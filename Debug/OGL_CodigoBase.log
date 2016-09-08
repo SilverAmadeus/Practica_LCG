@@ -1,2 +1,7 @@
-﻿  Skipping... (no relevant changes detected)
-  Main.cpp
+﻿  Vector.cpp
+  cargadorTGA.cpp
+  3ds.cpp
+  Generating Code...
+  LINK : C:\Users\ivanf\OneDrive\Documentos\Computacion_Grafica\Laboratorio\Practicas\Practica_LCG\Debug\OGL_CodigoBase.exe not found or not built by the last incremental link; performing full link
+3ds.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/SAFESEH' specification
+  OGL_CodigoBase.vcxproj -> C:\Users\ivanf\OneDrive\Documentos\Computacion_Grafica\Laboratorio\Practicas\Practica_LCG\Debug\OGL_CodigoBase.exe

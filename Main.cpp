@@ -1,6 +1,6 @@
 #include "Main.h"
 #include "3ds.h"
-// TODO: Camara 2
+// TODO: Camara 2, hue
 //Release se usa para "lanzar" nuestro proyecto y se pueda usar en cualquier maquina.
 
 HDC			hDC=NULL;		// Dispositivo de contexto GDI
