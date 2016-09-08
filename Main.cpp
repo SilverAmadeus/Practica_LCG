@@ -132,8 +132,6 @@ void iniciaCamara()
 	camara3.altCam = 5.0f;
 	camara3.altObj = 5.0f;
 
-
-        // Camara 4
 }
 
 
