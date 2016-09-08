@@ -112,11 +112,12 @@ void iniciaCamara()
 	//Cámara 2
 	camara2.distCam = 20.0f;
 	camara2.velCam = 0.5f;
-	camara2.angCam = 90.0f;
-
-	camara2.posCam.y = 5.0f;
-
-	camara2.objCam = CVector(0.0f, 5.0f, 0.0f);
+	camara2.angCam = 270.0f;
+	camara2.posCam = CVector(0.0f, 5.0f, 0.0f);
+	camara2.objCam = CVector(0.0f, 5.0f, -20.0f);
+	camara2.dirCam.x = cos(camara2.angCam*PI / 180.0f);
+	camara2.dirCam.y = 0.0f;
+	camara2.dirCam.z = sin(camara2.angCam*PI / 180.0f);
 	camara2.altCam = 5.0f;
 	camara2.altObj = 5.0f;
 
@@ -126,9 +127,9 @@ void iniciaCamara()
 	camara3.angCam = 270.0f;
 	camara3.posCam = CVector(0.0f, 5.0f, 0.0f);
 	camara3.objCam = CVector(0.0f, 5.0f, -20.0f);
-	camara2.dirCam.x = cos(camara2.angCam*PI / 180.0f);
-	camara2.dirCam.y = 0.0f;
-	camara2.dirCam.z = sin(camara2.angCam*PI / 180.0f);
+	camara3.dirCam.x = cos(camara2.angCam*PI / 180.0f);
+	camara3.dirCam.y = 0.0f;
+	camara3.dirCam.z = sin(camara2.angCam*PI / 180.0f);
 	camara3.altCam = 5.0f;
 	camara3.altObj = 5.0f;
 
@@ -205,17 +206,19 @@ void controlCamara(int funcion)
 	}
 	else if (tipoCamara == 2)
 	{
-		if (funcion == 1) //Disminuye radio de la camara (distCam)
+		if (funcion == 1) //Disminuye radio de la camara 
 		{
-
+			camara2.posCam = camara2.posCam + camara2.dirCam*camara2.velCam;
+			camara2.posCam.y = camara2.altCam;
 		}
-		else if (funcion == 2) // Aumenta radio de la camara (distCam)
+		else if (funcion == 2) // Aumenta radio de la camara 
 		{
-
+			camara2.posCam = camara2.posCam - camara2.dirCam*camara2.velCam;
+			camara2.posCam.y = camara2.altCam;
 		}
 		else if (funcion == 3) //Gira hacia la derecha
 		{
-
+		
 		}
 		else if (funcion == 4) //Gira hacia la izquierda
 		{
@@ -223,22 +226,16 @@ void controlCamara(int funcion)
 		}
 		else if (funcion == 5) //Sube pos camara (y+)
 		{
-
+			camara2.posCam.y += camara2.velCam;
+			camara2.altCam = camara2.posCam.y;
 		}
 		else if (funcion == 6) //Baja pos camara (y-)
 		{
-
+			camara2.posCam.y -= camara2.velCam;
+			camara2.altCam = camara2.posCam.y;
 		}
-		else if (funcion == 7) //Sube obj camara (y+)
-		{
-
-		}
-		else if (funcion == 8) //Baja obj camara (y-)
-		{
-
-		}
-
 		//Cálculo de la posición y objetivo de la cámara
+
 
 	}
 	else if (tipoCamara == 3)
@@ -1320,7 +1317,7 @@ int RenderizaEscena2(GLvoid)								// Aqui se dibuja todo lo que aparecera en l
                     camara1.objCam.x, camara1.objCam.y, camara1.objCam.z, 0, 1, 0);
             else if (tipoCamara == 2)
                 gluLookAt(camara2.posCam.x, camara2.posCam.y, camara2.posCam.z,
-                    camara2.objCam.x, camara2.objCam.y, camara2.objCam.z, 0, 1, 0);
+                    0, 0, 0, 0, 1, 0);
             else if (tipoCamara == 3)
                 gluLookAt(camara3.posCam.x, camara3.posCam.y, camara3.posCam.z,
                     camara3.objCam.x, camara3.objCam.y, camara3.objCam.z, 0, 1, 0);
