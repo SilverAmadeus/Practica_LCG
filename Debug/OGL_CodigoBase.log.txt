@@ -1,0 +1,2 @@
+﻿  Main.cpp
+  OGL_CodigoBase.vcxproj -> C:\Users\CG04\Desktop\Practica_2\Debug\OGL_CodigoBase.exe

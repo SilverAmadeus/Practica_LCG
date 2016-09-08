@@ -1,0 +1,15 @@
+c:\users\cg04\desktop\practica_2\debug\vc140.pdb
+c:\users\cg04\desktop\practica_2\debug\vc140.idb
+c:\users\cg04\desktop\practica_2\debug\3ds.obj
+c:\users\cg04\desktop\practica_2\debug\cargadortga.obj
+c:\users\cg04\desktop\practica_2\debug\main.obj
+c:\users\cg04\desktop\practica_2\debug\vector.obj
+c:\users\cg04\desktop\practica_2\debug\ogl_codigobase.ilk
+c:\users\cg04\desktop\practica_2\debug\ogl_codigobase.exe
+c:\users\cg04\desktop\practica_2\debug\ogl_codigobase.pdb
+c:\users\cg04\desktop\practica_2\debug\ogl_codigobase.tlog\cl.command.1.tlog
+c:\users\cg04\desktop\practica_2\debug\ogl_codigobase.tlog\cl.read.1.tlog
+c:\users\cg04\desktop\practica_2\debug\ogl_codigobase.tlog\cl.write.1.tlog
+c:\users\cg04\desktop\practica_2\debug\ogl_codigobase.tlog\link.command.1.tlog
+c:\users\cg04\desktop\practica_2\debug\ogl_codigobase.tlog\link.read.1.tlog
+c:\users\cg04\desktop\practica_2\debug\ogl_codigobase.tlog\link.write.1.tlog
