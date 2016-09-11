@@ -266,12 +266,23 @@ void controlCamara(int funcion)
 		}
 		else if (funcion == 5) //Sube pos camara (y+)
 		{
-			camara2.posCam.y += camara2.velCam;
+			if (camara2.posCam.y == 500) {
+				camara2.posCam = camara2.posCam;
+			}
+			else{
+				camara2.posCam.y += camara2.velCam;
+			}
+			
 			camara2.altCam = camara2.posCam.y;
 		}
 		else if (funcion == 6) //Baja pos camara (y-)
 		{
-			camara2.posCam.y -= camara2.velCam;
+			if (camara2.posCam.y == -500) {
+				camara2.posCam = camara2.posCam;
+			}
+			else {
+				camara2.posCam.y -= camara2.velCam;
+			}
 			camara2.altCam = camara2.posCam.y;
 		}
 		//Cálculo de la posición y objetivo de la cámara
@@ -610,9 +621,7 @@ void dibujaEscenario()
 		glVertex3f(-63.0f, 7.0f,-5.0f);
 		glVertex3f(-68.0f, 7.0f,-5.0f);
 	glEnd();
-
-	//Let the chopping begin!
-	//My shit starts here
+	//Aquí empiezan los planos creados 
 
 	//10
 	glBegin(codigo);

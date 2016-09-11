@@ -1,26 +1,27 @@
 ﻿  Main.cpp
-Main.cpp(116): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-Main.cpp(118): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-Main.cpp(130): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-Main.cpp(132): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-Main.cpp(241): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-Main.cpp(242): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-Main.cpp(254): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-Main.cpp(255): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-Main.cpp(300): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-Main.cpp(301): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-Main.cpp(313): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-Main.cpp(314): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-Main.cpp(1283): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
-Main.cpp(1297): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
-Main.cpp(1297): warning C4244: 'argument': conversion from 'float' to 'GLint', possible loss of data
-Main.cpp(1304): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
-Main.cpp(1304): warning C4244: 'argument': conversion from 'float' to 'GLint', possible loss of data
-Main.cpp(1311): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
-Main.cpp(1318): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
-Main.cpp(1318): warning C4244: 'argument': conversion from 'float' to 'GLint', possible loss of data
-Main.cpp(1509): warning C4838: conversion from 'int' to 'BYTE' requires a narrowing conversion
-Main.cpp(1792): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-Main.cpp(1793): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-  OGL_CodigoBase.vcxproj -> C:\Users\ivanf\OneDrive\Documentos\Computacion_Grafica\Laboratorio\Practicas\Practica_LCG\Release\OGL_CodigoBase.exe
+Main.cpp(116): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+Main.cpp(118): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+Main.cpp(130): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+Main.cpp(132): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+Main.cpp(245): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+Main.cpp(246): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+Main.cpp(258): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+Main.cpp(259): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+Main.cpp(315): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+Main.cpp(316): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+Main.cpp(328): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+Main.cpp(329): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+Main.cpp(1296): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\stdio.h(1769): note: vea la declaración de 'sprintf'
+Main.cpp(1310): warning C4244: 'argumento': conversión de 'float' a 'GLsizei'; posible pérdida de datos
+Main.cpp(1310): warning C4244: 'argumento': conversión de 'float' a 'GLint'; posible pérdida de datos
+Main.cpp(1317): warning C4244: 'argumento': conversión de 'float' a 'GLsizei'; posible pérdida de datos
+Main.cpp(1317): warning C4244: 'argumento': conversión de 'float' a 'GLint'; posible pérdida de datos
+Main.cpp(1324): warning C4244: 'argumento': conversión de 'float' a 'GLsizei'; posible pérdida de datos
+Main.cpp(1331): warning C4244: 'argumento': conversión de 'float' a 'GLsizei'; posible pérdida de datos
+Main.cpp(1331): warning C4244: 'argumento': conversión de 'float' a 'GLint'; posible pérdida de datos
+Main.cpp(1522): warning C4838: la conversión de 'int' en 'BYTE' requiere una conversión de restricción
+Main.cpp(1805): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+Main.cpp(1806): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+  OGL_CodigoBase.vcxproj -> C:\Users\Marcela\Documents\GitHub\Practica_LCG\Release\OGL_CodigoBase.exe
+  OGL_CodigoBase.vcxproj -> C:\Users\Marcela\Documents\GitHub\Practica_LCG\Release\OGL_CodigoBase.pdb (Full PDB)
