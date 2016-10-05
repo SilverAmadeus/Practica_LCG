@@ -1,6 +1,7 @@
 #include "Main.h"
 #include "3ds.h"
-// TODO: Camara 2, hue
+//Camara 3 fixed :)
+// TODO: Escalera of d00m
 //Release se usa para "lanzar" nuestro proyecto y se pueda usar en cualquier maquina.
 
 HDC			hDC=NULL;		// Dispositivo de contexto GDI
@@ -302,7 +303,7 @@ void controlCamara(int funcion)
 		{
 			camara3.posCam = camara3.posCam - camara3.dirCam*camara3.velCam;
 			camara3.posCam.y = camara3.altCam;
-			camara3.objCam = camara3.posCam + camara3.dirCam*camara3.velCam;
+			camara3.objCam = camara3.posCam + camara3.dirCam*camara3.distCam;
 			camara3.objCam.y = camara3.altObj;
 
 		}
@@ -1263,12 +1264,223 @@ void dibujaEscenario()
 	glColor3f(1.0f,1.0f,1.0f);
 
 }
+void boxWallA(float x, float y, float z, int modoRender)
+{
+    glColor3f(1.0f, 1.0f, 0.0f);
+    if (modoRender == 1) glBegin(GL_QUADS);// sólido
+    else if (modoRender == 2) glBegin(GL_LINE_LOOP);// alambrado
+    glVertex3f(0.0f, 0.0f, 0.0f);
+    glVertex3f(0.0f, y, 0.0f);
+    glVertex3f(x, y, 0.0f);
+    glVertex3f(x, 0.0f, 0.0f);
+    glEnd();
+}
+
+void boxWallB(float x, float y, float z, int modoRender)
+{
+    glColor3f(1.0f, 0.0f, 0.0f);
+
+    if (modoRender == 1) glBegin(GL_QUADS);// sólido
+    else if (modoRender == 2) glBegin(GL_LINE_LOOP);// alambrado
+    glVertex3f(0.0f, 0.0f, 0.0f);
+    glVertex3f(0.0f, 0.0f, z);
+    glVertex3f(0.0f, y, z);
+    glVertex3f(0.0f, y, 0.0f);
+    glEnd();
+}
+
+void boxWallC(float x, float y, float z, int modoRender)
+{
+    glColor3f(0.0f, 0.0f, 1.0f);
+    if (modoRender == 1) glBegin(GL_QUADS);// sólido
+    else if (modoRender == 2) glBegin(GL_LINE_LOOP);// alambrado
+    glVertex3f(0.0f, 0.0f, 0.0f);
+    glVertex3f(x, 0.0f, 0.0f);
+    glVertex3f(x, 0.0f, z);
+    glVertex3f(0.0f, 0.0f, z);
+    glEnd();
+}
 
 
+void dibujaCaja(float ancho, float altura, float largo, int modoRender)
+{
+   //Cara A
+    boxWallA(ancho, altura, largo, modoRender);
+   //Traslacion para Cara A Here:
+    glPushMatrix();
+        glRotatef(180.0f, 0.0f, 1.0f, 0.0f);
+        glTranslatef(-ancho, 0.0f, -largo);
+        boxWallA(ancho, altura, largo, modoRender);
+    glPopMatrix();
+   //Cara B
+    boxWallB(ancho, altura, largo, modoRender);
+
+    glPushMatrix();
+        glRotatef(180.0f, 0.0f, 1.0f, 0.0f);
+        glTranslatef(-ancho, 0.0f, -largo);
+
+        boxWallB(ancho, altura, largo, modoRender);
+    glPopMatrix();
+   //Cara C
+    boxWallC(ancho, altura, largo, modoRender);
+    glPushMatrix();
+        glRotatef(180.0f, 1.0f, 0.0f, 0.0f);
+        glTranslatef(0.0f, -altura, -largo);
+
+        boxWallC(ancho, altura, largo, modoRender);
+    glPopMatrix();
+
+
+   glColor3f(1.0f, 1.0f, 1.0f);
+
+    
+}
+
+void dibujaCilindro(float radio, int lados, float altura, int modoRender)
+{
+    float ang;
+    float a[3], b[3], c[3], d[3];
+    float delta;
+
+    delta = 360.0f / lados;
+
+    for (int i = 0; i < lados; i++)
+    {
+        ang = i*delta;
+
+        a[0] = radio*(float)cos(ang*PI / 180.0f);
+        a[1] = 0.0f;
+        a[2] = radio*(float)sin(ang*PI / 180.0f);
+
+        b[0] = a[0];
+        b[1] = altura;
+        b[2] = a[2];
+
+        ang = (i + 1)*delta;
+
+        c[0] = radio*(float)cos(ang*PI / 180.0f);
+        c[1] = altura;
+        c[2] = radio*(float)sin(ang*PI / 180.0f);
+
+        d[0] = c[0];
+        d[1] = 0.0f;
+        d[2] = c[2];
+
+        glColor3f(1.0f, 0.0f, 0.0f);
+
+        if (modoRender == 1) glBegin(GL_QUADS);// sólido
+        else if (modoRender == 2) glBegin(GL_LINE_LOOP);// alambrado
+        glVertex3f(a[0], a[1], a[2]);
+        glVertex3f(b[0], b[1], b[2]);
+        glVertex3f(c[0], c[1], c[2]);
+        glVertex3f(d[0], d[1], d[2]);
+        glEnd();
+
+        //Tapa superior
+        glColor3f(1.0f, 1.0f, 0.0f);
+
+        if (modoRender == 1) glBegin(GL_TRIANGLES);// sólido
+        else if (modoRender == 2) glBegin(GL_LINE_LOOP);// alambrado
+        glVertex3f(c[0], c[1], c[2]);
+        glVertex3f(b[0], b[1], b[2]);
+        glVertex3f(0.0f, altura, 0.0f);
+        glEnd();
+
+        //Tapa inferior
+        glColor3f(0.0f, 0.0f, 1.0f);
+
+        if (modoRender == 1) glBegin(GL_TRIANGLES);// sólido
+        else if (modoRender == 2) glBegin(GL_LINE_LOOP);// alambrado
+        glVertex3f(a[0], a[1], a[2]);
+        glVertex3f(d[0], d[1], d[2]);
+        glVertex3f(0.0f, 0.0f, 0.0f);
+        glEnd();
+
+        glColor3f(1.0f, 1.0f, 1.0f);
+    }
+}
+
+void dibujaCono(float radio1, float radio2, int lados, float altura, int modoRender)
+{
+    float ang;
+    float a[3], b[3], c[3], d[3];
+    float delta;
+
+    delta = 360.0f / lados;
+
+    for (int i = 0; i < lados; i++)
+    {
+        ang = i*delta;
+
+        a[0] = radio1*(float)cos(ang*PI / 180.0f);
+        a[1] = 0.0f;
+        a[2] = radio1*(float)sin(ang*PI / 180.0f);
+
+        b[0] = radio2*(float)cos(ang*PI / 180.0f);
+        b[1] = altura;
+        b[2] = radio2*(float)sin(ang*PI / 180.0f);
+
+        ang = (i + 1)*delta;
+
+        c[0] = radio2*(float)cos(ang*PI / 180.0f);
+        c[1] = altura;
+        c[2] = radio2*(float)sin(ang*PI / 180.0f);
+
+        d[0] = radio1*(float)cos(ang*PI / 180.0f);
+        d[1] = 0.0f;
+        d[2] = radio1*(float)sin(ang*PI / 180.0f);
+
+        glColor3f(1.0f, 0.0f, 0.0f);
+
+        glPushMatrix();
+        glTranslatef(0.0f, 0.5f, 0.0f);
+            if (modoRender == 1) glBegin(GL_QUADS);// sólido
+            else if (modoRender == 2) glBegin(GL_LINE_LOOP);// alambrado
+            glVertex3f(a[0], a[1], a[2]);
+            glVertex3f(b[0], b[1], b[2]);
+            glVertex3f(c[0], c[1], c[2]);
+            glVertex3f(d[0], d[1], d[2]);
+            glEnd();
+
+            //Tapa superior
+            glColor3f(1.0f, 1.0f, 0.0f);
+
+            if (modoRender == 1) glBegin(GL_TRIANGLES);// sólido
+            else if (modoRender == 2) glBegin(GL_LINE_LOOP);// alambrado
+            glVertex3f(c[0], c[1], c[2]);
+            glVertex3f(b[0], b[1], b[2]);
+            glVertex3f(0.0f, altura, 0.0f);
+            glEnd();
+
+            //Tapa inferior
+            glColor3f(0.0f, 0.0f, 1.0f);
+
+            if (modoRender == 1) glBegin(GL_TRIANGLES);// sólido
+            else if (modoRender == 2) glBegin(GL_LINE_LOOP);// alambrado
+            glVertex3f(a[0], a[1], a[2]);
+            glVertex3f(d[0], d[1], d[2]);
+            glVertex3f(0.0f, 0.0f, 0.0f);
+            glEnd();
+
+            glColor3f(1.0f, 1.0f, 1.0f);
+       glPopMatrix();
+       dibujaCilindro(3.0, 4, 0.5, 1);
+    }
+}
+
+//void dibujaEscalera() /se arma con traslaciones 
+//{
+//    glPushMatrix();
+//        glTranslatef(12.0f, 23.0f, 20.f);
+//}
+//
 
 int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la ventana
 {
-
+        static float despX = 0.0f;
+        static float scaleXY = 0.0f;
+        static float ang = 0.0f;
+        static int dir = 1;
 	static char strBuffer[255] = { 0 };
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // Se limpian ambos buffers al iniciar el programa
 	glLoadIdentity();									// Se limpian las matrices de transformaciones
@@ -1290,8 +1502,111 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 			camara3.objCam.x, camara3.objCam.y, camara3.objCam.z, 0, 1, 0);
 	
 	DibujaEjes();
-	
+	//Dibuja Cono lista. :)
+
+        //dibujaCono(1.5, 0.5, 8, 4.0, 1);
 	dibujaEscenario();
+        glPushMatrix();
+        glTranslatef(-51.5f, 5.2f, 3.0f);
+            dibujaCaja(0.5f, 0.2f, 2.0f, 1);
+        glPopMatrix();
+        //glPushMatrix();
+        //  glTranslatef(23.f, 14.0f, 8.0f);
+        //  dibujaEscalera();
+       
+       /* glPushMatrix();*/
+        //Generalmente, escalamiento, rotation, traslacion
+            //El orden de como ocurren las traslaciones cambian como se comporta la figura
+            // Se desplaza el plano dependiendo de del valor de despX
+            //glTranslatef(10.0f, 10.0f, 0.0f);
+            // Escalar de tamaño en X y en Y
+            //glScalef(scaleXY, scaleXY, 1.0f);
+            //Rotar a lo largo de un eje, angulo, ejes
+            //glRotatef(ang, 0.0f, 0.0f, 1.0f);
+            //Si se traslada y luego se escala, tambien se escala el espacio de traslacion 
+            //glScalef(2.0f, 8.0f, 1.0f);
+            //glTranslatef(10.0f, 10.0f, 0.0f);
+
+
+            //glBegin(GL_QUADS);
+            //    glVertex3f(-10.0f, -10.0f, 0.0f);
+            //    glVertex3f( 10.0f, -10.0f, 0.0f);
+            //    glVertex3f( 10.0f,  10.0f, 0.0f);
+            //    glVertex3f(-10.0f,  10.0f, 0.0f);
+            //glEnd();
+        /*glPopMatrix();*/
+
+
+        // Bandera para mantener al plano moviendo en un lado a la vez
+        // Cuando alcanza un extremo se cambia de direccion
+        //if (dir  == 1)
+        //{
+        //    if (despX < 50.0f)
+        //    {
+        //        despX += 0.5f;
+        //    }
+        //    else
+        //    {
+        //        dir = 2;
+        //    }
+        //}
+        //else
+        //{
+        //    if (despX > -50.0f)
+        //    {
+        //        despX -= 0.5f;
+        //    }
+        //    else
+        //    {
+        //        dir = 1;
+        //    }
+        //}
+ /*       if (dir == 1)
+        {
+            if (scaleXY < 6.0f)
+            {
+                scaleXY += 0.2f;
+            }
+            else
+            {
+                dir = 2;
+            }
+        }
+        else
+        {
+            if (scaleXY > 0.0f)
+            {
+                scaleXY  -= 0.2f;
+            }
+            else
+            {
+                dir = 1;
+            }
+        }
+*/
+        //if (dir == 1)
+        //{
+        //    if (ang < 360.0f)
+        //    {
+        //        ang += 0.4f;
+        //    }
+        //    else
+        //    {
+        //        dir = 2;
+        //    }
+        //}
+        //else
+        //{
+        //    if (ang > 0.0f)
+        //    {
+        //        ang -= 0.4f;
+        //    }
+        //    else
+        //    {
+        //        dir = 1;
+        //    }
+        //}
+
 
 	sprintf(strBuffer, "Tipo cámara: %d", tipoCamara);
 	SetWindowText(hWnd, strBuffer);
@@ -1672,7 +1987,7 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instancia
 				}
 				else								// De lo contrario, actualiza la pantalla
 				{
-					RenderizaEscena2();				// Dibuja la escena
+					RenderizaEscena();				// Dibuja la escena, se puede seleccionar la escena cambiando la llamada
 					SwapBuffers(hDC);				// Intercambia los Buffers (Double Buffering)
 				}
 
@@ -1769,21 +2084,22 @@ int ManejaTeclado()
 		controlCamara(3);
 	}
 
-	if (keys[VK_PRIOR])
+        if (keys[VK_PRIOR] || keys['O'])
 	{
 		controlCamara(5);
 	}
-	if (keys[VK_NEXT])
+
+        if (keys[VK_NEXT] || keys['L'])
 	{
 		controlCamara(6);
 	}
 
-	if (keys[VK_HOME])
+        if (keys[VK_HOME] || keys['I'])
 	{
 		controlCamara(7);
 	}
 
-	if (keys[VK_END])
+        if (keys[VK_END] || keys['K'])
 	{
 		controlCamara(8);
 	}
