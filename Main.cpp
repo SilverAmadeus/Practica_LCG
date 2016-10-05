@@ -29,6 +29,16 @@ GLUquadricObj	*e;
 #define FILE_NAME2  "Modelos/modelo2.3ds"
 #define FILE_NAME3  "Modelos/modelo3.3ds"
 
+#define FILE_NAME1g  "Modelos/torso.3ds"
+#define FILE_NAME2g  "Modelos/cabeza.3ds"
+#define FILE_NAME3g  "Modelos/piernader.3ds"
+#define FILE_NAME4g  "Modelos/piernaizq.3ds"
+#define FILE_NAME5g  "Modelos/brazoder.3ds"
+#define FILE_NAME6g  "Modelos/brazoizq.3ds"
+#define FILE_NAME7g  "Modelos/pierna_b.3ds"
+#define FILE_NAME8g  "Modelos/tabla.3ds"
+
+
 //Contenedores de texturas de cada modelo
 CTga textureModel1[4];
 CTga textureModel2[4];
@@ -45,14 +55,62 @@ t3DModel g_3DModel1;
 t3DModel g_3DModel2;
 t3DModel g_3DModel3;
 
+CTga textureModel1g[5];
+CTga textureModel2g[5];
+CTga textureModel3g[5];
+CTga textureModel4g[5];
+CTga textureModel5g[5];
+CTga textureModel6g[5];
+CTga textureModel7g[5];
+CTga textureModel8g[5];
+
+t3DModel g_3DModel1g;
+t3DModel g_3DModel2g;
+t3DModel g_3DModel3g;
+t3DModel g_3DModel4g;
+t3DModel g_3DModel5g;
+t3DModel g_3DModel6g;
+t3DModel g_3DModel7g;
+t3DModel g_3DModel8g;
+
+
 //Objeto para acceder a las variables de control del personaje
 paramObjCam player1;
 
 camara camara1;
 camara camara2;
 camara camara3;
+
 int tipoCamara;
 
+float Angt1;  //Rot. en x
+float Angt2;  //Rot. en y
+float Angc1;  //Rot. en x
+float Angc2;  //Rot. en y
+
+//Brazo izquierdo
+float Angbi1;  //Rot. en X
+float Angbi2;  //Rot. en Y
+float Angbi3;  //Rot. en Z
+
+//Brazo derecho
+float Angbd1;
+float Angbd2;
+float Angbd3;
+
+//Upper leg
+float Angpizq; //Rot en X
+float Angpder; //Rot en X
+
+//Lower leg
+float Angpi;
+float Angpd;
+
+float Xtor;
+float Ytor;
+float Ztor;
+
+int IncDec;
 
 LRESULT	CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);	// Declaracion de WndProc (Procedimiento de ventana)
 
@@ -80,22 +138,41 @@ GLvoid ReDimensionaEscenaGL(GLsizei width, GLsizei height)	// Redimensiona e ini
 
 int CargaModelos()
 {
-	if(!g_Load3ds.Load3DSFile(FILE_NAME1, &g_3DModel1, textureModel1))
-		return 0;
-	if(!g_Load3ds.Load3DSFile(FILE_NAME2, &g_3DModel2, textureModel2))
-		return 0;
-	if(!g_Load3ds.Load3DSFile(FILE_NAME3, &g_3DModel3, textureModel3))
-		return 0;
-	
-	return TRUE;
+    //Gaspar
+    if (!g_Load3ds.Load3DSFile(FILE_NAME1g, &g_3DModel1g, textureModel1g))
+        return 0;
+    if (!g_Load3ds.Load3DSFile(FILE_NAME2g, &g_3DModel2g, textureModel2g))
+        return 0;
+    if (!g_Load3ds.Load3DSFile(FILE_NAME3g, &g_3DModel3g, textureModel3g))
+        return 0;
+    if (!g_Load3ds.Load3DSFile(FILE_NAME4g, &g_3DModel4g, textureModel4g))
+        return 0;
+    if (!g_Load3ds.Load3DSFile(FILE_NAME5g, &g_3DModel5g, textureModel5g))
+        return 0;
+    if (!g_Load3ds.Load3DSFile(FILE_NAME6g, &g_3DModel6g, textureModel6g))
+        return 0;
+    if (!g_Load3ds.Load3DSFile(FILE_NAME7g, &g_3DModel7g, textureModel7g))
+        return 0;
+    if (!g_Load3ds.Load3DSFile(FILE_NAME8g, &g_3DModel8g, textureModel8g))
+        return 0;
+
+
+    return TRUE;
 }
 
 void DescargaModelos()
 {
-	g_Load3ds.UnLoad3DSFile(&g_3DModel1, textureModel1);
-	g_Load3ds.UnLoad3DSFile(&g_3DModel2, textureModel2);
-	g_Load3ds.UnLoad3DSFile(&g_3DModel3, textureModel3);
+    g_Load3ds.UnLoad3DSFile(&g_3DModel1g, textureModel1g);
+    g_Load3ds.UnLoad3DSFile(&g_3DModel2g, textureModel2g);
+    g_Load3ds.UnLoad3DSFile(&g_3DModel3g, textureModel3g);
+    g_Load3ds.UnLoad3DSFile(&g_3DModel4g, textureModel4g);
+    g_Load3ds.UnLoad3DSFile(&g_3DModel5g, textureModel5g);
+    g_Load3ds.UnLoad3DSFile(&g_3DModel6g, textureModel6g);
+    g_Load3ds.UnLoad3DSFile(&g_3DModel7g, textureModel7g);
+    g_Load3ds.UnLoad3DSFile(&g_3DModel8g, textureModel8g);
+
 }
+
 
 // Todas las funciones que llegan alterar caracteristicas del personaje se definen antes
 
@@ -156,6 +233,29 @@ int IniGL(GLvoid)										// Aqui se configuran los parametros iniciales de Ope
 	objetivoCamProv = CVector(0.0f, 10.0f, 0.0f);
 
 	iniciaCamara();
+
+        CargaModelos();
+
+        Angt1 = 0.0f;
+        Angt2 = 0.0f;
+        Angc1 = 0.0f;
+        Angc2 = 0.0f;
+        Angbi1 = 0.0f;
+        Angbi2 = 0.0f;
+        Angbi3 = 0.0f;
+        Angbd1 = 0.0f;
+        Angbd2 = 0.0f;
+        Angbd3 = 0.0f;
+        Angpizq = 0.0f;
+        Angpder = 0.0f;
+        Angpi = 0.0f;
+        Angpd = 0.0f;
+
+        Xtor = 0.0f;
+        Ytor = 0.0f;
+        Ztor = 0.0f;
+
+        IncDec = 0; //0: Incrementa valores, 1: Decrementa valores
 
 	return TRUE;										
 }
@@ -397,6 +497,67 @@ void DibujaEjes()
 
 	glColor3f(1.0f,1.0f,1.0f);
 }
+
+void dibujaEsfera(float radio, int paralelos, int meridianos, int modoRender)
+{
+    float ang1, ang2;
+    float a[3], b[3], c[3], d[3];
+    float delta1, delta2;
+
+    delta1 = 180.0f / paralelos;
+    delta2 = 360.0f / meridianos;
+
+    //Semiesfera superior (y positivos)
+    for (int i = 0; i < paralelos/2; i++)
+    {
+        for (int j = 0; j <= meridianos; j++)
+        {
+            ang1 = i*delta1;
+            ang2 = j*delta2;
+            a[0] = radio*(float)cos(ang1*PI / 180.0f)*(float)cos(ang2*PI / 180.0f);
+            a[1] = radio*(float)sin(ang1*PI / 180.0f);
+            a[2] = radio*(float)cos(ang1*PI / 180.0f)*(float)sin(ang2*PI / 180.0f);
+
+            ang1 = (i + 1)*delta1;
+            ang2 = j*delta2;
+            b[0] = radio*(float)cos(ang1*PI / 180.0f)*(float)cos(ang2*PI / 180.0f);
+            b[1] = radio*(float)sin(ang1*PI / 180.0f);
+            b[2] = radio*(float)cos(ang1*PI / 180.0f)*(float)sin(ang2*PI / 180.0f);
+            ang1 = (i + 1)*delta1;
+            ang2 = (j + 1)*delta2;
+            c[0] = radio*(float)cos(ang1*PI / 180.0f)*(float)cos(ang2*PI / 180.0f);
+            c[1] = radio*(float)sin(ang1*PI / 180.0f);
+            c[2] = radio*(float)cos(ang1*PI / 180.0f)*(float)sin(ang2*PI / 180.0f);
+            ang1 = i*delta1;
+            ang2 = (j + 1)*delta2;
+            d[0] = radio*(float)cos(ang1*PI / 180.0f)*(float)cos(ang2*PI / 180.0f);
+            d[1] = radio*(float)sin(ang1*PI / 180.0f);
+            d[2] = radio*(float)cos(ang1*PI / 180.0f)*(float)sin(ang2*PI / 180.0f);
+
+            glColor3f(1.0f, 1.0f, 1.0f);
+
+            //Parte superior
+            if (modoRender == 1) glBegin(GL_QUADS);// sólido
+            else if (modoRender == 2) glBegin(GL_LINE_LOOP);// alambrado
+            glVertex3f(a[0], a[1], a[2]);
+            glVertex3f(b[0], b[1], b[2]);
+            glVertex3f(c[0], c[1], c[2]);
+            glVertex3f(d[0], d[1], d[2]);
+            glEnd();
+
+            //Parte inferior
+            if (modoRender == 1) glBegin(GL_QUADS);// sólido
+            else if (modoRender == 2) glBegin(GL_LINE_LOOP);// alambrado
+            glVertex3f(a[0], -a[1], a[2]);
+            glVertex3f(d[0], -d[1], d[2]);
+            glVertex3f(c[0], -c[1], c[2]);
+            glVertex3f(b[0], -b[1], b[2]);
+            glEnd();
+
+        }
+    }
+}
+
 
 
 void dibujaEscenario()
@@ -1400,11 +1561,16 @@ void dibujaCilindro(float radio, int lados, float altura, int modoRender)
     }
 }
 
-void dibujaCono(float radio1, float radio2, int lados, float altura, int modoRender)
+void dibujaCono()
 {
     float ang;
     float a[3], b[3], c[3], d[3];
     float delta;
+    float radio1 = 1.5;
+    float radio2 = 0.5;
+    int lados = 8;
+    float altura = 4.0;
+    int modoRender = 1;
 
     delta = 360.0f / lados;
 
@@ -1464,8 +1630,44 @@ void dibujaCono(float radio1, float radio2, int lados, float altura, int modoRen
 
             glColor3f(1.0f, 1.0f, 1.0f);
        glPopMatrix();
-       dibujaCilindro(3.0, 4, 0.5, 1);
+
+       //Se hace la caja y despues se traslada al centro de los ejes de referencia
+       glPushMatrix();
+       glTranslated(-2.0f, 0.0f, -2.0f);
+            dibujaCaja(4.0, 0.5, 4.0, 1);
+       glPopMatrix();
     }
+}
+
+void dibujaHidrante()
+{
+    //Cuerpo del Hidrante
+    glPushMatrix();
+    glTranslatef(0.0f, 0.5f, 0.0f);
+    dibujaCilindro(1.0f, 12.0f, 3.0f, 2);
+    glPopMatrix();
+    ////Base del hidrante
+    dibujaCilindro(1.5f, 12.0f, 0.5f, 2);
+
+    //Brazos del Hidrante
+    // Brazo_A
+
+    //ang1 = 90
+    //ang2 = -90
+    glPushMatrix();
+    glScalef(0.5f, 0.5f, 0.5f);
+    glRotatef(90.0f, 0.0f, 0.0f, 1.0f);
+    glTranslatef(4.5f, 1.5f, 0.0f);
+    dibujaCilindro(1.0f, 12.0f, 2.7f, 2);
+    glPopMatrix();
+
+    //Brazo_B
+    glPushMatrix();
+    glScalef(0.5f, 0.5f, 0.5f);
+    glRotatef(-90.0f, 0.0f, 0.0f, 1.0f);
+    glTranslatef(-4.5f, 1.5f, 0.0f);
+    dibujaCilindro(1.0f, 12.0f, 2.7f, 2);
+    glPopMatrix();
 }
 
 //void dibujaEscalera() /se arma con traslaciones 
@@ -1474,6 +1676,34 @@ void dibujaCono(float radio1, float radio2, int lados, float altura, int modoRen
 //        glTranslatef(12.0f, 23.0f, 20.f);
 //}
 //
+void dibujaPersonaje()
+{
+    //Dibuja torso (nodo raiz de la jerarquía)
+    glPushMatrix();
+        glTranslatef(Xtor, Ytor, Ztor);
+        glRotatef(Angt2, 0.0f, 1.0f, 0.0f);
+        glRotatef(Angt1, 1.0f, 0.0f, 0.0f);
+        g_Load3ds.Render3DSFile(&g_3DModel1g, textureModel1g, 1); //informacion del modelo (vertices, etc), texturas, render mode
+
+        glPushMatrix();
+        //Cabeza
+            glTranslatef(0.0f, 2.3f, 0.0f);
+            glRotatef(Angc2, 0.0f, 1.0f, 0.0f);
+            glRotatef(Angc1, 1.0f, 0.0f, 0.0f);
+            g_Load3ds.Render3DSFile(&g_3DModel2g, textureModel2g, 1);
+        glPopMatrix();
+
+        //Brazo izq
+        glPushMatrix();
+            glTranslatef(0.85f, 2.0f, 0.0f);
+            glRotatef(Angbi3, 0.0f, 0.0f, 1.0f);
+            glRotatef(Angbi2, 0.0f, 1.0f, 0.0f);
+            glRotatef(Angbi1, 1.0f, 0.0f, 0.0f);
+            g_Load3ds.Render3DSFile(&g_3DModel6g, textureModel6g, 1);
+        glPopMatrix();
+
+    glPopMatrix();
+}
 
 int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la ventana
 {
@@ -1502,18 +1732,13 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 			camara3.objCam.x, camara3.objCam.y, camara3.objCam.z, 0, 1, 0);
 	
 	DibujaEjes();
-	//Dibuja Cono lista. :)
 
-        //dibujaCono(1.5, 0.5, 8, 4.0, 1);
-	dibujaEscenario();
-        glPushMatrix();
-        glTranslatef(-51.5f, 5.2f, 3.0f);
-            dibujaCaja(0.5f, 0.2f, 2.0f, 1);
-        glPopMatrix();
-        //glPushMatrix();
-        //  glTranslatef(23.f, 14.0f, 8.0f);
-        //  dibujaEscalera();
-       
+        //dibujaEsfera(10, 16, 16, 2);
+        //dibujaCono();
+	//dibujaEscenario();
+        dibujaPersonaje();
+        //dibujaHidrante();
+
        /* glPushMatrix();*/
         //Generalmente, escalamiento, rotation, traslacion
             //El orden de como ocurren las traslaciones cambian como se comporta la figura
@@ -1996,7 +2221,7 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instancia
 			
 		}
 	}
-
+        DescargaModelos();
 	// Finalización del programa
 	DestruyeVentanaOGL();							// Destruye la ventana
 	return (msg.wParam);							// Sale del programa
@@ -2126,6 +2351,169 @@ int ManejaTeclado()
 		camara3.objCam.y = camara3.altObj;
 
 	}
+
+
+        if ((GetAsyncKeyState('X') & 1) == 1)
+        {
+            if (IncDec == 0)
+                IncDec = 1;
+            else if (IncDec == 1)
+                IncDec = 0;
+        }
+
+        //Ang. 1 Torso
+        if (keys['1'])
+        {
+            if (IncDec == 0)
+                Angt1 += 1.0f;
+            else if (IncDec == 1)
+                Angt1 -= 1.0f;
+        }
+
+        //Ang. 2 Torso
+        if (keys['2'])
+        {
+            if (IncDec == 0)
+                Angt2 += 1.0f;
+            else if (IncDec == 1)
+                Angt2 -= 1.0f;
+        }
+
+        //Ang. 1 Cabeza
+        if (keys['3'])
+        {
+            if (IncDec == 0)
+                Angc1 += 1.0f;
+            else if (IncDec == 1)
+                Angc1 -= 1.0f;
+        }
+
+        //Ang. 2 Cabeza
+        if (keys['4'])
+        {
+            if (IncDec == 0)
+                Angc2 += 1.0f;
+            else if (IncDec == 1)
+                Angc2 -= 1.0f;
+        }
+
+        //Ang. 1 Brazo izq
+        if (keys['5'])
+        {
+            if (IncDec == 0)
+                Angbi1 += 1.0f;
+            else if (IncDec == 1)
+                Angbi1 -= 1.0f;
+        }
+
+        //Ang. 2 Brazo izq
+        if (keys['6'])
+        {
+            if (IncDec == 0)
+                Angbi2 += 1.0f;
+            else if (IncDec == 1)
+                Angbi2 -= 1.0f;
+        }
+
+        //Ang. 3 Brazo izq
+        if (keys['7'])
+        {
+            if (IncDec == 0)
+                Angbi3 += 1.0f;
+            else if (IncDec == 1)
+                Angbi3 -= 1.0f;
+        }
+
+        //Ang. 1 Brazo der
+        if (keys['8'])
+        {
+            if (IncDec == 0)
+                Angbd1 += 1.0f;
+            else if (IncDec == 1)
+                Angbd1 -= 1.0f;
+        }
+
+        //Ang. 2 Brazo der
+        if (keys['9'])
+        {
+            if (IncDec == 0)
+                Angbd2 += 1.0f;
+            else if (IncDec == 1)
+                Angbd2 -= 1.0f;
+        }
+
+        //Ang. 3 Brazo der
+        if (keys['0'])
+        {
+            if (IncDec == 0)
+                Angbd3 += 1.0f;
+            else if (IncDec == 1)
+                Angbd3 -= 1.0f;
+        }
+
+        //Ang. Pierna izq
+        if (keys['Q'])
+        {
+            if (IncDec == 0)
+                Angpizq += 1.0f;
+            else if (IncDec == 1)
+                Angpizq -= 1.0f;
+        }
+
+        //Ang. Pierna der
+        if (keys['W'])
+        {
+            if (IncDec == 0)
+                Angpder += 1.0f;
+            else if (IncDec == 1)
+                Angpder -= 1.0f;
+        }
+
+        //Ang. Pie izq
+        if (keys['E'])
+        {
+            if (IncDec == 0)
+                Angpi += 1.0f;
+            else if (IncDec == 1)
+                Angpi -= 1.0f;
+        }
+
+        //Ang. Pie der
+        if (keys['R'])
+        {
+            if (IncDec == 0)
+                Angpd += 1.0f;
+            else if (IncDec == 1)
+                Angpd -= 1.0f;
+        }
+
+        //Pos. X torso
+        if (keys['T'])
+        {
+            if (IncDec == 0)
+                Xtor += 1.0f;
+            else if (IncDec == 1)
+                Xtor -= 1.0f;
+        }
+
+        //Pos. Y torso
+        if (keys['Y'])
+        {
+            if (IncDec == 0)
+                Ytor += 1.0f;
+            else if (IncDec == 1)
+                Ytor -= 1.0f;
+        }
+
+        //Pos. Z torso
+        if (keys['U'])
+        {
+            if (IncDec == 0)
+                Ztor += 1.0f;
+            else if (IncDec == 1)
+                Ztor -= 1.0f;
+        }
+
 
 
 	return TRUE;
