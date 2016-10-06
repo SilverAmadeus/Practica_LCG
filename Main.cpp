@@ -1468,12 +1468,92 @@ void dibujaCono(float radio1, float radio2, int lados, float altura, int modoRen
     }
 }
 
-//void dibujaEscalera() /se arma con traslaciones 
-//{
-//    glPushMatrix();
-//        glTranslatef(12.0f, 23.0f, 20.f);
-//}
-//
+
+void dibujaEscalera() //se arma con traslaciones 
+{
+
+	//dibujaCaja(ancho, altura, largo, modo render)
+	glPushMatrix();//Escalon 1
+	glTranslatef(-51.5f, 5.7f, 2.7f);
+	dibujaCaja(0.5f, 0.2f, 2.2f, 1);
+	glPopMatrix();
+
+	glPushMatrix(); //Escalon 2
+	glTranslatef(-50.9f, 6.3f, 2.7f);
+	dibujaCaja(0.5f, 0.2f, 2.2f, 1);
+	glPopMatrix();
+
+	glPushMatrix(); //Escalon 3
+	glTranslatef(-50.3f, 6.8f, 2.7f);
+	dibujaCaja(0.5f, 0.2f, 2.2f, 1);
+	glPopMatrix();
+
+	glPushMatrix(); //Escalon 4
+	glTranslatef(-49.7f, 7.4f, 2.7f);
+	dibujaCaja(0.5f, 0.2f, 2.2f, 1);
+	glPopMatrix();
+
+	glPushMatrix(); //Escalon 5
+	glTranslatef(-49.1f, 8.0f, 2.7f);
+	dibujaCaja(0.5f, 0.2f, 2.2f, 1);
+	glPopMatrix();
+
+	glPushMatrix(); //Base lado izquierdo
+	glTranslatef(-44.0f, 5.2f, 0.0f);
+	dibujaCaja(0.2f, 0.5f, 5.0f, 1);
+	glPopMatrix();
+
+
+	glPushMatrix(); //Base lado derecho
+	glTranslatef(-56.5f, 5.2f, 0.0f);
+	dibujaCaja(0.2f, 0.5f, 5.0f, 1);
+	glPopMatrix();
+
+	glPushMatrix(); //Base enfrente izquierdo
+	glTranslatef(-56.5f, 5.2f, 5.0f);
+	glRotatef(90.0f, 0.0f, 1.0f, 0.0f);
+	dibujaCaja(0.2f, 0.5f, 4.7f, 1);
+	glPopMatrix();
+
+	glPushMatrix(); //Base enfrente derecho
+	glTranslatef(-48.3f, 5.2f, 5.0f);
+	glRotatef(90.0f, 0.0f, 1.0f, 0.0f);
+	dibujaCaja(0.2f, 0.5f, 4.5f, 1);
+	glPopMatrix();
+
+	glPushMatrix();//Base enfrente derecho dentro
+	glTranslatef(-48.3f, 5.2f, 2.5f);
+	dibujaCaja(0.2f, 0.5f, 2.5f, 1);
+	glPopMatrix();
+
+
+	glPushMatrix(); //Base centro enfrente dentro
+	glTranslatef(-51.5f, 5.2f, 2.7f);
+	glRotatef(90.0f, 0.0f, 1.0f, 0.0f);
+	dibujaCaja(0.2f, 0.5f, 3.4f, 1);
+	glPopMatrix();
+
+
+	glPushMatrix(); //Barandal base dentro 
+	glTranslatef(-51.5f, 5.2f, 2.7f);
+	glRotatef(90.0f, 0.0f, 1.0f, 0.0f);
+	glRotatef(-45.0f, 1.0f, 0.0f, 0.0f);
+	dibujaCaja(0.2f, 0.5f, 6.4f, 1);
+	glPopMatrix();
+
+	glPushMatrix(); //Barandal base fuera
+	glTranslatef(-51.5f, 5.2f, 5.0f);
+	glRotatef(90.0f, 0.0f, 1.0f, 0.0f);
+	glRotatef(-45.0f, 1.0f, 0.0f, 0.0f);
+	dibujaCaja(0.2f, 0.5f, 6.4f, 1);
+	glPopMatrix();
+
+	//dibujaCilindro(radio, lados, altura, modo render)
+	glPushMatrix();
+	glTranslatef(-44.0f, 5.2f, 0.0f);
+	dibujaCilindro(0.2f, 30, 2.0f, 1);
+	glPopMatrix();
+}
 
 int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la ventana
 {
@@ -1512,7 +1592,7 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
         glPopMatrix();
         //glPushMatrix();
         //  glTranslatef(23.f, 14.0f, 8.0f);
-        //  dibujaEscalera();
+      dibujaEscalera();
        
        /* glPushMatrix();*/
         //Generalmente, escalamiento, rotation, traslacion
