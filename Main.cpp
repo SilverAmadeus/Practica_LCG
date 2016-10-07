@@ -1436,7 +1436,6 @@ void boxWallA(float x, float y, float z, int modoRender)
     glVertex3f(x, 0.0f, 0.0f);
     glEnd();
 }
-<<<<<<< HEAD
 
 void boxWallB(float x, float y, float z, int modoRender)
 {
@@ -1460,278 +1459,9 @@ void boxWallC(float x, float y, float z, int modoRender)
     glVertex3f(x, 0.0f, 0.0f);
     glVertex3f(x, 0.0f, z);
     glVertex3f(0.0f, 0.0f, z);
-=======
-
-void boxWallB(float x, float y, float z, int modoRender)
-{
-    glColor3f(1.0f, 0.0f, 0.0f);
-
-    if (modoRender == 1) glBegin(GL_QUADS);// sólido
-    else if (modoRender == 2) glBegin(GL_LINE_LOOP);// alambrado
-    glVertex3f(0.0f, 0.0f, 0.0f);
-    glVertex3f(0.0f, 0.0f, z);
-    glVertex3f(0.0f, y, z);
-    glVertex3f(0.0f, y, 0.0f);
->>>>>>> dibujaEscalera
     glEnd();
 }
 
-void boxWallC(float x, float y, float z, int modoRender)
-{
-    glColor3f(0.0f, 0.0f, 1.0f);
-    if (modoRender == 1) glBegin(GL_QUADS);// sólido
-    else if (modoRender == 2) glBegin(GL_LINE_LOOP);// alambrado
-    glVertex3f(0.0f, 0.0f, 0.0f);
-    glVertex3f(x, 0.0f, 0.0f);
-    glVertex3f(x, 0.0f, z);
-    glVertex3f(0.0f, 0.0f, z);
-    glEnd();
-}
-
-<<<<<<< HEAD
-void dibujaCaja(float ancho, float altura, float largo, int modoRender)
-{
-   //Cara A
-    boxWallA(ancho, altura, largo, modoRender);
-   //Traslacion para Cara A Here:
-    glPushMatrix();
-        glRotatef(180.0f, 0.0f, 1.0f, 0.0f);
-        glTranslatef(-ancho, 0.0f, -largo);
-        boxWallA(ancho, altura, largo, modoRender);
-    glPopMatrix();
-   //Cara B
-    boxWallB(ancho, altura, largo, modoRender);
-
-    glPushMatrix();
-        glRotatef(180.0f, 0.0f, 1.0f, 0.0f);
-        glTranslatef(-ancho, 0.0f, -largo);
-
-        boxWallB(ancho, altura, largo, modoRender);
-    glPopMatrix();
-   //Cara C
-    boxWallC(ancho, altura, largo, modoRender);
-    glPushMatrix();
-        glRotatef(180.0f, 1.0f, 0.0f, 0.0f);
-        glTranslatef(0.0f, -altura, -largo);
-
-        boxWallC(ancho, altura, largo, modoRender);
-    glPopMatrix();
-
-
-   glColor3f(1.0f, 1.0f, 1.0f);
-
-    
-}
-
-void dibujaCilindro(float radio, int lados, float altura, int modoRender)
-{
-    float ang;
-    float a[3], b[3], c[3], d[3];
-    float delta;
-
-    delta = 360.0f / lados;
-
-    for (int i = 0; i < lados; i++)
-    {
-        ang = i*delta;
-
-        a[0] = radio*(float)cos(ang*PI / 180.0f);
-        a[1] = 0.0f;
-        a[2] = radio*(float)sin(ang*PI / 180.0f);
-
-        b[0] = a[0];
-        b[1] = altura;
-        b[2] = a[2];
-
-        ang = (i + 1)*delta;
-
-        c[0] = radio*(float)cos(ang*PI / 180.0f);
-        c[1] = altura;
-        c[2] = radio*(float)sin(ang*PI / 180.0f);
-
-        d[0] = c[0];
-        d[1] = 0.0f;
-        d[2] = c[2];
-
-        glColor3f(1.0f, 0.0f, 0.0f);
-
-        if (modoRender == 1) glBegin(GL_QUADS);// sólido
-        else if (modoRender == 2) glBegin(GL_LINE_LOOP);// alambrado
-        glVertex3f(a[0], a[1], a[2]);
-        glVertex3f(b[0], b[1], b[2]);
-        glVertex3f(c[0], c[1], c[2]);
-        glVertex3f(d[0], d[1], d[2]);
-        glEnd();
-
-        //Tapa superior
-        glColor3f(1.0f, 1.0f, 0.0f);
-
-        if (modoRender == 1) glBegin(GL_TRIANGLES);// sólido
-        else if (modoRender == 2) glBegin(GL_LINE_LOOP);// alambrado
-        glVertex3f(c[0], c[1], c[2]);
-        glVertex3f(b[0], b[1], b[2]);
-        glVertex3f(0.0f, altura, 0.0f);
-        glEnd();
-
-        //Tapa inferior
-        glColor3f(0.0f, 0.0f, 1.0f);
-
-        if (modoRender == 1) glBegin(GL_TRIANGLES);// sólido
-        else if (modoRender == 2) glBegin(GL_LINE_LOOP);// alambrado
-        glVertex3f(a[0], a[1], a[2]);
-        glVertex3f(d[0], d[1], d[2]);
-        glVertex3f(0.0f, 0.0f, 0.0f);
-        glEnd();
-
-        glColor3f(1.0f, 1.0f, 1.0f);
-    }
-}
-
-void dibujaCono()
-{
-    float ang;
-    float a[3], b[3], c[3], d[3];
-    float delta;
-    float radio1 = 1.5;
-    float radio2 = 0.5;
-    int lados = 8;
-    float altura = 4.0;
-    int modoRender = 1;
-
-    delta = 360.0f / lados;
-
-    for (int i = 0; i < lados; i++)
-    {
-        ang = i*delta;
-
-        a[0] = radio1*(float)cos(ang*PI / 180.0f);
-        a[1] = 0.0f;
-        a[2] = radio1*(float)sin(ang*PI / 180.0f);
-
-        b[0] = radio2*(float)cos(ang*PI / 180.0f);
-        b[1] = altura;
-        b[2] = radio2*(float)sin(ang*PI / 180.0f);
-
-        ang = (i + 1)*delta;
-
-        c[0] = radio2*(float)cos(ang*PI / 180.0f);
-        c[1] = altura;
-        c[2] = radio2*(float)sin(ang*PI / 180.0f);
-
-        d[0] = radio1*(float)cos(ang*PI / 180.0f);
-        d[1] = 0.0f;
-        d[2] = radio1*(float)sin(ang*PI / 180.0f);
-
-        glColor3f(1.0f, 0.0f, 0.0f);
-
-        glPushMatrix();
-        glTranslatef(0.0f, 0.5f, 0.0f);
-            if (modoRender == 1) glBegin(GL_QUADS);// sólido
-            else if (modoRender == 2) glBegin(GL_LINE_LOOP);// alambrado
-            glVertex3f(a[0], a[1], a[2]);
-            glVertex3f(b[0], b[1], b[2]);
-            glVertex3f(c[0], c[1], c[2]);
-            glVertex3f(d[0], d[1], d[2]);
-            glEnd();
-
-            //Tapa superior
-            glColor3f(1.0f, 1.0f, 0.0f);
-
-            if (modoRender == 1) glBegin(GL_TRIANGLES);// sólido
-            else if (modoRender == 2) glBegin(GL_LINE_LOOP);// alambrado
-            glVertex3f(c[0], c[1], c[2]);
-            glVertex3f(b[0], b[1], b[2]);
-            glVertex3f(0.0f, altura, 0.0f);
-            glEnd();
-
-            //Tapa inferior
-            glColor3f(0.0f, 0.0f, 1.0f);
-
-            if (modoRender == 1) glBegin(GL_TRIANGLES);// sólido
-            else if (modoRender == 2) glBegin(GL_LINE_LOOP);// alambrado
-            glVertex3f(a[0], a[1], a[2]);
-            glVertex3f(d[0], d[1], d[2]);
-            glVertex3f(0.0f, 0.0f, 0.0f);
-            glEnd();
-
-            glColor3f(1.0f, 1.0f, 1.0f);
-       glPopMatrix();
-
-       //Se hace la caja y despues se traslada al centro de los ejes de referencia
-       glPushMatrix();
-       glTranslated(-2.0f, 0.0f, -2.0f);
-            dibujaCaja(4.0, 0.5, 4.0, 1);
-       glPopMatrix();
-    }
-}
-
-void dibujaHidrante()
-{
-    //Cuerpo del Hidrante
-    glPushMatrix();
-    glTranslatef(0.0f, 0.5f, 0.0f);
-    dibujaCilindro(1.0f, 12.0f, 3.0f, 2);
-    glPopMatrix();
-    ////Base del hidrante
-    dibujaCilindro(1.5f, 12.0f, 0.5f, 2);
-
-    //Brazos del Hidrante
-    // Brazo_A
-
-    //ang1 = 90
-    //ang2 = -90
-    glPushMatrix();
-    glScalef(0.5f, 0.5f, 0.5f);
-    glRotatef(90.0f, 0.0f, 0.0f, 1.0f);
-    glTranslatef(4.5f, 1.5f, 0.0f);
-    dibujaCilindro(1.0f, 12.0f, 2.7f, 2);
-    glPopMatrix();
-
-    //Brazo_B
-    glPushMatrix();
-    glScalef(0.5f, 0.5f, 0.5f);
-    glRotatef(-90.0f, 0.0f, 0.0f, 1.0f);
-    glTranslatef(-4.5f, 1.5f, 0.0f);
-    dibujaCilindro(1.0f, 12.0f, 2.7f, 2);
-    glPopMatrix();
-}
-
-//void dibujaEscalera() /se arma con traslaciones 
-//{
-//    glPushMatrix();
-//        glTranslatef(12.0f, 23.0f, 20.f);
-//}
-//
-void dibujaPersonaje()
-{
-    //Dibuja torso (nodo raiz de la jerarquía)
-    glPushMatrix();
-        glTranslatef(Xtor, Ytor, Ztor);
-        glRotatef(Angt2, 0.0f, 1.0f, 0.0f);
-        glRotatef(Angt1, 1.0f, 0.0f, 0.0f);
-        g_Load3ds.Render3DSFile(&g_3DModel1g, textureModel1g, 1); //informacion del modelo (vertices, etc), texturas, render mode
-
-        glPushMatrix();
-        //Cabeza
-            glTranslatef(0.0f, 2.3f, 0.0f);
-            glRotatef(Angc2, 0.0f, 1.0f, 0.0f);
-            glRotatef(Angc1, 1.0f, 0.0f, 0.0f);
-            g_Load3ds.Render3DSFile(&g_3DModel2g, textureModel2g, 1);
-        glPopMatrix();
-
-        //Brazo izq
-        glPushMatrix();
-            glTranslatef(0.85f, 2.0f, 0.0f);
-            glRotatef(Angbi3, 0.0f, 0.0f, 1.0f);
-            glRotatef(Angbi2, 0.0f, 1.0f, 0.0f);
-            glRotatef(Angbi1, 1.0f, 0.0f, 0.0f);
-            g_Load3ds.Render3DSFile(&g_3DModel6g, textureModel6g, 1);
-        glPopMatrix();
-
-    glPopMatrix();
-}
-
-=======
 
 void dibujaCaja(float ancho, float altura, float largo, int modoRender)
 {
@@ -2156,7 +1886,6 @@ void dibujaEscalera() //se arma con traslaciones
 	glPopMatrix();
 }
 
->>>>>>> dibujaEscalera
 int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la ventana
 {
         static float despX = 0.0f;
@@ -2184,15 +1913,6 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 			camara3.objCam.x, camara3.objCam.y, camara3.objCam.z, 0, 1, 0);
 	
 	DibujaEjes();
-<<<<<<< HEAD
-
-        //dibujaEsfera(10, 16, 16, 2);
-        //dibujaCono();
-	//dibujaEscenario();
-        dibujaPersonaje();
-        //dibujaHidrante();
-
-=======
 	//Dibuja Cono lista. :)
 
         //dibujaCono(1.5, 0.5, 8, 4.0, 1);
@@ -2204,8 +1924,6 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
         //glPushMatrix();
         //  glTranslatef(23.f, 14.0f, 8.0f);
       dibujaEscalera();
-       
->>>>>>> dibujaEscalera
        /* glPushMatrix();*/
         //Generalmente, escalamiento, rotation, traslacion
             //El orden de como ocurren las traslaciones cambian como se comporta la figura
