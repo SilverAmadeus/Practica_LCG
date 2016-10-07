@@ -1,7 +1,4 @@
-<<<<<<< HEAD
 ﻿  Main.cpp
-  OGL_CodigoBase.vcxproj -> C:\Users\CG04\Desktop\Practica_LCG-master_Ivan\Practica_LCG-master\Debug\OGL_CodigoBase.exe
-=======
-﻿  OGL_CodigoBase.vcxproj -> C:\Users\Marcela\Documents\GitHub\Practica_LCG\Debug\OGL_CodigoBase.exe
+3ds.obj : warning LNK4075: se omite '/EDITANDCONTINUE' debido a la especificación '/SAFESEH'
+  OGL_CodigoBase.vcxproj -> C:\Users\Marcela\Documents\GitHub\Practica_LCG\Debug\OGL_CodigoBase.exe
   OGL_CodigoBase.vcxproj -> C:\Users\Marcela\Documents\GitHub\Practica_LCG\Debug\OGL_CodigoBase.pdb (Full PDB)
->>>>>>> dibujaEscalera

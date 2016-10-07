@@ -3,3 +3,14 @@ Debug/3ds.obj
 Debug/OGL_CodigoBase.ilk
 *.tlog
 *.idb
+.vs/OGL_CodigoBase/v14/.suo
+*.obj
+Debug/OGL_CodigoBase.exe
+*.ilk
+Debug/OGL_CodigoBase.log
+*.pdb
+*.tlog
+Debug/OGL_CodigoBase.tlog/OGL_CodigoBase.lastbuildstate
+*.idb
+Debug/vc140.pdb
+*.obj

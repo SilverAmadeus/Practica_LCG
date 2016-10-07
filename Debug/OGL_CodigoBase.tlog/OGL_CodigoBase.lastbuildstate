@@ -1,6 +1,2 @@
 #TargetFrameworkVersion=v4.0:PlatformToolSet=v140:EnableManagedIncrementalBuild=false:VCToolArchitecture=Native32Bit:WindowsTargetPlatformVersion=8.1
-<<<<<<< HEAD
-Debug|Win32|C:\Users\CG04\Desktop\Practica_LCG-master_Ivan\Practica_LCG-master\|
-=======
 Debug|Win32|C:\Users\Marcela\Documents\GitHub\Practica_LCG\|
->>>>>>> dibujaEscalera
