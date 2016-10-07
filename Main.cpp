@@ -1472,6 +1472,7 @@ void dibujaCono(float radio1, float radio2, int lados, float altura, int modoRen
 void dibujaEscalera() //se arma con traslaciones 
 {
 
+	int codigo = 0x0007;
 	//dibujaCaja(ancho, altura, largo, modo render)
 	glPushMatrix();//Escalon 1
 	glTranslatef(-51.5f, 5.7f, 2.7f);
@@ -1512,7 +1513,7 @@ void dibujaEscalera() //se arma con traslaciones
 	glPushMatrix(); //Base enfrente izquierdo
 	glTranslatef(-56.5f, 5.2f, 5.0f);
 	glRotatef(90.0f, 0.0f, 1.0f, 0.0f);
-	dibujaCaja(0.2f, 0.5f, 4.7f, 1);
+	dibujaCaja(0.2f, 0.5f, 5.0f, 1);
 	glPopMatrix();
 
 	glPushMatrix(); //Base enfrente derecho
@@ -1533,25 +1534,194 @@ void dibujaEscalera() //se arma con traslaciones
 	dibujaCaja(0.2f, 0.5f, 3.4f, 1);
 	glPopMatrix();
 
-
-	glPushMatrix(); //Barandal base dentro 
+	glPushMatrix(); //Base escalera dentro 
 	glTranslatef(-51.5f, 5.2f, 2.7f);
 	glRotatef(90.0f, 0.0f, 1.0f, 0.0f);
 	glRotatef(-45.0f, 1.0f, 0.0f, 0.0f);
 	dibujaCaja(0.2f, 0.5f, 6.4f, 1);
 	glPopMatrix();
 
-	glPushMatrix(); //Barandal base fuera
+	glPushMatrix(); //Base escalera fuera
 	glTranslatef(-51.5f, 5.2f, 5.0f);
 	glRotatef(90.0f, 0.0f, 1.0f, 0.0f);
 	glRotatef(-45.0f, 1.0f, 0.0f, 0.0f);
 	dibujaCaja(0.2f, 0.5f, 6.4f, 1);
 	glPopMatrix();
 
-	//dibujaCilindro(radio, lados, altura, modo render)
-	glPushMatrix();
-	glTranslatef(-44.0f, 5.2f, 0.0f);
-	dibujaCilindro(0.2f, 30, 2.0f, 1);
+	glPushMatrix(); //Barandal derecho atras
+	glTranslatef(-43.85f, 5.2f, 0.2f);
+	dibujaCilindro(0.1f, 30, 1.8f, 1);
+	glPopMatrix();
+
+	glPushMatrix(); //Barandal derecho centro
+	glTranslatef(-43.85f, 5.2f, 2.6f);
+	dibujaCilindro(0.1f, 30, 1.8f, 1);
+	glPopMatrix();
+
+	glPushMatrix(); //Barandal derecho frente
+	glTranslatef(-43.85f, 5.2f, 4.9f);
+	dibujaCilindro(0.1f, 30, 1.8f, 1);
+	glPopMatrix();
+
+	glPushMatrix(); //Barandal frente 1
+	glTranslatef(-45.9f, 5.2f, 4.9f);
+	dibujaCilindro(0.1f, 30, 1.8f, 1);
+	glPopMatrix();
+
+	glPushMatrix(); //Barandal frente 2
+	glTranslatef(-48.2f, 5.2f, 4.9f);
+	dibujaCilindro(0.1f, 30, 1.8f, 1);
+	glPopMatrix();
+
+	glPushMatrix(); //Barandal frente 3
+	glTranslatef(-51.8f, 5.2f, 4.9f);
+	dibujaCilindro(0.1f, 30, 1.8f, 1);
+	glPopMatrix();
+
+	glPushMatrix(); //Barandal frente 4
+	glTranslatef(-54.2f, 5.2f, 4.9f);
+	dibujaCilindro(0.1f, 30, 1.8f, 1);
+	glPopMatrix();
+
+	glPushMatrix(); //Barandal izquerda frente
+	glTranslatef(-56.4f, 5.2f, 4.9f);
+	dibujaCilindro(0.1f, 30, 1.8f, 1);
+	glPopMatrix();
+
+	glPushMatrix(); //Barandal izquierda medio
+	glTranslatef(-56.4f, 5.2f, 2.6f);
+	dibujaCilindro(0.1f, 30, 1.8f, 1);
+	glPopMatrix();
+
+	glPushMatrix(); //Barandal izquierda atrás
+	glTranslatef(-56.4f, 5.2f, 0.2f);
+	dibujaCilindro(0.1f, 30, 1.8f, 1);
+	glPopMatrix();
+
+	glPushMatrix(); //Barandal arriba izquierda
+	glTranslatef(-56.4f, 7.0f, 0.0f);
+	glRotatef(90, 1.0, 0.0, 0.0);
+	dibujaCilindro(0.1f, 30, 5.0f, 1);
+	glPopMatrix();
+
+	glPushMatrix(); //Barandal arriba derecha
+	glTranslatef(-43.85f, 7.0f, 0.0f);
+	glRotatef(90, 1.0, 0.0, 0.0);
+	dibujaCilindro(0.1f, 30, 5.0f, 1);
+	glPopMatrix();
+
+	glPushMatrix(); //Barandal arriba frente derecha
+	glTranslatef(-43.8f, 7.0f, 4.9f);
+	glRotatef(90, 0.0, 0.0, 1.0);
+	dibujaCilindro(0.1f, 30, 4.5f, 1);
+	glPopMatrix();
+
+	glPushMatrix(); //Barandal arriba frente izquierda
+	glTranslatef(-56.4f, 7.0f, 4.9f);
+	glRotatef(-90, 0.0, 0.0, 1.0);
+	dibujaCilindro(0.1f, 30, 4.7f, 1);
+	glPopMatrix();
+
+	glPushMatrix(); //Barandal adorno izquierda
+	glTranslatef(-56.4f, 6.5f, 0.0f);
+	glRotatef(90, 1.0, 0.0, 0.0);
+	dibujaCilindro(0.1f, 30, 5.0f, 1);
+	glPopMatrix();
+
+	glPushMatrix(); //Barandal adorno derecha
+	glTranslatef(-43.85f, 6.5f, 0.0f);
+	glRotatef(90, 1.0, 0.0, 0.0);
+	dibujaCilindro(0.1f, 30, 5.0f, 1);
+	glPopMatrix();
+
+	glPushMatrix(); //Barandal adorno frente derecha
+	glTranslatef(-43.8f, 6.5f, 4.9f);
+	glRotatef(90, 0.0, 0.0, 1.0);
+	dibujaCilindro(0.1f, 30, 4.5f, 1);
+	glPopMatrix();
+
+	glPushMatrix(); //Barandal adorno frente izquierda
+	glTranslatef(-56.4f, 6.5f, 4.9f);
+	glRotatef(-90, 0.0, 0.0, 1.0);
+	dibujaCilindro(0.1f, 30, 4.7f, 1);
+	glPopMatrix();
+
+	glPushMatrix(); //Barandal inclinado
+	glTranslatef(-51.8f, 6.9f, 4.9f);
+	glRotatef(-45.0f, 0.0f, 0.0f, 1.0f);
+	dibujaCilindro(0.1f, 30, 6.4f, 1);
+	glPopMatrix();
+
+	glPushMatrix(); //Barandal inclinado adorno
+	glTranslatef(-51.8f, 6.4f, 4.9f);
+	glRotatef(-45.0f, 0.0f, 0.0f, 1.0f);
+	dibujaCilindro(0.1f, 30, 6.3f, 1);
+	glPopMatrix();
+
+	glPushMatrix(); //Barandal frente inclinado 1
+	glTranslatef(-50.32f, 6.5f, 4.9f);
+	dibujaCilindro(0.1f, 30, 1.9f, 1);
+	glPopMatrix();
+
+	glPushMatrix(); //Barandal frente inclinado 2
+	glTranslatef(-48.84f, 8.0f, 4.9f);
+	dibujaCilindro(0.1f, 30, 1.9f, 1);
+	glPopMatrix();
+
+	glPushMatrix(); //Barandal frente inclinado 3
+	glTranslatef(-47.3f, 9.5f, 4.9f);
+	dibujaCilindro(0.1f, 30, 1.9f, 1);
+	glPopMatrix();
+
+	glPushMatrix(); //Plano izquierdo
+	glBegin(codigo);
+	glColor3f(0.501, 0.501, 0.75);
+	glVertex3f(-56.6, 0.0, 1.3);
+	glVertex3f(-56.6, 0.0, 3.3);
+	glVertex3f(-56.6, 12.5, 3.3);
+	glVertex3f(-56.6, 12.5, 1.3);
+	glEnd();
+	glPopMatrix();
+
+	glPushMatrix(); //Plano izquierdo
+	glBegin(codigo);
+	glColor3f(0.501, 0.501, 0.75);
+	glVertex3f(-56.6, 0.0, 1.3);
+	glVertex3f(-56.6, 12.5, 1.3);
+	glVertex3f(-56.6, 12.5, 3.3);
+	glVertex3f(-56.6, 0.0, 3.3);
+	glEnd();
+	glPopMatrix();
+
+	glPushMatrix(); //Plano derecho
+	glBegin(codigo);
+	glColor3f(0.501, 0.501, 0.75);
+	glVertex3f(-43.6, 0.0, 1.3);
+	glVertex3f(-43.6, 0.0, 3.3);
+	glVertex3f(-43.6, 12.5, 3.3);
+	glVertex3f(-43.6, 12.5, 1.3);
+	glEnd();
+	glPopMatrix();
+
+
+	glPushMatrix(); //Plano derecho
+	glBegin(codigo);
+	glColor3f(0.501, 0.501, 0.75);
+	glVertex3f(-43.6, 0.0, 1.3);
+	glVertex3f(-43.6, 12.5, 1.3);
+	glVertex3f(-43.6, 12.5, 3.3);
+	glVertex3f(-43.6, 0.0, 3.3);
+	glEnd();
+	glPopMatrix();
+
+	glPushMatrix(); //Plano grande
+	glBegin(codigo);
+	glColor3f(0.501, 0.501, 1.0);
+	glVertex3f(-56.4, 5.2, 0.0);
+	glVertex3f(-56.4, 5.2, 2.7);
+	glVertex3f(-43.85, 5.2, 2.7);
+	glVertex3f(-43.85, 5.2, 0.0);
+	glEnd();
 	glPopMatrix();
 }
 
