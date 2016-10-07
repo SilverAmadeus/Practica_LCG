@@ -1,0 +1,5 @@
+Debug/3ds.obj
+*.obj
+Debug/OGL_CodigoBase.ilk
+*.tlog
+*.idb
