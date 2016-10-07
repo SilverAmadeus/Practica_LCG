@@ -1436,6 +1436,7 @@ void boxWallA(float x, float y, float z, int modoRender)
     glVertex3f(x, 0.0f, 0.0f);
     glEnd();
 }
+<<<<<<< HEAD
 
 void boxWallB(float x, float y, float z, int modoRender)
 {
@@ -1459,10 +1460,35 @@ void boxWallC(float x, float y, float z, int modoRender)
     glVertex3f(x, 0.0f, 0.0f);
     glVertex3f(x, 0.0f, z);
     glVertex3f(0.0f, 0.0f, z);
+=======
+
+void boxWallB(float x, float y, float z, int modoRender)
+{
+    glColor3f(1.0f, 0.0f, 0.0f);
+
+    if (modoRender == 1) glBegin(GL_QUADS);// sólido
+    else if (modoRender == 2) glBegin(GL_LINE_LOOP);// alambrado
+    glVertex3f(0.0f, 0.0f, 0.0f);
+    glVertex3f(0.0f, 0.0f, z);
+    glVertex3f(0.0f, y, z);
+    glVertex3f(0.0f, y, 0.0f);
+>>>>>>> dibujaEscalera
     glEnd();
 }
 
+void boxWallC(float x, float y, float z, int modoRender)
+{
+    glColor3f(0.0f, 0.0f, 1.0f);
+    if (modoRender == 1) glBegin(GL_QUADS);// sólido
+    else if (modoRender == 2) glBegin(GL_LINE_LOOP);// alambrado
+    glVertex3f(0.0f, 0.0f, 0.0f);
+    glVertex3f(x, 0.0f, 0.0f);
+    glVertex3f(x, 0.0f, z);
+    glVertex3f(0.0f, 0.0f, z);
+    glEnd();
+}
 
+<<<<<<< HEAD
 void dibujaCaja(float ancho, float altura, float largo, int modoRender)
 {
    //Cara A
@@ -1705,6 +1731,432 @@ void dibujaPersonaje()
     glPopMatrix();
 }
 
+=======
+
+void dibujaCaja(float ancho, float altura, float largo, int modoRender)
+{
+   //Cara A
+    boxWallA(ancho, altura, largo, modoRender);
+   //Traslacion para Cara A Here:
+    glPushMatrix();
+        glRotatef(180.0f, 0.0f, 1.0f, 0.0f);
+        glTranslatef(-ancho, 0.0f, -largo);
+        boxWallA(ancho, altura, largo, modoRender);
+    glPopMatrix();
+   //Cara B
+    boxWallB(ancho, altura, largo, modoRender);
+
+    glPushMatrix();
+        glRotatef(180.0f, 0.0f, 1.0f, 0.0f);
+        glTranslatef(-ancho, 0.0f, -largo);
+
+        boxWallB(ancho, altura, largo, modoRender);
+    glPopMatrix();
+   //Cara C
+    boxWallC(ancho, altura, largo, modoRender);
+    glPushMatrix();
+        glRotatef(180.0f, 1.0f, 0.0f, 0.0f);
+        glTranslatef(0.0f, -altura, -largo);
+
+        boxWallC(ancho, altura, largo, modoRender);
+    glPopMatrix();
+
+
+   glColor3f(1.0f, 1.0f, 1.0f);
+
+    
+}
+
+void dibujaCilindro(float radio, int lados, float altura, int modoRender)
+{
+    float ang;
+    float a[3], b[3], c[3], d[3];
+    float delta;
+
+    delta = 360.0f / lados;
+
+    for (int i = 0; i < lados; i++)
+    {
+        ang = i*delta;
+
+        a[0] = radio*(float)cos(ang*PI / 180.0f);
+        a[1] = 0.0f;
+        a[2] = radio*(float)sin(ang*PI / 180.0f);
+
+        b[0] = a[0];
+        b[1] = altura;
+        b[2] = a[2];
+
+        ang = (i + 1)*delta;
+
+        c[0] = radio*(float)cos(ang*PI / 180.0f);
+        c[1] = altura;
+        c[2] = radio*(float)sin(ang*PI / 180.0f);
+
+        d[0] = c[0];
+        d[1] = 0.0f;
+        d[2] = c[2];
+
+        glColor3f(1.0f, 0.0f, 0.0f);
+
+        if (modoRender == 1) glBegin(GL_QUADS);// sólido
+        else if (modoRender == 2) glBegin(GL_LINE_LOOP);// alambrado
+        glVertex3f(a[0], a[1], a[2]);
+        glVertex3f(b[0], b[1], b[2]);
+        glVertex3f(c[0], c[1], c[2]);
+        glVertex3f(d[0], d[1], d[2]);
+        glEnd();
+
+        //Tapa superior
+        glColor3f(1.0f, 1.0f, 0.0f);
+
+        if (modoRender == 1) glBegin(GL_TRIANGLES);// sólido
+        else if (modoRender == 2) glBegin(GL_LINE_LOOP);// alambrado
+        glVertex3f(c[0], c[1], c[2]);
+        glVertex3f(b[0], b[1], b[2]);
+        glVertex3f(0.0f, altura, 0.0f);
+        glEnd();
+
+        //Tapa inferior
+        glColor3f(0.0f, 0.0f, 1.0f);
+
+        if (modoRender == 1) glBegin(GL_TRIANGLES);// sólido
+        else if (modoRender == 2) glBegin(GL_LINE_LOOP);// alambrado
+        glVertex3f(a[0], a[1], a[2]);
+        glVertex3f(d[0], d[1], d[2]);
+        glVertex3f(0.0f, 0.0f, 0.0f);
+        glEnd();
+
+        glColor3f(1.0f, 1.0f, 1.0f);
+    }
+}
+
+void dibujaCono(float radio1, float radio2, int lados, float altura, int modoRender)
+{
+    float ang;
+    float a[3], b[3], c[3], d[3];
+    float delta;
+
+    delta = 360.0f / lados;
+
+    for (int i = 0; i < lados; i++)
+    {
+        ang = i*delta;
+
+        a[0] = radio1*(float)cos(ang*PI / 180.0f);
+        a[1] = 0.0f;
+        a[2] = radio1*(float)sin(ang*PI / 180.0f);
+
+        b[0] = radio2*(float)cos(ang*PI / 180.0f);
+        b[1] = altura;
+        b[2] = radio2*(float)sin(ang*PI / 180.0f);
+
+        ang = (i + 1)*delta;
+
+        c[0] = radio2*(float)cos(ang*PI / 180.0f);
+        c[1] = altura;
+        c[2] = radio2*(float)sin(ang*PI / 180.0f);
+
+        d[0] = radio1*(float)cos(ang*PI / 180.0f);
+        d[1] = 0.0f;
+        d[2] = radio1*(float)sin(ang*PI / 180.0f);
+
+        glColor3f(1.0f, 0.0f, 0.0f);
+
+        glPushMatrix();
+        glTranslatef(0.0f, 0.5f, 0.0f);
+            if (modoRender == 1) glBegin(GL_QUADS);// sólido
+            else if (modoRender == 2) glBegin(GL_LINE_LOOP);// alambrado
+            glVertex3f(a[0], a[1], a[2]);
+            glVertex3f(b[0], b[1], b[2]);
+            glVertex3f(c[0], c[1], c[2]);
+            glVertex3f(d[0], d[1], d[2]);
+            glEnd();
+
+            //Tapa superior
+            glColor3f(1.0f, 1.0f, 0.0f);
+
+            if (modoRender == 1) glBegin(GL_TRIANGLES);// sólido
+            else if (modoRender == 2) glBegin(GL_LINE_LOOP);// alambrado
+            glVertex3f(c[0], c[1], c[2]);
+            glVertex3f(b[0], b[1], b[2]);
+            glVertex3f(0.0f, altura, 0.0f);
+            glEnd();
+
+            //Tapa inferior
+            glColor3f(0.0f, 0.0f, 1.0f);
+
+            if (modoRender == 1) glBegin(GL_TRIANGLES);// sólido
+            else if (modoRender == 2) glBegin(GL_LINE_LOOP);// alambrado
+            glVertex3f(a[0], a[1], a[2]);
+            glVertex3f(d[0], d[1], d[2]);
+            glVertex3f(0.0f, 0.0f, 0.0f);
+            glEnd();
+
+            glColor3f(1.0f, 1.0f, 1.0f);
+       glPopMatrix();
+       dibujaCilindro(3.0, 4, 0.5, 1);
+    }
+}
+
+
+void dibujaEscalera() //se arma con traslaciones 
+{
+
+	int codigo = 0x0007;
+	//dibujaCaja(ancho, altura, largo, modo render)
+	glPushMatrix();//Escalon 1
+	glTranslatef(-51.5f, 5.7f, 2.7f);
+	dibujaCaja(0.5f, 0.2f, 2.2f, 1);
+	glPopMatrix();
+
+	glPushMatrix(); //Escalon 2
+	glTranslatef(-50.9f, 6.3f, 2.7f);
+	dibujaCaja(0.5f, 0.2f, 2.2f, 1);
+	glPopMatrix();
+
+	glPushMatrix(); //Escalon 3
+	glTranslatef(-50.3f, 6.8f, 2.7f);
+	dibujaCaja(0.5f, 0.2f, 2.2f, 1);
+	glPopMatrix();
+
+	glPushMatrix(); //Escalon 4
+	glTranslatef(-49.7f, 7.4f, 2.7f);
+	dibujaCaja(0.5f, 0.2f, 2.2f, 1);
+	glPopMatrix();
+
+	glPushMatrix(); //Escalon 5
+	glTranslatef(-49.1f, 8.0f, 2.7f);
+	dibujaCaja(0.5f, 0.2f, 2.2f, 1);
+	glPopMatrix();
+
+	glPushMatrix(); //Base lado izquierdo
+	glTranslatef(-44.0f, 5.2f, 0.0f);
+	dibujaCaja(0.2f, 0.5f, 5.0f, 1);
+	glPopMatrix();
+
+
+	glPushMatrix(); //Base lado derecho
+	glTranslatef(-56.5f, 5.2f, 0.0f);
+	dibujaCaja(0.2f, 0.5f, 5.0f, 1);
+	glPopMatrix();
+
+	glPushMatrix(); //Base enfrente izquierdo
+	glTranslatef(-56.5f, 5.2f, 5.0f);
+	glRotatef(90.0f, 0.0f, 1.0f, 0.0f);
+	dibujaCaja(0.2f, 0.5f, 5.0f, 1);
+	glPopMatrix();
+
+	glPushMatrix(); //Base enfrente derecho
+	glTranslatef(-48.3f, 5.2f, 5.0f);
+	glRotatef(90.0f, 0.0f, 1.0f, 0.0f);
+	dibujaCaja(0.2f, 0.5f, 4.5f, 1);
+	glPopMatrix();
+
+	glPushMatrix();//Base enfrente derecho dentro
+	glTranslatef(-48.3f, 5.2f, 2.5f);
+	dibujaCaja(0.2f, 0.5f, 2.5f, 1);
+	glPopMatrix();
+
+
+	glPushMatrix(); //Base centro enfrente dentro
+	glTranslatef(-51.5f, 5.2f, 2.7f);
+	glRotatef(90.0f, 0.0f, 1.0f, 0.0f);
+	dibujaCaja(0.2f, 0.5f, 3.4f, 1);
+	glPopMatrix();
+
+	glPushMatrix(); //Base escalera dentro 
+	glTranslatef(-51.5f, 5.2f, 2.7f);
+	glRotatef(90.0f, 0.0f, 1.0f, 0.0f);
+	glRotatef(-45.0f, 1.0f, 0.0f, 0.0f);
+	dibujaCaja(0.2f, 0.5f, 6.4f, 1);
+	glPopMatrix();
+
+	glPushMatrix(); //Base escalera fuera
+	glTranslatef(-51.5f, 5.2f, 5.0f);
+	glRotatef(90.0f, 0.0f, 1.0f, 0.0f);
+	glRotatef(-45.0f, 1.0f, 0.0f, 0.0f);
+	dibujaCaja(0.2f, 0.5f, 6.4f, 1);
+	glPopMatrix();
+
+	glPushMatrix(); //Barandal derecho atras
+	glTranslatef(-43.85f, 5.2f, 0.2f);
+	dibujaCilindro(0.1f, 30, 1.8f, 1);
+	glPopMatrix();
+
+	glPushMatrix(); //Barandal derecho centro
+	glTranslatef(-43.85f, 5.2f, 2.6f);
+	dibujaCilindro(0.1f, 30, 1.8f, 1);
+	glPopMatrix();
+
+	glPushMatrix(); //Barandal derecho frente
+	glTranslatef(-43.85f, 5.2f, 4.9f);
+	dibujaCilindro(0.1f, 30, 1.8f, 1);
+	glPopMatrix();
+
+	glPushMatrix(); //Barandal frente 1
+	glTranslatef(-45.9f, 5.2f, 4.9f);
+	dibujaCilindro(0.1f, 30, 1.8f, 1);
+	glPopMatrix();
+
+	glPushMatrix(); //Barandal frente 2
+	glTranslatef(-48.2f, 5.2f, 4.9f);
+	dibujaCilindro(0.1f, 30, 1.8f, 1);
+	glPopMatrix();
+
+	glPushMatrix(); //Barandal frente 3
+	glTranslatef(-51.8f, 5.2f, 4.9f);
+	dibujaCilindro(0.1f, 30, 1.8f, 1);
+	glPopMatrix();
+
+	glPushMatrix(); //Barandal frente 4
+	glTranslatef(-54.2f, 5.2f, 4.9f);
+	dibujaCilindro(0.1f, 30, 1.8f, 1);
+	glPopMatrix();
+
+	glPushMatrix(); //Barandal izquerda frente
+	glTranslatef(-56.4f, 5.2f, 4.9f);
+	dibujaCilindro(0.1f, 30, 1.8f, 1);
+	glPopMatrix();
+
+	glPushMatrix(); //Barandal izquierda medio
+	glTranslatef(-56.4f, 5.2f, 2.6f);
+	dibujaCilindro(0.1f, 30, 1.8f, 1);
+	glPopMatrix();
+
+	glPushMatrix(); //Barandal izquierda atrás
+	glTranslatef(-56.4f, 5.2f, 0.2f);
+	dibujaCilindro(0.1f, 30, 1.8f, 1);
+	glPopMatrix();
+
+	glPushMatrix(); //Barandal arriba izquierda
+	glTranslatef(-56.4f, 7.0f, 0.0f);
+	glRotatef(90, 1.0, 0.0, 0.0);
+	dibujaCilindro(0.1f, 30, 5.0f, 1);
+	glPopMatrix();
+
+	glPushMatrix(); //Barandal arriba derecha
+	glTranslatef(-43.85f, 7.0f, 0.0f);
+	glRotatef(90, 1.0, 0.0, 0.0);
+	dibujaCilindro(0.1f, 30, 5.0f, 1);
+	glPopMatrix();
+
+	glPushMatrix(); //Barandal arriba frente derecha
+	glTranslatef(-43.8f, 7.0f, 4.9f);
+	glRotatef(90, 0.0, 0.0, 1.0);
+	dibujaCilindro(0.1f, 30, 4.5f, 1);
+	glPopMatrix();
+
+	glPushMatrix(); //Barandal arriba frente izquierda
+	glTranslatef(-56.4f, 7.0f, 4.9f);
+	glRotatef(-90, 0.0, 0.0, 1.0);
+	dibujaCilindro(0.1f, 30, 4.7f, 1);
+	glPopMatrix();
+
+	glPushMatrix(); //Barandal adorno izquierda
+	glTranslatef(-56.4f, 6.5f, 0.0f);
+	glRotatef(90, 1.0, 0.0, 0.0);
+	dibujaCilindro(0.1f, 30, 5.0f, 1);
+	glPopMatrix();
+
+	glPushMatrix(); //Barandal adorno derecha
+	glTranslatef(-43.85f, 6.5f, 0.0f);
+	glRotatef(90, 1.0, 0.0, 0.0);
+	dibujaCilindro(0.1f, 30, 5.0f, 1);
+	glPopMatrix();
+
+	glPushMatrix(); //Barandal adorno frente derecha
+	glTranslatef(-43.8f, 6.5f, 4.9f);
+	glRotatef(90, 0.0, 0.0, 1.0);
+	dibujaCilindro(0.1f, 30, 4.5f, 1);
+	glPopMatrix();
+
+	glPushMatrix(); //Barandal adorno frente izquierda
+	glTranslatef(-56.4f, 6.5f, 4.9f);
+	glRotatef(-90, 0.0, 0.0, 1.0);
+	dibujaCilindro(0.1f, 30, 4.7f, 1);
+	glPopMatrix();
+
+	glPushMatrix(); //Barandal inclinado
+	glTranslatef(-51.8f, 6.9f, 4.9f);
+	glRotatef(-45.0f, 0.0f, 0.0f, 1.0f);
+	dibujaCilindro(0.1f, 30, 6.4f, 1);
+	glPopMatrix();
+
+	glPushMatrix(); //Barandal inclinado adorno
+	glTranslatef(-51.8f, 6.4f, 4.9f);
+	glRotatef(-45.0f, 0.0f, 0.0f, 1.0f);
+	dibujaCilindro(0.1f, 30, 6.3f, 1);
+	glPopMatrix();
+
+	glPushMatrix(); //Barandal frente inclinado 1
+	glTranslatef(-50.32f, 6.5f, 4.9f);
+	dibujaCilindro(0.1f, 30, 1.9f, 1);
+	glPopMatrix();
+
+	glPushMatrix(); //Barandal frente inclinado 2
+	glTranslatef(-48.84f, 8.0f, 4.9f);
+	dibujaCilindro(0.1f, 30, 1.9f, 1);
+	glPopMatrix();
+
+	glPushMatrix(); //Barandal frente inclinado 3
+	glTranslatef(-47.3f, 9.5f, 4.9f);
+	dibujaCilindro(0.1f, 30, 1.9f, 1);
+	glPopMatrix();
+
+	glPushMatrix(); //Plano izquierdo
+	glBegin(codigo);
+	glColor3f(0.501, 0.501, 0.75);
+	glVertex3f(-56.6, 0.0, 1.3);
+	glVertex3f(-56.6, 0.0, 3.3);
+	glVertex3f(-56.6, 12.5, 3.3);
+	glVertex3f(-56.6, 12.5, 1.3);
+	glEnd();
+	glPopMatrix();
+
+	glPushMatrix(); //Plano izquierdo
+	glBegin(codigo);
+	glColor3f(0.501, 0.501, 0.75);
+	glVertex3f(-56.6, 0.0, 1.3);
+	glVertex3f(-56.6, 12.5, 1.3);
+	glVertex3f(-56.6, 12.5, 3.3);
+	glVertex3f(-56.6, 0.0, 3.3);
+	glEnd();
+	glPopMatrix();
+
+	glPushMatrix(); //Plano derecho
+	glBegin(codigo);
+	glColor3f(0.501, 0.501, 0.75);
+	glVertex3f(-43.6, 0.0, 1.3);
+	glVertex3f(-43.6, 0.0, 3.3);
+	glVertex3f(-43.6, 12.5, 3.3);
+	glVertex3f(-43.6, 12.5, 1.3);
+	glEnd();
+	glPopMatrix();
+
+
+	glPushMatrix(); //Plano derecho
+	glBegin(codigo);
+	glColor3f(0.501, 0.501, 0.75);
+	glVertex3f(-43.6, 0.0, 1.3);
+	glVertex3f(-43.6, 12.5, 1.3);
+	glVertex3f(-43.6, 12.5, 3.3);
+	glVertex3f(-43.6, 0.0, 3.3);
+	glEnd();
+	glPopMatrix();
+
+	glPushMatrix(); //Plano grande
+	glBegin(codigo);
+	glColor3f(0.501, 0.501, 1.0);
+	glVertex3f(-56.4, 5.2, 0.0);
+	glVertex3f(-56.4, 5.2, 2.7);
+	glVertex3f(-43.85, 5.2, 2.7);
+	glVertex3f(-43.85, 5.2, 0.0);
+	glEnd();
+	glPopMatrix();
+}
+
+>>>>>>> dibujaEscalera
 int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la ventana
 {
         static float despX = 0.0f;
@@ -1732,6 +2184,7 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 			camara3.objCam.x, camara3.objCam.y, camara3.objCam.z, 0, 1, 0);
 	
 	DibujaEjes();
+<<<<<<< HEAD
 
         //dibujaEsfera(10, 16, 16, 2);
         //dibujaCono();
@@ -1739,6 +2192,20 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
         dibujaPersonaje();
         //dibujaHidrante();
 
+=======
+	//Dibuja Cono lista. :)
+
+        //dibujaCono(1.5, 0.5, 8, 4.0, 1);
+	dibujaEscenario();
+        glPushMatrix();
+        glTranslatef(-51.5f, 5.2f, 3.0f);
+            dibujaCaja(0.5f, 0.2f, 2.0f, 1);
+        glPopMatrix();
+        //glPushMatrix();
+        //  glTranslatef(23.f, 14.0f, 8.0f);
+      dibujaEscalera();
+       
+>>>>>>> dibujaEscalera
        /* glPushMatrix();*/
         //Generalmente, escalamiento, rotation, traslacion
             //El orden de como ocurren las traslaciones cambian como se comporta la figura
