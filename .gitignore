@@ -14,3 +14,5 @@ Debug/OGL_CodigoBase.tlog/OGL_CodigoBase.lastbuildstate
 *.idb
 Debug/vc140.pdb
 *.obj
+*.log
+*.tlog
