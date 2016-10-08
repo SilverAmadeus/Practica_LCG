@@ -16,3 +16,15 @@ Debug/vc140.pdb
 *.obj
 *.log
 *.tlog
+*.obj
+Debug/OGL_CodigoBase.ilk
+*.log
+Debug/OGL_CodigoBase.pdb
+*.tlog
+Debug/vc140.idb
+*.pdb
+*.obj
+Debug/OGL_CodigoBase.ilk
+*.pdb
+Debug/OGL_CodigoBase.tlog/link.read.1.tlog
+*.pdb

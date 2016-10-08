@@ -558,6 +558,53 @@ void dibujaEsfera(float radio, int paralelos, int meridianos, int modoRender)
     }
 }
 
+void SemiesferaSup(float radio, int paralelos, int meridianos, int modoRender) {
+
+	float ang1, ang2;
+	float a[3], b[3], c[3], d[3];
+	float delta1, delta2;
+
+	delta1 = 180.0f / paralelos;
+	delta2 = 360.0f / meridianos;
+	for (int i = 0; i < paralelos / 2; i++)
+	{
+		for (int j = 0; j <= meridianos; j++)
+		{
+			ang1 = i*delta1;
+			ang2 = j*delta2;
+			a[0] = radio*(float)cos(ang1*PI / 180.0f)*(float)cos(ang2*PI / 180.0f);
+			a[1] = radio*(float)sin(ang1*PI / 180.0f);
+			a[2] = radio*(float)cos(ang1*PI / 180.0f)*(float)sin(ang2*PI / 180.0f);
+
+			ang1 = (i + 1)*delta1;
+			ang2 = j*delta2;
+			b[0] = radio*(float)cos(ang1*PI / 180.0f)*(float)cos(ang2*PI / 180.0f);
+			b[1] = radio*(float)sin(ang1*PI / 180.0f);
+			b[2] = radio*(float)cos(ang1*PI / 180.0f)*(float)sin(ang2*PI / 180.0f);
+			ang1 = (i + 1)*delta1;
+			ang2 = (j + 1)*delta2;
+			c[0] = radio*(float)cos(ang1*PI / 180.0f)*(float)cos(ang2*PI / 180.0f);
+			c[1] = radio*(float)sin(ang1*PI / 180.0f);
+			c[2] = radio*(float)cos(ang1*PI / 180.0f)*(float)sin(ang2*PI / 180.0f);
+			ang1 = i*delta1;
+			ang2 = (j + 1)*delta2;
+			d[0] = radio*(float)cos(ang1*PI / 180.0f)*(float)cos(ang2*PI / 180.0f);
+			d[1] = radio*(float)sin(ang1*PI / 180.0f);
+			d[2] = radio*(float)cos(ang1*PI / 180.0f)*(float)sin(ang2*PI / 180.0f);
+
+			glColor3f(1.0, 0.0, 0.0);
+			//Parte superior
+			if (modoRender == 1) glBegin(GL_QUADS);// sólido
+			else if (modoRender == 2) glBegin(GL_LINE_LOOP);// alambrado
+			glVertex3f(a[0], a[1], a[2]);
+			glVertex3f(b[0], b[1], b[2]);
+			glVertex3f(c[0], c[1], c[2]);
+			glVertex3f(d[0], d[1], d[2]);
+			glEnd();
+		}
+	}
+
+}
 
 
 void dibujaEscenario()
@@ -569,7 +616,7 @@ void dibujaEscenario()
 	if(modoRender == 2) // Alambrado (GL_LINE_LOOP)
 		codigo = 0x0002;
 	//objeto 1
-	glColor3f(1.0f, 0.0f, 0.0f);
+	glColor3f(0.6156f, 0.0f, 0.0f);
 
 	glBegin(codigo);
 		glVertex3f(-120.0f, 0.0f, 17.0f);
@@ -622,7 +669,7 @@ void dibujaEscenario()
 	glEnd();
 
 	//objeto 4
-	glColor3f(1.0f, 1.0f, 0.0f);
+	glColor3f(1.0f, 1.0f, 0.61f);
 
 	glBegin(codigo);
 		
@@ -1425,6 +1472,7 @@ void dibujaEscenario()
 	glColor3f(1.0f,1.0f,1.0f);
 
 }
+
 void boxWallA(float x, float y, float z, int modoRender)
 {
     glColor3f(1.0f, 1.0f, 0.0f);
@@ -1604,8 +1652,7 @@ void dibujaCono(float radio1, float radio2, int lados, float altura, int modoRen
             glEnd();
 
             //Tapa superior
-            glColor3f(1.0f, 1.0f, 0.0f);
-
+			glColor3f(1.0f, 1.0f, 0.0f);
             if (modoRender == 1) glBegin(GL_TRIANGLES);// sólido
             else if (modoRender == 2) glBegin(GL_LINE_LOOP);// alambrado
             glVertex3f(c[0], c[1], c[2]);
@@ -1625,10 +1672,44 @@ void dibujaCono(float radio1, float radio2, int lados, float altura, int modoRen
 
             glColor3f(1.0f, 1.0f, 1.0f);
        glPopMatrix();
-       dibujaCilindro(3.0, 4, 0.5, 1);
+       dibujaCilindro(radio1 + 0.7, 4, 0.5, 1);
     }
 }
 
+void dibujaHidrante() {
+
+	//Cuerpo del Hidrante
+	glPushMatrix();
+	glTranslatef(0.0, 0.5f, 0.0f);
+	dibujaCilindro(1.0f, 12.0f, 3.0f, 1);
+	glPopMatrix();
+
+	//Base
+	dibujaCilindro(1.5f, 12.0f, 0.5f, 1);
+
+	//Brazo A
+	glPushMatrix();
+	glScalef(0.5f, 0.5f, 0.5f);
+	glRotatef(90.0f, 0.0f, 0.0f, 1.0f);
+	glTranslatef(4.5f, 1.5f, 0.0f);
+	dibujaCilindro(1.0f, 12.0f, 2.7f, 1);
+	glPopMatrix();
+
+	//Brazo B
+	glPushMatrix();
+	glScalef(0.5f, 0.5f, 0.5f);
+	glRotatef(-90.0f, 0.0f, 0.0f, 1.0f);
+	glTranslatef(-4.5f, 1.5f, 0.0f);
+	dibujaCilindro(1.0f, 12.0f, 2.7f, 1);
+	glPopMatrix();
+
+	//Parte de arriba hidrante
+	glPushMatrix();	
+	glColor3f(1.0, 0.0, 0.0);
+	glTranslatef(0.0, 3.5, 0.0);
+	SemiesferaSup(1.0f, 12, 10, 1);
+	glPopMatrix();
+}
 
 void dibujaEscalera() //se arma con traslaciones 
 {
@@ -1844,7 +1925,7 @@ void dibujaEscalera() //se arma con traslaciones
 	glEnd();
 	glPopMatrix();
 
-	glPushMatrix(); //Plano izquierdo
+	glPushMatrix(); 
 	glBegin(codigo);
 	glColor3f(0.501, 0.501, 0.75);
 	glVertex3f(-56.6, 0.0, 1.3);
@@ -1865,7 +1946,7 @@ void dibujaEscalera() //se arma con traslaciones
 	glPopMatrix();
 
 
-	glPushMatrix(); //Plano derecho
+	glPushMatrix(); 
 	glBegin(codigo);
 	glColor3f(0.501, 0.501, 0.75);
 	glVertex3f(-43.6, 0.0, 1.3);
@@ -1913,17 +1994,64 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 			camara3.objCam.x, camara3.objCam.y, camara3.objCam.z, 0, 1, 0);
 	
 	DibujaEjes();
-	//Dibuja Cono lista. :)
-
-        //dibujaCono(1.5, 0.5, 8, 4.0, 1);
 	dibujaEscenario();
-        glPushMatrix();
-        glTranslatef(-51.5f, 5.2f, 3.0f);
-            dibujaCaja(0.5f, 0.2f, 2.0f, 1);
-        glPopMatrix();
-        //glPushMatrix();
-        //  glTranslatef(23.f, 14.0f, 8.0f);
-      dibujaEscalera();
+  	dibujaEscalera();
+
+	//Conos 
+	glPushMatrix();
+	glTranslatef(8.0f, 0.0f, 3.0f);
+	dibujaCono(1.0, 0.4, 30, 2.3, 1);
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslatef(-40.0,0.0,3.0f);
+	dibujaCono(1.0, 0.4, 30, 2.3, 1);
+	glPopMatrix();
+	
+	glPushMatrix();
+	glTranslatef(115.0, 0.0, 15.0f);
+	dibujaCono(1.0, 0.4, 30, 2.3, 1);
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslatef(48.0, 0.0, 15.0f);
+	dibujaCono(1.0, 0.4, 30, 2.3, 1);
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslatef(-118.0, 0.0, 3.0f);
+	dibujaCono(1.0, 0.4, 30, 2.3, 1);
+	glPopMatrix();
+	
+	//Hidrante
+	glPushMatrix();
+	glTranslatef(-100.0, 0.0, 3.0);
+	dibujaHidrante();
+	glPopMatrix();	
+	
+	glPushMatrix();
+	glTranslatef(127.0, 0.0, -10.0);
+	glRotatef(90, 0.0, 1.0, 0.0);	
+	dibujaHidrante();
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslatef(-15.0, 0.0, 15.0);
+	dibujaHidrante();
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslatef(77.0, 0.0, 3.0);
+	dibujaHidrante();
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslatef(45.0, 0.0, -27.0);
+	dibujaHidrante();
+	glPopMatrix();
+
+
+	
        /* glPushMatrix();*/
         //Generalmente, escalamiento, rotation, traslacion
             //El orden de como ocurren las traslaciones cambian como se comporta la figura
