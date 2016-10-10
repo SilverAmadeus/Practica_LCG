@@ -1965,6 +1965,26 @@ void dibujaEscalera() //se arma con traslaciones
 	glVertex3f(-43.85, 5.2, 0.0);
 	glEnd();
 	glPopMatrix();
+
+	glPushMatrix(); //Plano izquierda
+	glBegin(codigo);
+	glColor3f(0.601, 0.601, 1.0);
+	glVertex3f(-56.4, 5.2, 2.7);
+	glVertex3f(-56.4, 5.2, 5.0 );
+	glVertex3f(-51.5, 5.2, 5.0);
+	glVertex3f(-51.5, 5.2, 2.7);
+	glEnd();
+	glPopMatrix();
+
+	glPushMatrix(); //Plano derecha
+	glBegin(codigo);
+	glColor3f(0.601, 0.601, 1.0);
+	glVertex3f(-48.3, 5.2, 2.7);
+	glVertex3f(-48.3, 5.2, 5.0);
+	glVertex3f(-43.85, 5.2, 5.0);
+	glVertex3f(-43.85, 5.2, 2.7);
+	glEnd();
+	glPopMatrix();
 }
 
 int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la ventana
