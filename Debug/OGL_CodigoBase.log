@@ -1,3 +1,3 @@
-﻿3ds.obj : warning LNK4075: se omite '/EDITANDCONTINUE' debido a la especificación '/SAFESEH'
+﻿  Main.cpp
   OGL_CodigoBase.vcxproj -> C:\Users\Marcela\Documents\GitHub\Practica_LCG\Debug\OGL_CodigoBase.exe
   OGL_CodigoBase.vcxproj -> C:\Users\Marcela\Documents\GitHub\Practica_LCG\Debug\OGL_CodigoBase.pdb (Full PDB)
