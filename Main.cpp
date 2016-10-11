@@ -162,14 +162,14 @@ int CargaModelos()
 
 void DescargaModelos()
 {
-    g_Load3ds.UnLoad3DSFile(&g_3DModel1g, textureModel1g);
-    g_Load3ds.UnLoad3DSFile(&g_3DModel2g, textureModel2g);
-    g_Load3ds.UnLoad3DSFile(&g_3DModel3g, textureModel3g);
-    g_Load3ds.UnLoad3DSFile(&g_3DModel4g, textureModel4g);
-    g_Load3ds.UnLoad3DSFile(&g_3DModel5g, textureModel5g);
-    g_Load3ds.UnLoad3DSFile(&g_3DModel6g, textureModel6g);
-    g_Load3ds.UnLoad3DSFile(&g_3DModel7g, textureModel7g);
-    g_Load3ds.UnLoad3DSFile(&g_3DModel8g, textureModel8g);
+    g_Load3ds.UnLoad3DSFile(&g_3DModel1g, textureModel1g); //Torso
+    g_Load3ds.UnLoad3DSFile(&g_3DModel2g, textureModel2g);//Cabeza
+    g_Load3ds.UnLoad3DSFile(&g_3DModel3g, textureModel3g);//Up leg right
+	g_Load3ds.UnLoad3DSFile(&g_3DModel4g, textureModel4g); //Up leg left
+    g_Load3ds.UnLoad3DSFile(&g_3DModel5g, textureModel5g);//Brazo derecho
+    g_Load3ds.UnLoad3DSFile(&g_3DModel6g, textureModel6g);//Brazo izq
+    g_Load3ds.UnLoad3DSFile(&g_3DModel7g, textureModel7g); //Low lew
+    g_Load3ds.UnLoad3DSFile(&g_3DModel8g, textureModel8g); //Tabla
 
 }
 
@@ -1987,6 +1987,83 @@ void dibujaEscalera() //se arma con traslaciones
 	glPopMatrix();
 }
 
+void dibujaPersonaje()
+{
+	//Dibuja torso (nodo raiz de la jerarquía)   //(datos del modelo, texturas que utiliza el modelo, modo render);
+	glPushMatrix();
+	glTranslatef(Xtor, Ytor, Ztor);
+	glRotatef(Angt2, 0.0f, 1.0f, 0.0f);
+	glRotatef(Angt1, 1.0f, 0.0f, 0.0f);
+	g_Load3ds.Render3DSFile(&g_3DModel1g, textureModel1g, 1);
+
+	//Cabeza
+	glPushMatrix();
+	glTranslatef(0.0, 2.5, 0.0);
+	glRotatef(Angc2, 0.0f, 1.0f, 0.0f);
+	glRotatef(Angc1, 1.0f, 0.0f, 0.0f);
+	g_Load3ds.Render3DSFile(&g_3DModel2g, textureModel2g, 1);
+	glPopMatrix();
+
+	//Brazo izquierdo
+	glPushMatrix();
+	glTranslatef(0.9f, 1.8f, 0.0f);
+	glRotatef(Angbi3, 0.0f, 0.0f, 1.0f);
+	glRotatef(Angbi2, 0.0f, 1.0f, 0.0f);
+	glRotatef(Angbi1, 1.0f, 0.0f, 0.0f);
+	g_Load3ds.Render3DSFile(&g_3DModel6g, textureModel6g, 1);
+	glPopMatrix();
+	
+	//Pierna derecha
+	glPushMatrix();
+	glTranslatef(-0.7f, 0.2f, 0.0f);
+	glRotatef(Angpizq, 0.0f, 0.0f, 1.0f);
+	g_Load3ds.Render3DSFile(&g_3DModel4g, textureModel4g, 1);
+
+		//Pie derecho
+		glPushMatrix();
+		glTranslatef(-0.0f, -0.5f, 0.0f);
+		glRotatef(Angpizq, 0.0f, 0.0f, 1.0f);
+		g_Load3ds.Render3DSFile(&g_3DModel7g, textureModel7g, 1);
+		glPopMatrix();
+
+	glPopMatrix();
+	
+	//Brazo derecho
+	glPushMatrix();
+	glTranslatef(-0.9f, 1.8f, 0.0f);
+	glRotatef(Angbd3, 0.0f, 0.0f, 1.0f);
+	glRotatef(Angbd2, 0.0f, 1.0f, 0.0f);
+	glRotatef(Angbd1, 1.0f, 0.0f, 0.0f);
+	g_Load3ds.Render3DSFile(&g_3DModel5g, textureModel5g, 1);
+
+		//Tabla
+		glPushMatrix();
+		glTranslatef(-0.7f, -1.7f, 0.0f);
+		glRotatef(-90, 1.0f, 0.0f, 0.0f);
+		g_Load3ds.Render3DSFile(&g_3DModel8g, textureModel8g, 1);
+		glPopMatrix();
+
+	glPopMatrix();
+
+	//Pierna izquierda
+	glPushMatrix();
+	glTranslatef(0.7f, 0.2f, 0.0f);
+	glRotatef(Angpizq, 0.0f, 0.0f, 1.0f);
+	g_Load3ds.Render3DSFile(&g_3DModel3g, textureModel3g, 1);
+
+		//Pie izquierdo
+		glPushMatrix();
+		glTranslatef(0.0f, -0.5f, 0.0f);
+		glRotatef(Angpizq, 0.0f, 0.0f, 1.0f);
+		g_Load3ds.Render3DSFile(&g_3DModel7g, textureModel7g, 1);
+		glPopMatrix();
+
+	glPopMatrix();
+glPopMatrix();
+}
+
+
+
 int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la ventana
 {
         static float despX = 0.0f;
@@ -2015,6 +2092,7 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 	
 	DibujaEjes();
 	dibujaEscenario();
+	dibujaPersonaje();
   	dibujaEscalera();
 
 	//Conos 
@@ -2563,67 +2641,7 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instancia
 // Agregar variables para cambiar de lugar la camara
 int ManejaTeclado()
 {
-	//if(keys[VK_UP])
-	//{		
-	//	posicionCamProv.z-=0.5;
-	//}
-	//if(keys[VK_DOWN])
-	//{
-	//	posicionCamProv.z+=0.5f;
-	//}
-	//if(keys[VK_LEFT])
-	//{
-	//	posicionCamProv.x-=0.5f;
-	//}
-	//if(keys[VK_RIGHT])
-	//{
-	//	posicionCamProv.x+=0.5f;
-
-	//}
-
-	//if(keys[VK_PRIOR])
-	//{
-	//	posicionCamProv.y+=0.5f;
-	//}
-	//if(keys[VK_NEXT])
-	//{
-	//	posicionCamProv.y-=0.5f;
-	//}
-
-	//if(keys[VK_HOME])
-	//{
-	//	modoRender=1;
-	//}
-
-	//if(keys[VK_END])
-	//{
-	//	modoRender=2;
-	//}
-
-	//if(keys['A'])
-	//{
-	//	objetivoCamProv.x-=0.5f;
-	//}
-	//if(keys['S'])
-	//{
-	//	objetivoCamProv.z+=0.5f;
-	//}
-	//	if(keys['D'])
-	//{
-	//	objetivoCamProv.x+=0.5f;
-	//}
-	//	if(keys['W'])
-	//{
-	//	objetivoCamProv.z-=0.5f;
-	//}
-	//	if(keys['Q'])
-	//{
-	//	objetivoCamProv.y+=0.5f;
-	//}
-	//	if(keys['E'])
-	//{
-	//	objetivoCamProv.y-=0.5f;
-	//}
+	
 
 	if (keys[VK_UP])
 	{

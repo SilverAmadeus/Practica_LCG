@@ -28,3 +28,9 @@ Debug/OGL_CodigoBase.ilk
 *.pdb
 Debug/OGL_CodigoBase.tlog/link.read.1.tlog
 *.pdb
+*.obj
+Debug/OGL_CodigoBase.ilk
+*.log
+Debug/vc140.idb
+*.pdb
+Debug/Main.obj
