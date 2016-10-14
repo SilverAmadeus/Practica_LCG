@@ -1672,6 +1672,7 @@ void dibujaCono(float radio1, float radio2, int lados, float altura, int modoRen
 
             glColor3f(1.0f, 1.0f, 1.0f);
        glPopMatrix();
+
        dibujaCilindro(radio1 + 0.7, 4, 0.5, 1);
     }
 }
@@ -1703,11 +1704,23 @@ void dibujaHidrante() {
 	dibujaCilindro(1.0f, 12.0f, 2.7f, 1);
 	glPopMatrix();
 
-	//Parte de arriba hidrante
-	glPushMatrix();	
-	glColor3f(1.0, 0.0, 0.0);
+	//Arriba hidrante adorno
+	glPushMatrix();
 	glTranslatef(0.0, 3.5, 0.0);
+	dibujaCilindro(1.2f, 12.0f, 0.2f, 1);
+	glPopMatrix();
+
+	//Semiesfera arriba hidrante
+	glPushMatrix();
+	glColor3f(1.0, 0.0, 0.0);
+	glTranslatef(0.0, 3.7, 0.0);
 	SemiesferaSup(1.0f, 12, 10, 1);
+	glPopMatrix();
+
+	//Arriba hidrante adorno
+	glPushMatrix();
+	glTranslatef(0.0, 4.6, 0.0);
+	dibujaCilindro(0.2, 12.0f, 0.2f, 1);
 	glPopMatrix();
 }
 
@@ -2016,13 +2029,13 @@ void dibujaPersonaje()
 	//Pierna derecha
 	glPushMatrix();
 	glTranslatef(-0.7f, 0.2f, 0.0f);
-	glRotatef(Angpizq, 0.0f, 0.0f, 1.0f);
+	glRotatef(Angpder, 1.0f, 0.0f, 0.0f);
 	g_Load3ds.Render3DSFile(&g_3DModel4g, textureModel4g, 1);
 
 		//Pie derecho
 		glPushMatrix();
-		glTranslatef(-0.0f, -0.5f, 0.0f);
-		glRotatef(Angpizq, 0.0f, 0.0f, 1.0f);
+		glTranslatef(-0.0f, -1.0f, 0.0f);
+		glRotatef(Angpd, 1.0f, 0.0f, 0.0f);
 		g_Load3ds.Render3DSFile(&g_3DModel7g, textureModel7g, 1);
 		glPopMatrix();
 
@@ -2048,17 +2061,17 @@ void dibujaPersonaje()
 	//Pierna izquierda
 	glPushMatrix();
 	glTranslatef(0.7f, 0.2f, 0.0f);
-	glRotatef(Angpizq, 0.0f, 0.0f, 1.0f);
+	glRotatef(Angpizq, 1.0f, 0.0f, 0.0f);
 	g_Load3ds.Render3DSFile(&g_3DModel3g, textureModel3g, 1);
 
 		//Pie izquierdo
 		glPushMatrix();
-		glTranslatef(0.0f, -0.5f, 0.0f);
-		glRotatef(Angpizq, 0.0f, 0.0f, 1.0f);
+		glTranslatef(0.0f, -1.0f, 0.0f);
+		glRotatef(Angpi, 1.0f, 0.0f, 0.0f);
 		g_Load3ds.Render3DSFile(&g_3DModel7g, textureModel7g, 1);
 		glPopMatrix();
-
 	glPopMatrix();
+
 glPopMatrix();
 }
 
