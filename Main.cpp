@@ -112,6 +112,13 @@ float Ztor;
 
 int IncDec;
 
+//Variables para iluminacion
+GLfloat LightPos[] = { 0.0f, 80.0f, 100.0f, 1.0f };		// Posición de la luz
+GLfloat LightAmb[] = { 0.8f,  0.8f, 0.8f, 1.0f };		// Valores de la componente ambiente
+GLfloat LightDif[] = { 0.9f,  0.9f, 0.9f, 1.0f };		// Valores de la componente difusa
+GLfloat LightSpc[] = { 0.9f,  0.9f, 0.9f, 1.0f };		// Valores de la componente especular
+CVector lightPosition;
+
 LRESULT	CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);	// Declaracion de WndProc (Procedimiento de ventana)
 
 GLvoid ReDimensionaEscenaGL(GLsizei width, GLsizei height)	// Redimensiona e inicializa la ventana
@@ -226,6 +233,15 @@ int IniGL(GLvoid)										// Aqui se configuran los parametros iniciales de Ope
 
 	glCullFace(GL_BACK);								// Configurado para eliminar caras traseras
 	glEnable(GL_CULL_FACE);								// Activa eliminacion de caras ocultas
+
+
+	glLightfv(GL_LIGHT0, GL_POSITION, LightPos);		// Posicion de la luz0
+	glLightfv(GL_LIGHT0, GL_AMBIENT, LightAmb);		// Componente ambiente
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, LightDif);		// Componente difusa
+	glLightfv(GL_LIGHT0, GL_SPECULAR, LightSpc);		// Componente especular
+
+	glEnable(GL_LIGHT0);								// Activa luz0
+	glEnable(GL_LIGHTING);								// Habilita la iluminación
 
 	e=gluNewQuadric();
 	
@@ -619,27 +635,18 @@ void dibujaEscenario()
 	glColor3f(0.6156f, 0.0f, 0.0f);
 
 	glBegin(codigo);
+		glNormal3f(0.0f, 1.0f, 0.0f);
 		glVertex3f(-120.0f, 0.0f, 17.0f);
 		glVertex3f(  80.0f, 0.0f, 17.0f);
 		glVertex3f(  80.0f, 0.0f,  0.0f);
 		glVertex3f(-120.0f, 0.0f,  0.0f);
 	glEnd();
 
-	//Normal que se forma cuando el plano se genera no debe ser mayor a 90 grados para que lo pueda captar la camara
-	//Normal de cuando se genera el plano debe apuntar a la camara para que el plano sea visible
-	
-	//glBegin(codigo);
-	//	glVertex3f(  80.0f, 0.0f, 17.0f);
-	//	glVertex3f(-120.0f, 0.0f, 17.0f);
-
-	//	glVertex3f(-120.0f, 0.0f,  0.0f);
-	//	glVertex3f(  80.0f, 0.0f,  0.0f);
-	//glEnd();
-
 	//objeto 2
 	glColor3f(1.0f, 0.4f, 0.0f);
 	
 	glBegin(codigo);
+		glNormal3f(0.0f, 1.0f, 0.0f);
 		glVertex3f(-120.0f, 0.0f,  0.0f);
 		glVertex3f(  50.0f, 0.0f,  0.0f);
 		glVertex3f(  50.0f, 0.0f,-20.0f);
@@ -650,7 +657,7 @@ void dibujaEscenario()
 	glColor3f(1.0f, 0.4f, 0.0f);
 	
 	glBegin(codigo);
-		
+		glNormal3f(0.0f, 1.0f, 0.0f);
 		glVertex3f(50.0f, 0.0f,-12.0f);
 		glVertex3f(80.0f, 0.0f,-12.0f);
 		glVertex3f(80.0f, 0.0f,-30.0f);
@@ -661,7 +668,7 @@ void dibujaEscenario()
 	glColor3f(1.0f, 0.8f, 0.0f);
 
 	glBegin(codigo);
-		
+		glNormal3f(0.0f, 1.0f, 0.0f);
 		glVertex3f(-115.0f, 0.0f,-20.0f);
 		glVertex3f(- 50.0f, 0.0f,-20.0f);
 		glVertex3f(- 50.0f, 0.0f,-40.0f);
@@ -672,7 +679,7 @@ void dibujaEscenario()
 	glColor3f(1.0f, 1.0f, 0.61f);
 
 	glBegin(codigo);
-		
+		glNormal3f(0.0f, 1.0f, 0.0f);
 		glVertex3f( 80.0f, 0.0f, 17.0f);
 		glVertex3f(140.0f, 0.0f, 17.0f);
 		glVertex3f(140.0f, 0.0f,-30.0f);
@@ -683,7 +690,7 @@ void dibujaEscenario()
 	glColor3f(1.0f, 1.0f, 0.2f);
 
 	glBegin(codigo);
-		
+		glNormal3f(0.0f, 0.0f, 1.0f);
 		glVertex3f(-110.0f,  0.0f,-40.0f);
 		glVertex3f(- 85.0f,  0.0f,-40.0f);
 		glVertex3f(- 85.0f, 17.0f,-40.0f);
@@ -694,7 +701,7 @@ void dibujaEscenario()
 	glColor3f(1.0f, 1.0f, 0.6f);
 
 	glBegin(codigo);
-		
+		glNormal3f(0.0f, 0.0f, 1.0f);
 		glVertex3f(-85.0f,  0.0f,-40.0f);
 		glVertex3f(-60.0f,  0.0f,-40.0f);
 		glVertex3f(-60.0f, 19.0f,-40.0f);
@@ -705,7 +712,7 @@ void dibujaEscenario()
 	glColor3f(0.0f, 1.0f, 0.0f);
 
 	glBegin(codigo);
-		
+		glNormal3f(0.0f, 0.0f, 1.0f);
 		glVertex3f(-120.0f,  0.0f, 0.0f);
 		glVertex3f(- 95.0f,  0.0f, 0.0f);
 		glVertex3f(- 95.0f, 22.0f, 0.0f);
@@ -715,7 +722,7 @@ void dibujaEscenario()
 	glColor3f(0.7f, 1.0f, 0.0f);
 
 	glBegin(codigo);
-		
+		glNormal3f(1.0f, 0.0f, 0.0f);
 		glVertex3f(-95.0f,  0.0f,  0.0f);
 		glVertex3f(-95.0f,  0.0f,-18.0f);
 		glVertex3f(-95.0f, 22.0f,-18.0f);
@@ -727,7 +734,7 @@ void dibujaEscenario()
 	glColor3f(0.0f, 1.0f, 0.4f);
 
 	glBegin(codigo);
-		
+		glNormal3f(0.0f, 0.0f, 1.0f);
 		glVertex3f(-78.0f,  0.0f, 0.0f);
 		glVertex3f(-68.0f,  0.0f, 0.0f);
 		glVertex3f(-68.0f, 22.0f, 0.0f);
@@ -738,7 +745,7 @@ void dibujaEscenario()
 	glColor3f(0.0f, 1.0f, 0.8f);
 	
 	glBegin(codigo);
-		
+		glNormal3f(0.0f, 0.0f, 1.0f);
 		glVertex3f(-68.0f,  7.0f, 0.0f);
 		glVertex3f(-63.0f,  7.0f, 0.0f);
 		glVertex3f(-63.0f, 22.0f, 0.0f);
@@ -749,7 +756,7 @@ void dibujaEscenario()
 	glColor3f(1.0f, 1.0f, 0.5f);
 	
 	glBegin(codigo);
-		
+		glNormal3f(0.0f, 0.0f, 1.0f);
 		glVertex3f(-68.0f, 0.0f, 0.0f);
 		glVertex3f(-63.0f, 0.0f, 0.0f);
 		glVertex3f(-63.0f, 1.0f, 0.0f);
@@ -760,7 +767,7 @@ void dibujaEscenario()
 	glColor3f(0.5f, 0.0f, 1.0f);
 	
 	glBegin(codigo);
-		
+		glNormal3f(0.0f, 0.0f, 1.0f);
 		glVertex3f(-63.0f,  0.0f, 0.0f);
 		glVertex3f(-10.0f,  0.0f, 0.0f);
 		glVertex3f(-10.0f, 22.0f, 0.0f);
@@ -771,7 +778,7 @@ void dibujaEscenario()
 	glColor3f(0.5f, 0.4f, 1.0f);
 
 	glBegin(codigo);
-		
+		glNormal3f(1.0f, 0.0f, 0.0f);
 		glVertex3f(-10.0f,  0.0f,  0.0f);
 		glVertex3f(-10.0f,  0.0f,-18.0f);
 		glVertex3f(-10.0f, 22.0f,-18.0f);
@@ -782,7 +789,7 @@ void dibujaEscenario()
 	glColor3f(0.5f, 0.8f, 1.0f);
 
 	glBegin(codigo);
-		
+		glNormal3f(-1.0f, 0.0f, 0.0f);
 		glVertex3f(-78.0f,  0.0f,-18.0f);
 		glVertex3f(-78.0f,  0.0f,  0.0f);
 		glVertex3f(-78.0f, 22.0f,  0.0f);
@@ -793,7 +800,7 @@ void dibujaEscenario()
 	glColor3f(1.0f, 0.2f, 0.5f);
 
 	glBegin(codigo);
-		
+		glNormal3f(0.0f, 1.0f, 0.0f);
 		glVertex3f(-68.0f, 1.0f, 0.0f);
 		glVertex3f(-63.0f, 1.0f, 0.0f);
 		glVertex3f(-63.0f, 1.0f,-5.0f);
@@ -804,7 +811,7 @@ void dibujaEscenario()
 	glColor3f(0.0f, 0.0f, 1.0f);
 	
 	glBegin(codigo);
-		
+		glNormal3f(1.0f, 0.0f, 0.0f);
 		glVertex3f(-68.0f, 1.0f, 0.0f);
 		glVertex3f(-68.0f, 1.0f,-5.0f);
 		glVertex3f(-68.0f, 7.0f,-5.0f);
@@ -815,7 +822,7 @@ void dibujaEscenario()
 	glColor3f(0.0f, 0.2f, 1.0f);
 	
 	glBegin(codigo);
-		
+		glNormal3f(-1.0f, 0.0f, 0.0f);
 		glVertex3f(-63.0f, 1.0f,-5.0f);
 		glVertex3f(-63.0f, 1.0f, 0.0f);
 		glVertex3f(-63.0f, 7.0f, 0.0f);
@@ -824,7 +831,7 @@ void dibujaEscenario()
 
 	//9a
 	glBegin(codigo);
-		
+		glNormal3f(0.0f, 0.0f, 1.0f);
 		glVertex3f(-68.0f, 1.0f,-5.0f);
 		glVertex3f(-63.0f, 1.0f,-5.0f);
 		glVertex3f(-63.0f, 7.0f,-5.0f);
@@ -833,9 +840,10 @@ void dibujaEscenario()
 	//Aquí empiezan los planos creados 
 
 	//10
+	glColor3f(0.11f, 0.97f, 0.88f);
 	glBegin(codigo);
-		glColor3f(0.11f, 0.97f, 0.88f);
 		
+		glNormal3f(0.0f, 0.0f, 1.0f);
 		glVertex3f(-10.0f, 0.0f, -1.0f);
 		glVertex3f( 50.0f, 0.0f, -1.0f);
 		glVertex3f( 50.0f, 8.0f, -1.0f);
@@ -843,10 +851,10 @@ void dibujaEscenario()
 	glEnd();
 
 	//11 Shadow
-
+	glColor3f(0.08f, 0.32f, 0.67f);
 	glBegin(codigo);
-		glColor3f(0.08f, 0.32f, 0.67f);
 		
+		glNormal3f(1.0f, 0.0f, 0.0f);
 		glVertex3f(50.0f, 0.0f,  0.0f);
 		glVertex3f(50.0f, 22.0f, 0.0f);
 		glVertex3f(50.0f, 22.0f, -12.0f);
@@ -854,21 +862,20 @@ void dibujaEscenario()
 	glEnd();
 	
 	//11 Front
-
+	glColor3f(0.5f, 0.73f, 0.95f);
 	glBegin(codigo);
-		glColor3f(0.5f, 0.73f, 0.95f);
 		
-		glVertex3f(50.0f, 0.0f,  0.0f);
+		glNormal3f(0.0f, 0.0f, 1.0f);
+		glVertex3f(50.0f, 0.0f, 0.0f);
 		glVertex3f(56.0f, 0.0f, 0.0f);
 		glVertex3f(56.0f, 22.0f, 0.0f);
 		glVertex3f(50.0f, 22.0f, 0.0f);
 	glEnd();
 
         //11_inside
-
+		glColor3f(0.0f, 0.29f, 0.29f);
         glBegin(codigo);
-                glColor3f(0.0f, 0.29f, 0.29f);
-
+        		glNormal3f(1.0f, 0.0f, 0.0f);
                 glVertex3f(56.0f, 1.0f, 0.0f);
                 glVertex3f(56.0f, 1.0f, -5.0f);
                 glVertex3f(56.0f, 7.0f, -5.0f);
@@ -876,10 +883,10 @@ void dibujaEscenario()
         glEnd();
 
 	//12 Front_a
-
+	glColor3f(0.92f, 0.80f, 0.91f);
 	glBegin(codigo);
-		glColor3f(0.92f, 0.80f, 0.91f);
 		
+		glNormal3f(0.0f, 0.0f, 1.0f);
 		glVertex3f(56.0f, 0.0f,  0.0f);
 		glVertex3f(62.0f, 0.0f, 0.0f);
 		glVertex3f(62.0f, 1.0f, 0.0f);
@@ -887,10 +894,10 @@ void dibujaEscenario()
 	glEnd();
 
         //12 Front_a_Up_Cover
-
+		glColor3f(0.66f, 0.0f, 0.66f);
         glBegin(codigo);
-                glColor3f(0.66f, 0.0f, 0.66f);
-
+                
+				glNormal3f(0.0f, 1.0f, 0.0f);
                 glVertex3f(56.0f, 1.0f, 0.0f);
                 glVertex3f(62.0f, 1.0f, 0.0f);
                 glVertex3f(62.0f, 1.0f, -5.0f);
@@ -898,10 +905,10 @@ void dibujaEscenario()
         glEnd();
 	
 	//12 Front_b
-
+	glColor3f(0.54f, 0.18f, 0.98f);
 	glBegin(codigo);
-		glColor3f(0.54f, 0.18f, 0.98f);
 		
+		glNormal3f(0.0f, 0.0f, 1.0f);
 		glVertex3f(56.0f, 7.0f,  0.0f);
 		glVertex3f(62.0f, 7.0f, 0.0f);
 		glVertex3f(62.0f, 22.0f, 0.0f);
@@ -909,10 +916,10 @@ void dibujaEscenario()
 	glEnd();
 
 	//13 Front
-
+	glColor3f(0.95f, 0.4f, 0.95f);
 	glBegin(codigo);
-		glColor3f(0.95f, 0.4f, 0.95f);
 		
+		glNormal3f(0.0f, 0.0f, 1.0f);
 		glVertex3f(62.0f, 0.0f,  0.0f);
 		glVertex3f(68.0f, 0.0f, 0.0f);
 		glVertex3f(68.0f, 22.0f, 0.0f);
@@ -921,9 +928,9 @@ void dibujaEscenario()
 
         //13_inside_a
 
+        glColor3f(0.4f, 0.0f, 0.4f);
         glBegin(codigo);
-                glColor3f(0.4f, 0.0f, 0.4f);
-
+				glNormal3f(-1.0f, 0.0f, 0.0f);
                 glVertex3f(62.0f, 1.0f, 0.0f);
                 glVertex3f(62.0f, 7.0f, 0.0f);
                 glVertex3f(62.0f, 7.0f, -5.0f);
@@ -931,10 +938,10 @@ void dibujaEscenario()
         glEnd();
 
         //13_inside_b
-
+		glColor3f(0.4f, 0.0f, 0.4f);
         glBegin(codigo);
-                glColor3f(0.4f, 0.0f, 0.4f);
-
+             
+				glNormal3f(1.0f, 0.0f, 0.0f);
                 glVertex3f(68.0f, 1.0f, -5.0f);
                 glVertex3f(68.0f, 7.0f, -5.0f);
                 glVertex3f(68.0f, 7.0f, 0.0f);
@@ -944,10 +951,10 @@ void dibujaEscenario()
 
 
 	//14 Front_a
-
+	glColor3f(0.58f, 0.84f, 0.61f);
 	glBegin(codigo);
-		glColor3f(0.58f, 0.84f, 0.61f);
 		
+		glNormal3f(0.0f, 0.0f, 1.0f);
 		glVertex3f(68.0f, 0.0f,  0.0f);
 		glVertex3f(74.0f, 0.0f, 0.0f);
 		glVertex3f(74.0f, 1.0f, 0.0f);
@@ -955,10 +962,10 @@ void dibujaEscenario()
 	glEnd();
 
         //14 Front_inside_cover
-
+		glColor3f(0.13f, 0.35f, 0.109f);
         glBegin(codigo);
-                glColor3f(0.13f, 0.35f, 0.109f);
-
+                
+				glNormal3f(0.0f, 1.0f, 0.0f);
                 glVertex3f(68.0f, 1.0f, 0.0f);
                 glVertex3f(74.0f, 1.0f, 0.0f);
                 glVertex3f(74.0f, 1.0f, -5.0f);
@@ -966,10 +973,10 @@ void dibujaEscenario()
         glEnd();
 	
 	//14 Front_b
-
+	glColor3f(0.19f, 0.55f, 0.23f);
 	glBegin(codigo);
-		glColor3f(0.19f, 0.55f, 0.23f);
 		
+		glNormal3f(0.0f, 0.0f, 1.0f);
 		glVertex3f(68.0f, 7.0f,  0.0f);
 		glVertex3f(74.0f, 7.0f, 0.0f);
 		glVertex3f(74.0f, 22.0f, 0.0f);
@@ -977,10 +984,10 @@ void dibujaEscenario()
 	glEnd();
 
         //15 _Front
-
+		glColor3f(1.0f, 0.50f, 0.25f);
         glBegin(codigo);
-                glColor3f(1.0f, 0.50f, 0.25f);
-
+                
+				glNormal3f(0.0f, 0.0f, 1.0f);
                 glVertex3f(74.0f, 0.0f, 0.0f);
                 glVertex3f(80.0f, 0.0f, 0.0f);
                 glVertex3f(80.0f, 22.0f, 0.0f);
@@ -988,10 +995,10 @@ void dibujaEscenario()
         glEnd();
 
         //15_inside
-
+		glColor3f(0.49f, 0.247f, 0.0f);
         glBegin(codigo);
-                glColor3f(0.49f, 0.247f, 0.0f);
-
+                
+				glNormal3f(-1.0f, 0.0f, 0.0f);
                 glVertex3f(74.0f, 1.0f, 0.0f);
                 glVertex3f(74.0f, 7.0f, 0.0f);
                 glVertex3f(74.0f, 7.0f, -5.0f);
@@ -999,11 +1006,12 @@ void dibujaEscenario()
         glEnd();
 
 
-
+		
         //15_Shadow
+		glColor3f(0.784f, 0.411f, 0.015f);
         glBegin(codigo);
-                glColor3f(0.784f, 0.411f, 0.015f);
-
+                
+				glNormal3f(1.0f, 0.0f, 0.0f);
                 glVertex3f(80.0f, 0.0f, 0.0f);
                 glVertex3f(80.0f, 0.0f, -12.0f);
                 glVertex3f(80.0f, 22.0f, -12.0f);
@@ -1011,9 +1019,10 @@ void dibujaEscenario()
         glEnd();
 
         //15_Box_inside_shadow
+		glColor3f(0.45f, 0.45f, 0.45f);
         glBegin(codigo);
-                 glColor3f(0.45f, 0.45f, 0.45f);
-
+                 
+				 glNormal3f(0.0f, 0.0f, 1.0f);
                  glVertex3f(56.0f, 1.0f, -5.0f);
                  glVertex3f(74.0f, 1.0f, -5.0f);
                  glVertex3f(74.0f, 7.0f, -5.0f);
@@ -1021,10 +1030,10 @@ void dibujaEscenario()
         glEnd();
 
         //16_Utter_wall
-
+		glColor3f(0.4f, 0.4f, 0.0f);
         glBegin(codigo);
-                glColor3f(0.4f, 0.4f, 0.0f);
-
+                
+				glNormal3f(-1.0f, 0.0f, 0.0f);
                 glVertex3f(140.0f, 0.0f, 17.0f);
                 glVertex3f(140.0f, 22.0f, 17.0f);
                 glVertex3f(140.0f, 22.0f, -30.0f);
@@ -1032,10 +1041,10 @@ void dibujaEscenario()
         glEnd();
 
         //17_Background_Wall
-
+		glColor3f(0.23f, 0.403f, 0.615f);
         glBegin(codigo);
-                glColor3f(0.23f, 0.403f, 0.615f);
-
+               
+				glNormal3f(0.0f, 0.0f, 1.0f);
                 glVertex3f(68.0f, 0.0f, -30.0f);
                 glVertex3f(140.0f, 0.0f, -30.0f);
                 glVertex3f(140.0f, 22.0f, -30.0f);
@@ -1043,9 +1052,9 @@ void dibujaEscenario()
         glEnd();
 
         //18_Fence
-        glBegin(codigo);
-                glColor3f(0.20f, 0.278f, 0.286f);
-
+		glColor3f(0.20f, 0.278f, 0.286f);
+        glBegin(codigo);             
+				glNormal3f(-1.0f, 0.0f, 0.0f);
                 glVertex3f(130.0f, 0.0f, 17.0f);
                 glVertex3f(130.0f, 9.0f, 17.0f);
                 glVertex3f(130.0f, 9.0f, -26.0f);
@@ -1053,9 +1062,9 @@ void dibujaEscenario()
         glEnd();
 
         //19_Background_Fence_a
-        glBegin(codigo);
-                glColor3f(0.4f, 0.4f, 0.0f);
-        
+		glColor3f(0.4f, 0.4f, 0.0f);
+        glBegin(codigo);           
+				glNormal3f(0.0f, 0.0f, 1.0f);
                 glVertex3f(130.0f, 0.0f, -26.0f);
                 glVertex3f(130.0f, 9.0f, -26.0f);
                 glVertex3f(105.0f, 9.0f, -26.0f);
@@ -1063,9 +1072,9 @@ void dibujaEscenario()
         glEnd();
 
         //19_Background_Fence_b
+		glColor3f(0.4f, 0.4f, 0.0f);
         glBegin(codigo);
-        glColor3f(0.4f, 0.4f, 0.0f);
-
+				glNormal3f(0.0f, 0.0f, 1.0f);
                 glVertex3f(90.0f, 0.0f, -26.0f);
                 glVertex3f(90.0f, 9.0f, -26.0f);
                 glVertex3f(68.0f, 9.0f, -26.0f);
@@ -1073,9 +1082,9 @@ void dibujaEscenario()
         glEnd();
 
         //20_Back_floor
-        glBegin(codigo);
         glColor3f(1.0f, 0.65f, 0.0f);
-
+		glBegin(codigo);
+				glNormal3f(0.0f, 1.0f, 0.0f);
                 glVertex3f(50.0f, 0.0f, -20.0f);
                 glVertex3f(50.0f, 0.0f, -30.0f);
                 glVertex3f(-50.0f, 0.0f, -30.0f);
@@ -1083,11 +1092,10 @@ void dibujaEscenario()
         glEnd();
 
         //Building1_a
-
-
+		glColor3f(0.20f, 0.52f, 0.16f);
         glBegin(codigo);
-        glColor3f(0.20f, 0.52f, 0.16f);
-
+       
+				glNormal3f(0.0f, 0.0f, 1.0f);
                 glVertex3f(50.0f, 0.0f, -30.0f);
                 glVertex3f(50.0f, 22.0f, -30.0f);
                 glVertex3f(40.0f, 22.0f, -30.0f);
@@ -1095,9 +1103,10 @@ void dibujaEscenario()
         glEnd();
 
         //Building1_b
+		glColor3f(0.26f, 0.67f, 0.21f);
         glBegin(codigo);
-                glColor3f(0.26f, 0.67f, 0.21f);
-
+                
+				glNormal3f(-1.0f, 0.0f, 0.0f);
                 glVertex3f(40.0f, 0.0f, -30.0f);
                 glVertex3f(40.0f, 22.0f, -30.0f);
                 glVertex3f(40.0f, 22.0f, -34.0f);
@@ -1105,9 +1114,10 @@ void dibujaEscenario()
         glEnd();
 
         //Building1_c
+		glColor3f(0.18f, 0.47f, 0.152f);
         glBegin(codigo);
-                glColor3f(0.18f, 0.47f, 0.152f);
-
+               
+				glNormal3f(-1.0f, 0.0f, 0.0f);
                 glVertex3f(50.0f, 0.0f, -34.0f);
                 glVertex3f(50.0f, 22.0f, -34.0f);
                 glVertex3f(50.0f, 22.0f, -30.0f);
@@ -1115,9 +1125,10 @@ void dibujaEscenario()
         glEnd();
 
         //Building1_Wall_a
+		glColor3f(0.145f, 0.478f, 0.447f);
         glBegin(codigo);
-                glColor3f(0.145f, 0.478f, 0.447f);
-
+            
+				glNormal3f(0.0f, 0.0f, 1.0f);
                 glVertex3f(60.0f, 0.0f, -34.0f);
                 glVertex3f(60.0f, 20.0f, -34.0f);
                 glVertex3f(50.0f, 20.0f, -34.0f);
@@ -1125,9 +1136,10 @@ void dibujaEscenario()
         glEnd();
 
         //Building1_Wall_b
+		glColor3f(0.623f, 0.639f, 0.211f);
         glBegin(codigo);
-                glColor3f(0.623f, 0.639f, 0.211f);
-
+            
+				glNormal3f(0.0f, 0.0f, 1.0f);
                 glVertex3f(40.0f, 0.0f, -34.0f);
                 glVertex3f(40.0f, 20.0f, -34.0f);
                 glVertex3f(30.0f, 20.0f, -34.0f);
@@ -1135,9 +1147,10 @@ void dibujaEscenario()
         glEnd();
 
         //Building1_Wall_c
+		glColor3f(0.98f, 0.658f, 0.541f);
         glBegin(codigo);
-                glColor3f(0.98f, 0.658f, 0.541f);
-
+           
+				glNormal3f(-1.0f, 0.0f, 0.0f);
                 glVertex3f(30.0f, 0.0f, -34.0f);
                 glVertex3f(30.0f, 20.0f, -34.0f);
                 glVertex3f(30.0f, 20.0f, -46.0f);
@@ -1145,9 +1158,10 @@ void dibujaEscenario()
         glEnd();
 
         //Building2_Wall_a
+		glColor3f(0.98f, 0.658f, 0.541f);
         glBegin(codigo);
-                glColor3f(0.98f, 0.658f, 0.541f);
-
+    
+				glNormal3f(-1.0f, 0.0f, 0.0f);
                 glVertex3f(20.0f, 0.0f, -46.0f);
                 glVertex3f(20.0f, 20.0f, -46.0f);
                 glVertex3f(20.0f, 20.0f, -34.0f);
@@ -1155,9 +1169,10 @@ void dibujaEscenario()
         glEnd();
 
         //Building2_Wall_b
+		glColor3f(0.133f, 0.658f, 0.501f);
         glBegin(codigo);
-                glColor3f(0.133f, 0.658f, 0.501f);
-
+              
+				glNormal3f(0.0f, 0.0f, 1.0f);
                 glVertex3f(20.0f, 0.0f, -34.0f);
                 glVertex3f(20.0f, 20.0f, -34.0f);
                 glVertex3f(10.0f, 20.0f, -34.0f);
@@ -1166,10 +1181,10 @@ void dibujaEscenario()
 
         //Building2_a
 
-
+	    glColor3f(0.13f, 0.568f, 0.658f);
         glBegin(codigo);
-                glColor3f(0.13f, 0.568f, 0.658f);
-
+            
+				glNormal3f(0.0f, 0.0f, 1.0f);
                 glVertex3f(10.0f, 0.0f, -30.0f);
                 glVertex3f(10.0f, 22.0f, -30.0f);
                 glVertex3f(8.0f, 22.0f, -30.0f);
@@ -1177,9 +1192,10 @@ void dibujaEscenario()
         glEnd();
 
         //Building2_b
+		glColor3f(0.26f, 0.67f, 0.21f);
         glBegin(codigo);
-                glColor3f(0.26f, 0.67f, 0.21f);
-
+ 
+				glNormal3f(-1.0f, 0.0f, 0.0f);
                 glVertex3f(8.0f, 0.0f, -30.0f);
                 glVertex3f(8.0f, 22.0f, -30.0f);
                 glVertex3f(8.0f, 22.0f, -34.0f);
@@ -1187,9 +1203,10 @@ void dibujaEscenario()
         glEnd();
 
         //Building2_c
+		glColor3f(0.18f, 0.47f, 0.152f);
         glBegin(codigo);
-                glColor3f(0.18f, 0.47f, 0.152f);
-
+        
+				glNormal3f(1.0f, 0.0f, 0.0f);
                 glVertex3f(10.0f, 0.0f, -34.0f);
                 glVertex3f(10.0f, 22.0f, -34.0f);
                 glVertex3f(10.0f, 22.0f, -30.0f);
@@ -1197,11 +1214,9 @@ void dibujaEscenario()
         glEnd();
 
         //Building3_a
-
-
+        glColor3f(0.13f, 0.568f, 0.658f);
         glBegin(codigo);
-                glColor3f(0.13f, 0.568f, 0.658f);
-
+				glNormal3f(0.0f, 0.0f, 1.0f);
                 glVertex3f(10.0f, 0.0f, -30.0f);
                 glVertex3f(10.0f, 22.0f, -30.0f);
                 glVertex3f(8.0f, 22.0f, -30.0f);
@@ -1209,9 +1224,10 @@ void dibujaEscenario()
         glEnd();
 
         //Building3_b
+		glColor3f(0.26f, 0.67f, 0.21f);
         glBegin(codigo);
-                glColor3f(0.26f, 0.67f, 0.21f);
-
+               
+				glNormal3f(-1.0f, 0.0f, 0.0f);
                 glVertex3f(8.0f, 0.0f, -30.0f);
                 glVertex3f(8.0f, 22.0f, -30.0f);
                 glVertex3f(8.0f, 22.0f, -34.0f);
@@ -1219,9 +1235,9 @@ void dibujaEscenario()
         glEnd();
 
         //Building3_c
+		glColor3f(0.18f, 0.47f, 0.152f);
         glBegin(codigo);
-                glColor3f(0.18f, 0.47f, 0.152f);
-
+				glNormal3f(1.0f, 0.0f, 0.0f);
                 glVertex3f(10.0f, 0.0f, -34.0f);
                 glVertex3f(10.0f, 22.0f, -34.0f);
                 glVertex3f(10.0f, 22.0f, -30.0f);
@@ -1230,9 +1246,10 @@ void dibujaEscenario()
 
 
         //Building4_Wall_a
-        glBegin(codigo);
-                glColor3f(0.145f, 0.478f, 0.447f);
+		glColor3f(0.145f, 0.478f, 0.447f);
 
+        glBegin(codigo);
+				glNormal3f(0.0f, 0.0f, 1.0f);
                 glVertex3f(8.0f, 0.0f, -34.0f);
                 glVertex3f(8.0f, 20.0f, -34.0f);
                 glVertex3f(-2.0f, 20.0f, -34.0f);
@@ -1241,10 +1258,10 @@ void dibujaEscenario()
 
         //Building4_a
 
-
+		glColor3f(0.13f, 0.568f, 0.658f);
         glBegin(codigo);
-                glColor3f(0.13f, 0.568f, 0.658f);
-
+                
+				glNormal3f(0.0f, 0.0f, 1.0f);
                 glVertex3f(-2.0f, 0.0f, -30.0f);
                 glVertex3f(-2.0f, 22.0f, -30.0f);
                 glVertex3f(-12.0f, 22.0f, -30.0f);
@@ -1252,9 +1269,10 @@ void dibujaEscenario()
         glEnd();
 
         //Building4_b
+		glColor3f(0.26f, 0.67f, 0.21f);
         glBegin(codigo);
-                glColor3f(0.26f, 0.67f, 0.21f);
-
+              
+				glNormal3f(-1.0f, 0.0f, 0.0f);
                 glVertex3f(-12.0f, 0.0f, -30.0f);
                 glVertex3f(-12.0f, 22.0f, -30.0f);
                 glVertex3f(-12.0f, 22.0f, -34.0f);
@@ -1262,9 +1280,10 @@ void dibujaEscenario()
         glEnd();
 
         //Building4_c
+		glColor3f(0.18f, 0.47f, 0.152f);
         glBegin(codigo);
-                glColor3f(0.18f, 0.47f, 0.152f);
-
+          
+				glNormal3f(1.0f, 0.0f, 0.0f);
                 glVertex3f(-2.0f, 0.0f, -34.0f);
                 glVertex3f(-2.0f, 22.0f, -34.0f);
                 glVertex3f(-2.0f, 22.0f, -30.0f);
@@ -1273,9 +1292,10 @@ void dibujaEscenario()
 
 
         //Building4_Wall_b
+		glColor3f(0.623f, 0.639f, 0.211f);
         glBegin(codigo);
-            glColor3f(0.623f, 0.639f, 0.211f);
-
+         
+			glNormal3f(0.0f, 0.0f, 1.0f);
             glVertex3f(-12.0f, 0.0f, -34.0f);
             glVertex3f(-12.0f, 20.0f, -34.0f);
             glVertex3f(-22.0f, 20.0f, -34.0f);
@@ -1285,10 +1305,9 @@ void dibujaEscenario()
 
         //Building5_a
 
-
-        glBegin(codigo);
-                glColor3f(0.13f, 0.568f, 0.658f);
-
+		glColor3f(0.13f, 0.568f, 0.658f);
+        glBegin(codigo);  
+				glNormal3f(0.0f, 0.0f, 1.0f);
                 glVertex3f(-22.0f, 0.0f, -30.0f);
                 glVertex3f(-22.0f, 22.0f, -30.0f);
                 glVertex3f(-24.0f, 22.0f, -30.0f);
@@ -1296,9 +1315,10 @@ void dibujaEscenario()
         glEnd();
 
         //Building5_b
+		glColor3f(0.26f, 0.67f, 0.21f);
         glBegin(codigo);
-                glColor3f(0.26f, 0.67f, 0.21f);
-
+       
+				glNormal3f(-1.0f, 0.0f, 0.0f);
                 glVertex3f(-24.0f, 0.0f, -30.0f);
                 glVertex3f(-24.0f, 22.0f, -30.0f);
                 glVertex3f(-24.0f, 22.0f, -34.0f);
@@ -1306,9 +1326,10 @@ void dibujaEscenario()
         glEnd();
 
         //Building5_c
+		glColor3f(0.18f, 0.47f, 0.152f);
         glBegin(codigo);
-                glColor3f(0.18f, 0.47f, 0.152f);
-
+            
+				glNormal3f(1.0f, 0.0f, 0.0f);
                 glVertex3f(-22.0f, 0.0f, -34.0f);
                 glVertex3f(-22.0f, 22.0f, -34.0f);
                 glVertex3f(-22.0f, 22.0f, -30.0f);
@@ -1317,21 +1338,22 @@ void dibujaEscenario()
 
 
         //Building5_Wall_a
+		glColor3f(0.145f, 0.478f, 0.447f);
         glBegin(codigo);
-                glColor3f(0.145f, 0.478f, 0.447f);
-
+         
+				glNormal3f(0.0f, 0.0f, 1.0f);
                 glVertex3f(-24.0f, 0.0f, -34.0f);
                 glVertex3f(-24.0f, 20.0f, -34.0f);
                 glVertex3f(-34.0f, 20.0f, -34.0f);
                 glVertex3f(-34.0f, 0.0f, -34.0f);
         glEnd();
 
+
         //Building6_a
-
-
+       glColor3f(0.13f, 0.568f, 0.658f);
         glBegin(codigo);
-                glColor3f(0.13f, 0.568f, 0.658f);
-
+         
+				glNormal3f(0.0f, 0.0f, 1.0f);
                 glVertex3f(-34.0f, 0.0f, -30.0f);
                 glVertex3f(-34.0f, 22.0f, -30.0f);
                 glVertex3f(-44.0f, 22.0f, -30.0f);
@@ -1339,9 +1361,10 @@ void dibujaEscenario()
         glEnd();
 
         //Building6_b
+		glColor3f(0.26f, 0.67f, 0.21f);
         glBegin(codigo);
-                glColor3f(0.26f, 0.67f, 0.21f);
-
+          
+				glNormal3f(-1.0f, 0.0f, 0.0f);
                 glVertex3f(-44.0f, 0.0f, -30.0f);
                 glVertex3f(-44.0f, 22.0f, -30.0f);
                 glVertex3f(-44.0f, 22.0f, -34.0f);
@@ -1349,9 +1372,10 @@ void dibujaEscenario()
         glEnd();
 
         //Building6_c
+		glColor3f(0.18f, 0.47f, 0.152f);
         glBegin(codigo);
-                glColor3f(0.18f, 0.47f, 0.152f);
-
+         
+				glNormal3f(1.0f, 0.0f, 0.0f);
                 glVertex3f(-34.0f, 0.0f, -34.0f);
                 glVertex3f(-34.0f, 22.0f, -34.0f);
                 glVertex3f(-34.0f, 22.0f, -30.0f);
@@ -1359,10 +1383,10 @@ void dibujaEscenario()
         glEnd();
 
         //Weird_table_thing_a
-
+	    glColor3f(0.27f, 0.48f, 0.521f);
         glBegin(codigo);
-                glColor3f(0.27f, 0.48f, 0.521f);
-
+            
+				glNormal3f(0.0f, 1.0f, 0.0f);
                 glVertex3f(-45.0f, 5.0f, 0.0f);
                 glVertex3f(-55.0f, 5.0f, 0.0f);
                 glVertex3f(-55.0f, 5.0f, 5.0f);
@@ -1370,10 +1394,10 @@ void dibujaEscenario()
         glEnd();
 
         //Weird_table_thing_b
-
+        glColor3f(0.16f, 0.29f, 0.30f);
         glBegin(codigo);
-                glColor3f(0.16f, 0.29f, 0.30f);
-
+        
+				glNormal3f(-1.0f, 0.0f, 0.0f);
                 glVertex3f(-55.0f, 5.0f, 0.0f);
                 glVertex3f(-55.0f, 2.0f, 0.0f);
                 glVertex3f(-55.0f, 2.0f, 5.0f);
@@ -1381,10 +1405,10 @@ void dibujaEscenario()
         glEnd();
 
         //Weird_table_thing_c
-
+        glColor3f(0.16f, 0.29f, 0.30f);
         glBegin(codigo);
-                glColor3f(0.16f, 0.29f, 0.30f);
 
+				glNormal3f(1.0f, 0.0f, 0.0f);
                 glVertex3f(-45.0f, 2.0f, 0.0f);
                 glVertex3f(-45.0f, 5.0f, 0.0f);
                 glVertex3f(-45.0f, 5.0f, 5.0f);
@@ -1392,10 +1416,10 @@ void dibujaEscenario()
         glEnd();
 
         //Weird_table_thing_d
-
+        glColor3f(0.443f, 0.52f, 0.27f);
         glBegin(codigo);
-                glColor3f(0.443f, 0.52f, 0.27f);
-
+       
+				glNormal3f(0.0f, 0.0f, 1.0f);
                 glVertex3f(-45.0f, 2.0f, 5.0f);
                 glVertex3f(-45.0f, 5.0f, 5.0f);
                 glVertex3f(-55.0f, 5.0f, 5.0f);
@@ -1403,10 +1427,10 @@ void dibujaEscenario()
         glEnd();
 
         //Weird_table_thing_e
-
+	    glColor3f(0.16f, 0.25f, 0.23f);
         glBegin(codigo);
-                glColor3f(0.16f, 0.25f, 0.23f);
-
+          
+			//	glNormal3f(0.0f, 0.0f, 1.0f); // No se como :(
                 glVertex3f(-55.0f, 2.0f, 0.0f);
                 glVertex3f(-54.0f, 1.0f, 1.0f);
                 glVertex3f(-54.0f, 1.0f, 4.0f);
@@ -1414,10 +1438,10 @@ void dibujaEscenario()
         glEnd();
 
         //Weird_table_thing_f
-
+		glColor3f(0.50f, 0.32f, 0.458f);
         glBegin(codigo);
-                glColor3f(0.50f, 0.32f, 0.458f);
-
+              
+			//	glNormal3f(0.0f, 0.0f, 1.0f); //No se como :(
                 glVertex3f(-45.0f, 2.0f, 5.0f);
                 glVertex3f(-55.0f, 2.0f, 5.0f);
                 glVertex3f(-54.0f, 1.0f, 4.0f);
@@ -1425,10 +1449,10 @@ void dibujaEscenario()
         glEnd();
 
         //Weird_table_thing_g
-
+	    glColor3f(0.16f, 0.25f, 0.23f);
         glBegin(codigo);
-                glColor3f(0.16f, 0.25f, 0.23f);
-
+          
+		//	glNormal3f(0.0f, 0.0f, 1.0f); // No se como :(
                 glVertex3f(-45.0f, 2.0f, 0.0f);
                 glVertex3f(-45.0f, 2.0f, 5.0f);
                 glVertex3f(-46.0f, 1.0f, 4.0f);
@@ -1436,10 +1460,10 @@ void dibujaEscenario()
         glEnd();
 
         //Weird_table_thing_h
-
+	    glColor3f(0.5f, 1.0f, 0.623f);
         glBegin(codigo);
-                glColor3f(0.5f, 1.0f, 0.623f);
-
+            
+				glNormal3f(1.0f, 0.0f, 0.0f);
                 glVertex3f(-46.0f, 0.0f, 1.0f);
                 glVertex3f(-46.0f, 1.0f, 1.0f);
                 glVertex3f(-46.0f, 1.0f, 4.0f);
@@ -1447,10 +1471,9 @@ void dibujaEscenario()
         glEnd();
 
         //Weird_table_thing_i
-
+        glColor3f(0.694f, 0.176f, 0.80f);
         glBegin(codigo);
-                glColor3f(0.694f, 0.176f, 0.80f);
-
+				glNormal3f(0.0f, 0.0f, 1.0f);
                 glVertex3f(-46.0f, 0.0f, 4.0f);
                 glVertex3f(-46.0f, 1.0f, 4.0f);
                 glVertex3f(-54.0f, 1.0f, 4.0f);
@@ -1458,10 +1481,9 @@ void dibujaEscenario()
         glEnd();
 
         //Weird_table_thing_j
-
-        glBegin(codigo);
-                glColor3f(0.5f, 1.0f, 0.623f);
-
+		glColor3f(0.5f, 1.0f, 0.623f);
+        glBegin(codigo);              
+				glNormal3f(-1.0f, 0.0f, 0.0f);
                 glVertex3f(-54.0f, 0.0f, 4.0f);
                 glVertex3f(-54.0f, 1.0f, 4.0f);
                 glVertex3f(-54.0f, 1.0f, 1.0f);
@@ -1545,68 +1567,82 @@ void dibujaCaja(float ancho, float altura, float largo, int modoRender)
     
 }
 
-void dibujaCilindro(float radio, int lados, float altura, int modoRender)
-{
-    float ang;
-    float a[3], b[3], c[3], d[3];
-    float delta;
+void dibujaCilindro(float radio, int lados, float altura, int modoRender) {
+	float ang;
+	float a[3], b[3], c[3], d[3];
+	float delta;
 
-    delta = 360.0f / lados;
+	CVector normalVert[4];
 
-    for (int i = 0; i < lados; i++)
-    {
-        ang = i*delta;
+	delta = 360.0f / lados;
 
-        a[0] = radio*(float)cos(ang*PI / 180.0f);
-        a[1] = 0.0f;
-        a[2] = radio*(float)sin(ang*PI / 180.0f);
+	for (int i = 0; i < lados; i++)
+	{
+		ang = i*delta;
 
-        b[0] = a[0];
-        b[1] = altura;
-        b[2] = a[2];
+		a[0] = radio*(float)cos(ang*PI / 180.0f);
+		a[1] = 0.0f;
+		a[2] = radio*(float)sin(ang*PI / 180.0f);
 
-        ang = (i + 1)*delta;
+		b[0] = a[0];
+		b[1] = altura;
+		b[2] = a[2];
 
-        c[0] = radio*(float)cos(ang*PI / 180.0f);
-        c[1] = altura;
-        c[2] = radio*(float)sin(ang*PI / 180.0f);
+		ang = (i + 1)*delta;
 
-        d[0] = c[0];
-        d[1] = 0.0f;
-        d[2] = c[2];
+		c[0] = radio*(float)cos(ang*PI / 180.0f);
+		c[1] = altura;
+		c[2] = radio*(float)sin(ang*PI / 180.0f);
 
-        glColor3f(1.0f, 0.0f, 0.0f);
+		d[0] = c[0];
+		d[1] = 0.0f;
+		d[2] = c[2];
 
-        if (modoRender == 1) glBegin(GL_QUADS);// sólido
-        else if (modoRender == 2) glBegin(GL_LINE_LOOP);// alambrado
-        glVertex3f(a[0], a[1], a[2]);
-        glVertex3f(b[0], b[1], b[2]);
-        glVertex3f(c[0], c[1], c[2]);
-        glVertex3f(d[0], d[1], d[2]);
-        glEnd();
+		glColor3f(1.0f, 0.0f, 0.0f);
 
-        //Tapa superior
-        glColor3f(1.0f, 1.0f, 0.0f);
+		//Cálculo de las normales
+		normalVert[0] = Normaliza(CVector(a[0], a[1], a[2]) - CVector(0.0f, 0.0f, 0.0f));
+		normalVert[1] = Normaliza(CVector(b[0], b[1], b[2]) - CVector(0.0f, altura, 0.0f));
+		normalVert[2] = Normaliza(CVector(c[0], c[1], c[2]) - CVector(0.0f, altura, 0.0f));
+		normalVert[3] = Normaliza(CVector(d[0], d[1], d[2]) - CVector(0.0f, 0.0f, 0.0f));
 
-        if (modoRender == 1) glBegin(GL_TRIANGLES);// sólido
-        else if (modoRender == 2) glBegin(GL_LINE_LOOP);// alambrado
-        glVertex3f(c[0], c[1], c[2]);
-        glVertex3f(b[0], b[1], b[2]);
-        glVertex3f(0.0f, altura, 0.0f);
-        glEnd();
+		if (modoRender == 1) glBegin(GL_QUADS);// sólido
+		else if (modoRender == 2) glBegin(GL_LINE_LOOP);// alambrado
+		glNormal3f(normalVert[0].x, normalVert[0].y, normalVert[0].z);
+		glVertex3f(a[0], a[1], a[2]);
+		glNormal3f(normalVert[1].x, normalVert[1].y, normalVert[1].z);
+		glVertex3f(b[0], b[1], b[2]);
+		glNormal3f(normalVert[2].x, normalVert[2].y, normalVert[2].z);
+		glVertex3f(c[0], c[1], c[2]);
+		glNormal3f(normalVert[3].x, normalVert[3].y, normalVert[3].z);
+		glVertex3f(d[0], d[1], d[2]);
+		glEnd();
 
-        //Tapa inferior
-        glColor3f(0.0f, 0.0f, 1.0f);
+		//Tapa superior
+		glColor3f(1.0f, 1.0f, 0.0f);
 
-        if (modoRender == 1) glBegin(GL_TRIANGLES);// sólido
-        else if (modoRender == 2) glBegin(GL_LINE_LOOP);// alambrado
-        glVertex3f(a[0], a[1], a[2]);
-        glVertex3f(d[0], d[1], d[2]);
-        glVertex3f(0.0f, 0.0f, 0.0f);
-        glEnd();
+		if (modoRender == 1) glBegin(GL_TRIANGLES);// sólido
+		else if (modoRender == 2) glBegin(GL_LINE_LOOP);// alambrado
+		glNormal3f(0.0f, 1.0f, 0.0f);
+		glVertex3f(c[0], c[1], c[2]);
+		glVertex3f(b[0], b[1], b[2]);
+		glVertex3f(0.0f, altura, 0.0f);
+		glEnd();
 
-        glColor3f(1.0f, 1.0f, 1.0f);
-    }
+		//Tapa inferior
+		glColor3f(0.0f, 0.0f, 1.0f);
+
+		if (modoRender == 1) glBegin(GL_TRIANGLES);// sólido
+		else if (modoRender == 2) glBegin(GL_LINE_LOOP);// alambrado
+		glNormal3f(0.0f, -1.0f, 0.0f);
+		glVertex3f(a[0], a[1], a[2]);
+		glVertex3f(d[0], d[1], d[2]);
+		glVertex3f(0.0f, 0.0f, 0.0f);
+		glEnd();
+
+		glColor3f(1.0f, 1.0f, 1.0f);
+
+	}
 }
 
 void dibujaCono(float radio1, float radio2, int lados, float altura, int modoRender)
@@ -2075,7 +2111,30 @@ void dibujaPersonaje()
 glPopMatrix();
 }
 
+void actualizaLuzParam()
+{
+	glLightfv(GL_LIGHT0, GL_POSITION, LightPos);		// Posicion de la luz0
+	glLightfv(GL_LIGHT0, GL_AMBIENT, LightAmb);		// Componente ambiente
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, LightDif);		// Componente difusa
+	glLightfv(GL_LIGHT0, GL_SPECULAR, LightSpc);
+}
 
+void DibujaLuz()
+{
+	//Dibuja una esfera que representa la fuente luminosa
+	glDisable(GL_LIGHTING);			// Deshabilita iluminación
+
+	glPushMatrix();
+	glTranslatef(LightPos[0], LightPos[1], LightPos[2]);	// Traslada a la posicion de la luz
+
+	glColor3f(1.0f, 1.0f, 0.0f);	// Color amarillo
+	gluSphere(e, 1.0f, 16, 8);	// Dibuja la esfera
+	glPopMatrix();
+
+
+	glEnable(GL_LIGHTING);			// Habilita Iluminación
+	glColor3f(1.0f, 1.0f, 1.0f);
+}
 
 int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la ventana
 {
@@ -2103,12 +2162,17 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 		gluLookAt(camara3.posCam.x, camara3.posCam.y, camara3.posCam.z,
 			camara3.objCam.x, camara3.objCam.y, camara3.objCam.z, 0, 1, 0);
 	
+	actualizaLuzParam();
 	DibujaEjes();
 	dibujaEscenario();
 	dibujaPersonaje();
+
+	glEnable(GL_NORMALIZE);
   	dibujaEscalera();
+	glDisable(GL_NORMALIZE);
 
 	//Conos 
+	glEnable(GL_NORMALIZE);
 	glPushMatrix();
 	glTranslatef(8.0f, 0.0f, 3.0f);
 	dibujaCono(1.0, 0.4, 30, 2.3, 1);
@@ -2133,8 +2197,11 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 	glTranslatef(-118.0, 0.0, 3.0f);
 	dibujaCono(1.0, 0.4, 30, 2.3, 1);
 	glPopMatrix();
+
+	glDisable(GL_NORMALIZE);
 	
 	//Hidrante
+	glEnable(GL_NORMALIZE);
 	glPushMatrix();
 	glTranslatef(-100.0, 0.0, 3.0);
 	dibujaHidrante();
@@ -2160,106 +2227,13 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 	glTranslatef(45.0, 0.0, -27.0);
 	dibujaHidrante();
 	glPopMatrix();
-
-
-	
-       /* glPushMatrix();*/
-        //Generalmente, escalamiento, rotation, traslacion
-            //El orden de como ocurren las traslaciones cambian como se comporta la figura
-            // Se desplaza el plano dependiendo de del valor de despX
-            //glTranslatef(10.0f, 10.0f, 0.0f);
-            // Escalar de tamaño en X y en Y
-            //glScalef(scaleXY, scaleXY, 1.0f);
-            //Rotar a lo largo de un eje, angulo, ejes
-            //glRotatef(ang, 0.0f, 0.0f, 1.0f);
-            //Si se traslada y luego se escala, tambien se escala el espacio de traslacion 
-            //glScalef(2.0f, 8.0f, 1.0f);
-            //glTranslatef(10.0f, 10.0f, 0.0f);
-
-
-            //glBegin(GL_QUADS);
-            //    glVertex3f(-10.0f, -10.0f, 0.0f);
-            //    glVertex3f( 10.0f, -10.0f, 0.0f);
-            //    glVertex3f( 10.0f,  10.0f, 0.0f);
-            //    glVertex3f(-10.0f,  10.0f, 0.0f);
-            //glEnd();
-        /*glPopMatrix();*/
-
-
-        // Bandera para mantener al plano moviendo en un lado a la vez
-        // Cuando alcanza un extremo se cambia de direccion
-        //if (dir  == 1)
-        //{
-        //    if (despX < 50.0f)
-        //    {
-        //        despX += 0.5f;
-        //    }
-        //    else
-        //    {
-        //        dir = 2;
-        //    }
-        //}
-        //else
-        //{
-        //    if (despX > -50.0f)
-        //    {
-        //        despX -= 0.5f;
-        //    }
-        //    else
-        //    {
-        //        dir = 1;
-        //    }
-        //}
- /*       if (dir == 1)
-        {
-            if (scaleXY < 6.0f)
-            {
-                scaleXY += 0.2f;
-            }
-            else
-            {
-                dir = 2;
-            }
-        }
-        else
-        {
-            if (scaleXY > 0.0f)
-            {
-                scaleXY  -= 0.2f;
-            }
-            else
-            {
-                dir = 1;
-            }
-        }
-*/
-        //if (dir == 1)
-        //{
-        //    if (ang < 360.0f)
-        //    {
-        //        ang += 0.4f;
-        //    }
-        //    else
-        //    {
-        //        dir = 2;
-        //    }
-        //}
-        //else
-        //{
-        //    if (ang > 0.0f)
-        //    {
-        //        ang -= 0.4f;
-        //    }
-        //    else
-        //    {
-        //        dir = 1;
-        //    }
-        //}
-
+	glDisable(GL_NORMALIZE);
 
 	sprintf(strBuffer, "Tipo cámara: %d", tipoCamara);
 	SetWindowText(hWnd, strBuffer);
-					
+
+	DibujaLuz();
+
 	return TRUE;
 }
 
@@ -2878,6 +2852,24 @@ int ManejaTeclado()
                 Ztor -= 1.0f;
         }
 
+		//Controles de la iluminación
+		if (keys['Z'])
+			LightPos[0] += 1.0f; //Hacia la derecha
+
+		if (keys['X'])
+			LightPos[0] -= 1.0f; //Hacia la izquierda
+
+		if (keys['C'])
+			LightPos[1] += 1.0f; //Hacia arriba
+
+		if (keys['V'])
+			LightPos[1] -= 1.0f; //Hacia abajo
+
+		if (keys['B'])
+			LightPos[2] += 1.0f; //Hacia adelante
+
+		if (keys['N'])
+			LightPos[2] -= 1.0f; //Hacia atrás
 
 
 	return TRUE;
