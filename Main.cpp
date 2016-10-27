@@ -2296,10 +2296,17 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
         //Se traslada el cono a la posicion que se desea
         //Se escala el cono ya que el modelo original es algo grande
 	glPushMatrix();
-		glTranslatef(8.0f, 0.0f, 3.0f);
+		glTranslatef(-100.0f, 0.0f, -5.0f);
                 glScalef(0.7f, 0.7f, 0.7f);
 		dibujaCono();
 	glPopMatrix();
+
+        SeleccionaMaterial(1);
+            glPushMatrix();
+            glTranslatef(8.0f, 0.0f, 3.0f);
+            glScalef(0.7f, 0.7f, 0.7f);
+            dibujaCono();
+        glPopMatrix();
 
         SeleccionaMaterial(1);
 	glPushMatrix();
