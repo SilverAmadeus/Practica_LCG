@@ -119,6 +119,26 @@ GLfloat LightDif[] = { 0.9f,  0.9f, 0.9f, 1.0f };		// Valores de la componente d
 GLfloat LightSpc[] = { 0.9f,  0.9f, 0.9f, 1.0f };		// Valores de la componente especular
 CVector lightPosition;
 
+GLfloat gDefaultAmbient[] = { 0.2f, 0.2f, 0.2f, 1.0f };
+GLfloat gDefaultDiffuse[] = { 0.8f, 0.8f, 0.8f, 1.0f };
+GLfloat gDefaultSpecular[] = { 0.0f, 0.0f, 0.0f, 1.0f };
+GLfloat gDefaultShininess = 0.0f;
+
+//Naranja metalico
+GLfloat nmetalAmb[] = { 0.3f, 0.2f, 0.1f, 1.0f };
+GLfloat nmetalDif[] = { 0.7f, 0.4f, 0.1f, 1.0f };
+GLfloat nmetalSpe[] = { 0.6f, 0.3f, 0.1f, 1.0f };
+GLfloat nmetalShi = 110.0f;
+
+//Verde metalico
+GLfloat vmetalAmb[] = { 0.1f, 0.3f, 0.14f, 1.0f };
+GLfloat vmetalDif[] = { 0.08f, 0.7f, 0.11f, 1.0f };
+GLfloat vmetalSpe[] = { 0.08f, 0.6f, 0.16f, 1.0f };
+GLfloat vmetalShi = 110.0f;
+
+//Contenedor de texturas para el escenario
+CTga textura[25];
+
 LRESULT	CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);	// Declaracion de WndProc (Procedimiento de ventana)
 
 GLvoid ReDimensionaEscenaGL(GLsizei width, GLsizei height)	// Redimensiona e inicializa la ventana
@@ -142,6 +162,57 @@ GLvoid ReDimensionaEscenaGL(GLsizei width, GLsizei height)	// Redimensiona e ini
 	glWidth=width;
 	glHeight=height;
 }
+
+void CargaTexturas()
+{
+	textura[0].LoadTGA("Texturas/t1.tga");
+	textura[1].LoadTGA("Texturas/t2.tga");
+	textura[2].LoadTGA("Texturas/t3.tga");
+	textura[3].LoadTGA("Texturas/t4.tga");
+	textura[4].LoadTGA("Texturas/t5.tga");
+	textura[5].LoadTGA("Texturas/t6.tga");
+	textura[6].LoadTGA("Texturas/t7.tga");
+	textura[7].LoadTGA("Texturas/t8.tga");
+	textura[8].LoadTGA("Texturas/t9.tga");
+	textura[9].LoadTGA("Texturas/t10.tga");
+	textura[10].LoadTGA("Texturas/t11.tga");
+	textura[11].LoadTGA("Texturas/t12.tga");
+	textura[12].LoadTGA("Texturas/t13.tga");
+	textura[13].LoadTGA("Texturas/t14.tga");
+	textura[14].LoadTGA("Texturas/t15.tga");
+	textura[15].LoadTGA("Texturas/t16.tga");
+	textura[16].LoadTGA("Texturas/t17.tga");
+	textura[17].LoadTGA("Texturas/t18.tga");
+	textura[18].LoadTGA("Texturas/t19.tga");
+	textura[19].LoadTGA("Texturas/t20.tga");
+	textura[20].LoadTGA("Texturas/t21.tga");
+}
+
+void DescargaTexturas()
+{
+	textura[0].Elimina();
+	textura[1].Elimina();
+	textura[2].Elimina();
+	textura[3].Elimina();
+	textura[4].Elimina();
+	textura[5].Elimina();
+	textura[6].Elimina();
+	textura[7].Elimina();
+	textura[8].Elimina();
+	textura[9].Elimina();
+	textura[10].Elimina();
+	textura[11].Elimina();
+	textura[12].Elimina();
+	textura[13].Elimina();
+	textura[14].Elimina();
+	textura[15].Elimina();
+	textura[16].Elimina();
+	textura[17].Elimina();
+	textura[18].Elimina();
+	textura[19].Elimina();
+	textura[20].Elimina();
+}
+
 
 int CargaModelos()
 {
@@ -172,7 +243,7 @@ void DescargaModelos()
     g_Load3ds.UnLoad3DSFile(&g_3DModel1g, textureModel1g); //Torso
     g_Load3ds.UnLoad3DSFile(&g_3DModel2g, textureModel2g);//Cabeza
     g_Load3ds.UnLoad3DSFile(&g_3DModel3g, textureModel3g);//Up leg right
-	g_Load3ds.UnLoad3DSFile(&g_3DModel4g, textureModel4g); //Up leg left
+    g_Load3ds.UnLoad3DSFile(&g_3DModel4g, textureModel4g); //Up leg left
     g_Load3ds.UnLoad3DSFile(&g_3DModel5g, textureModel5g);//Brazo derecho
     g_Load3ds.UnLoad3DSFile(&g_3DModel6g, textureModel6g);//Brazo izq
     g_Load3ds.UnLoad3DSFile(&g_3DModel7g, textureModel7g); //Low lew
@@ -273,8 +344,38 @@ int IniGL(GLvoid)										// Aqui se configuran los parametros iniciales de Ope
 
         IncDec = 0; //0: Incrementa valores, 1: Decrementa valores
 
+		CargaTexturas();
 	return TRUE;										
 }
+
+void SeleccionaMaterial(int tipo)
+{
+    if (tipo == 0)
+    {
+        //Material default de OpenGL
+        glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, gDefaultDiffuse);
+        glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, gDefaultAmbient);
+        glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, gDefaultSpecular);
+        glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, gDefaultShininess);
+    }
+    else if (tipo == 1)
+    {
+        //naranja metálico
+        glMaterialfv(GL_FRONT, GL_AMBIENT, nmetalAmb);
+        glMaterialfv(GL_FRONT, GL_DIFFUSE, nmetalDif);
+        glMaterialfv(GL_FRONT, GL_SPECULAR, nmetalSpe);
+        glMaterialf(GL_FRONT, GL_SHININESS, nmetalShi);
+    }
+    else if (tipo == 2)
+    {
+        //verde metálico
+        glMaterialfv(GL_FRONT, GL_AMBIENT, vmetalAmb);
+        glMaterialfv(GL_FRONT, GL_DIFFUSE, vmetalDif);
+        glMaterialfv(GL_FRONT, GL_SPECULAR, vmetalSpe);
+        glMaterialf(GL_FRONT, GL_SHININESS, vmetalShi);
+    }
+}
+
 
 void controlCamara(int funcion)
 {
@@ -514,7 +615,7 @@ void DibujaEjes()
 	glColor3f(1.0f,1.0f,1.0f);
 }
 
-void dibujaEsfera(float radio, int paralelos, int meridianos, int modoRender)
+void dibujaEsfera(float radio, int paralelos, int meridianos, int modoRender, int semi)
 {
     float ang1, ang2;
     float a[3], b[3], c[3], d[3];
@@ -555,71 +656,41 @@ void dibujaEsfera(float radio, int paralelos, int meridianos, int modoRender)
             //Parte superior
             if (modoRender == 1) glBegin(GL_QUADS);// sólido
             else if (modoRender == 2) glBegin(GL_LINE_LOOP);// alambrado
-            glVertex3f(a[0], a[1], a[2]);
-            glVertex3f(b[0], b[1], b[2]);
-            glVertex3f(c[0], c[1], c[2]);
-            glVertex3f(d[0], d[1], d[2]);
+                glNormal3f(a[0], a[1], a[2]);
+                glVertex3f(a[0], a[1], a[2]);
+
+                glNormal3f(b[0], b[1], b[2]);
+                glVertex3f(b[0], b[1], b[2]);
+
+                glNormal3f(c[0], c[1], c[2]);
+                glVertex3f(c[0], c[1], c[2]);
+
+                glNormal3f(d[0], d[1], d[2]);
+                glVertex3f(d[0], d[1], d[2]);
             glEnd();
 
-            //Parte inferior
-            if (modoRender == 1) glBegin(GL_QUADS);// sólido
-            else if (modoRender == 2) glBegin(GL_LINE_LOOP);// alambrado
-            glVertex3f(a[0], -a[1], a[2]);
-            glVertex3f(d[0], -d[1], d[2]);
-            glVertex3f(c[0], -c[1], c[2]);
-            glVertex3f(b[0], -b[1], b[2]);
-            glEnd();
+            //Si la opcion es igual a 1 se dibuja la esfera completa, si no, se dibuja solo la mitad
+            if (semi == 1)
+            {
+                //Parte inferior
+                if (modoRender == 1) glBegin(GL_QUADS);// sólido
+                else if (modoRender == 2) glBegin(GL_LINE_LOOP);// alambrado
+                glNormal3f(a[0], -a[1], a[2]);
+                glVertex3f(a[0], -a[1], a[2]);
+
+                glNormal3f(d[0], -d[1], d[2]);
+                glVertex3f(d[0], -d[1], d[2]);
+
+                glNormal3f(c[0], -c[1], c[2]);
+                glVertex3f(c[0], -c[1], c[2]);
+                
+                glNormal3f(b[0], -b[1], b[2]);
+                glVertex3f(b[0], -b[1], b[2]);
+                glEnd();
+            }
 
         }
     }
-}
-
-void SemiesferaSup(float radio, int paralelos, int meridianos, int modoRender) {
-
-	float ang1, ang2;
-	float a[3], b[3], c[3], d[3];
-	float delta1, delta2;
-
-	delta1 = 180.0f / paralelos;
-	delta2 = 360.0f / meridianos;
-	for (int i = 0; i < paralelos / 2; i++)
-	{
-		for (int j = 0; j <= meridianos; j++)
-		{
-			ang1 = i*delta1;
-			ang2 = j*delta2;
-			a[0] = radio*(float)cos(ang1*PI / 180.0f)*(float)cos(ang2*PI / 180.0f);
-			a[1] = radio*(float)sin(ang1*PI / 180.0f);
-			a[2] = radio*(float)cos(ang1*PI / 180.0f)*(float)sin(ang2*PI / 180.0f);
-
-			ang1 = (i + 1)*delta1;
-			ang2 = j*delta2;
-			b[0] = radio*(float)cos(ang1*PI / 180.0f)*(float)cos(ang2*PI / 180.0f);
-			b[1] = radio*(float)sin(ang1*PI / 180.0f);
-			b[2] = radio*(float)cos(ang1*PI / 180.0f)*(float)sin(ang2*PI / 180.0f);
-			ang1 = (i + 1)*delta1;
-			ang2 = (j + 1)*delta2;
-			c[0] = radio*(float)cos(ang1*PI / 180.0f)*(float)cos(ang2*PI / 180.0f);
-			c[1] = radio*(float)sin(ang1*PI / 180.0f);
-			c[2] = radio*(float)cos(ang1*PI / 180.0f)*(float)sin(ang2*PI / 180.0f);
-			ang1 = i*delta1;
-			ang2 = (j + 1)*delta2;
-			d[0] = radio*(float)cos(ang1*PI / 180.0f)*(float)cos(ang2*PI / 180.0f);
-			d[1] = radio*(float)sin(ang1*PI / 180.0f);
-			d[2] = radio*(float)cos(ang1*PI / 180.0f)*(float)sin(ang2*PI / 180.0f);
-
-			glColor3f(1.0, 0.0, 0.0);
-			//Parte superior
-			if (modoRender == 1) glBegin(GL_QUADS);// sólido
-			else if (modoRender == 2) glBegin(GL_LINE_LOOP);// alambrado
-			glVertex3f(a[0], a[1], a[2]);
-			glVertex3f(b[0], b[1], b[2]);
-			glVertex3f(c[0], c[1], c[2]);
-			glVertex3f(d[0], d[1], d[2]);
-			glEnd();
-		}
-	}
-
 }
 
 
@@ -631,108 +702,124 @@ void dibujaEscenario()
 		codigo = 0x0007;
 	if(modoRender == 2) // Alambrado (GL_LINE_LOOP)
 		codigo = 0x0002;
-	//objeto 1
-	glColor3f(0.6156f, 0.0f, 0.0f);
 
-	glBegin(codigo);
-		glNormal3f(0.0f, 1.0f, 0.0f);
-		glVertex3f(-120.0f, 0.0f, 17.0f);
-		glVertex3f(  80.0f, 0.0f, 17.0f);
-		glVertex3f(  80.0f, 0.0f,  0.0f);
-		glVertex3f(-120.0f, 0.0f,  0.0f);
+	glEnable(GL_TEXTURE_2D);
+
+	//objeto 1
+	glColor3f(1.0f, 0.0f, 0.0f);
+
+	glBindTexture(GL_TEXTURE_2D, textura[0].texID); //Para indicar que imagen de textura se la aplica.
+
+	glBegin(GL_QUADS);
+	glNormal3f(0.0f, 1.0f, 0.0f);
+	glTexCoord2f(0.0f, 0.0f); glVertex3f(-120.0f, 0.0f, 17.0f);
+	glTexCoord2f(12.0f, 0.0f); glVertex3f(80.0f, 0.0f, 17.0f);
+	glTexCoord2f(12.0f, 1.0f); glVertex3f(80.0f, 0.0f, 0.0f);
+	glTexCoord2f(0.0f, 1.0f); glVertex3f(-120.0f, 0.0f, 0.0f);
 	glEnd();
 
 	//objeto 2
 	glColor3f(1.0f, 0.4f, 0.0f);
-	
-	glBegin(codigo);
-		glNormal3f(0.0f, 1.0f, 0.0f);
-		glVertex3f(-120.0f, 0.0f,  0.0f);
-		glVertex3f(  50.0f, 0.0f,  0.0f);
-		glVertex3f(  50.0f, 0.0f,-20.0f);
-		glVertex3f(-120.0f, 0.0f,-20.0f);
+
+	glBegin(GL_QUADS);
+	glNormal3f(0.0f, 1.0f, 0.0f);
+	glTexCoord2f(0.0f, 0.9f); glVertex3f(-120.0f, 0.0f, 0.0f);
+	glTexCoord2f(1.0f, 0.9f); glVertex3f(50.0f, 0.0f, 0.0f);
+	glTexCoord2f(1.0f, 1.0f); glVertex3f(50.0f, 0.0f, -20.0f);
+	glTexCoord2f(0.0f, 1.0f); glVertex3f(-120.0f, 0.0f, -20.0f);
 	glEnd();
 
 	//objeto 2a
 	glColor3f(1.0f, 0.4f, 0.0f);
-	
-	glBegin(codigo);
-		glNormal3f(0.0f, 1.0f, 0.0f);
-		glVertex3f(50.0f, 0.0f,-12.0f);
-		glVertex3f(80.0f, 0.0f,-12.0f);
-		glVertex3f(80.0f, 0.0f,-30.0f);
-		glVertex3f(50.0f, 0.0f,-30.0f);
+
+	glBegin(GL_QUADS);
+	glNormal3f(0.0f, 1.0f, 0.0f);
+	glTexCoord2f(0.0f, 0.9f); glVertex3f(50.0f, 0.0f, -12.0f);
+	glTexCoord2f(1.0f, 0.9f); glVertex3f(80.0f, 0.0f, -12.0f);
+	glTexCoord2f(1.0f, 1.0f); glVertex3f(80.0f, 0.0f, -30.0f);
+	glTexCoord2f(0.0f, 1.0f); glVertex3f(50.0f, 0.0f, -30.0f);
 	glEnd();
+
 
 	//objeto 3
 	glColor3f(1.0f, 0.8f, 0.0f);
 
-	glBegin(codigo);
-		glNormal3f(0.0f, 1.0f, 0.0f);
-		glVertex3f(-115.0f, 0.0f,-20.0f);
-		glVertex3f(- 50.0f, 0.0f,-20.0f);
-		glVertex3f(- 50.0f, 0.0f,-40.0f);
-		glVertex3f(-115.0f, 0.0f,-40.0f);
+	glBindTexture(GL_TEXTURE_2D, textura[1].texID);
+	glBegin(GL_QUADS);
+	glNormal3f(0.0f, 1.0f, 0.0f);
+	glTexCoord2f(0.0f, 0.0f); glVertex3f(-115.0f, 0.0f, -20.0f);
+	glTexCoord2f(8.0f, 0.0f); glVertex3f(-50.0f, 0.0f, -20.0f);
+	glTexCoord2f(8.0f, 1.0f); glVertex3f(-50.0f, 0.0f, -40.0f);
+	glTexCoord2f(0.0f, 1.0f); glVertex3f(-115.0f, 0.0f, -40.0f);
 	glEnd();
 
 	//objeto 4
-	glColor3f(1.0f, 1.0f, 0.61f);
+	glColor3f(1.0f, 1.0f, 0.0f);
 
-	glBegin(codigo);
-		glNormal3f(0.0f, 1.0f, 0.0f);
-		glVertex3f( 80.0f, 0.0f, 17.0f);
-		glVertex3f(140.0f, 0.0f, 17.0f);
-		glVertex3f(140.0f, 0.0f,-30.0f);
-		glVertex3f( 80.0f, 0.0f,-30.0f);
+	glBindTexture(GL_TEXTURE_2D, textura[14].texID);
+
+	glBegin(GL_QUADS);
+	glNormal3f(0.0f, 1.0f, 0.0f);
+	glTexCoord2f(0.0f, 0.0f); glVertex3f(80.0f, 0.0f, 17.0f);
+	glTexCoord2f(1.0f, 0.0f); glVertex3f(140.0f, 0.0f, 17.0f);
+	glTexCoord2f(1.0f, 1.0f); glVertex3f(140.0f, 0.0f, -30.0f);
+	glTexCoord2f(0.0f, 1.0f); glVertex3f(80.0f, 0.0f, -30.0f);
 	glEnd();
 
 	//objeto 5
 	glColor3f(1.0f, 1.0f, 0.2f);
 
-	glBegin(codigo);
-		glNormal3f(0.0f, 0.0f, 1.0f);
-		glVertex3f(-110.0f,  0.0f,-40.0f);
-		glVertex3f(- 85.0f,  0.0f,-40.0f);
-		glVertex3f(- 85.0f, 17.0f,-40.0f);
-		glVertex3f(-110.0f, 17.0f,-40.0f);
+	glBindTexture(GL_TEXTURE_2D, textura[3].texID);
+
+	glBegin(GL_QUADS);
+	glNormal3f(0.0f, 0.0f, 1.0f);
+	glTexCoord2f(0.0f, 0.0f); glVertex3f(-110.0f, 0.0f, -40.0f);
+	glTexCoord2f(1.0f, 0.0f); glVertex3f(-85.0f, 0.0f, -40.0f);
+	glTexCoord2f(1.0f, 1.0f); glVertex3f(-85.0f, 17.0f, -40.0f);
+	glTexCoord2f(0.0f, 1.0f); glVertex3f(-110.0f, 17.0f, -40.0f);
 	glEnd();
 
 	//objeto 6
 	glColor3f(1.0f, 1.0f, 0.6f);
 
-	glBegin(codigo);
-		glNormal3f(0.0f, 0.0f, 1.0f);
-		glVertex3f(-85.0f,  0.0f,-40.0f);
-		glVertex3f(-60.0f,  0.0f,-40.0f);
-		glVertex3f(-60.0f, 19.0f,-40.0f);
-		glVertex3f(-85.0f, 19.0f,-40.0f);
+	glBindTexture(GL_TEXTURE_2D, textura[2].texID);
+
+	glBegin(GL_QUADS);
+	glNormal3f(0.0f, 0.0f, 1.0f);
+	glTexCoord2f(0.0f, 0.0f); glVertex3f(-85.0f, 0.0f, -40.0f);
+	glTexCoord2f(1.0f, 0.0f); glVertex3f(-60.0f, 0.0f, -40.0f);
+	glTexCoord2f(1.0f, 1.0f); glVertex3f(-60.0f, 19.0f, -40.0f);
+	glTexCoord2f(0.0f, 1.0f); glVertex3f(-85.0f, 19.0f, -40.0f);
 	glEnd();
 
 	//objeto 7 (2 planos)
 	glColor3f(0.0f, 1.0f, 0.0f);
 
-	glBegin(codigo);
-		glNormal3f(0.0f, 0.0f, 1.0f);
-		glVertex3f(-120.0f,  0.0f, 0.0f);
-		glVertex3f(- 95.0f,  0.0f, 0.0f);
-		glVertex3f(- 95.0f, 22.0f, 0.0f);
-		glVertex3f(-120.0f, 22.0f, 0.0f);
+	glBindTexture(GL_TEXTURE_2D, textura[4].texID);
+
+	glBegin(GL_QUADS);
+	glNormal3f(0.0f, 0.0f, 1.0f);
+	glTexCoord2f(0.0f, 0.0f); glVertex3f(-120.0f, 0.0f, 0.0f);
+	glTexCoord2f(1.0f, 0.0f); glVertex3f(-95.0f, 0.0f, 0.0f);
+	glTexCoord2f(1.0f, 1.0f); glVertex3f(-95.0f, 22.0f, 0.0f);
+	glTexCoord2f(0.0f, 1.0f); glVertex3f(-120.0f, 22.0f, 0.0f);
 	glEnd();
 
 	glColor3f(0.7f, 1.0f, 0.0f);
 
-	glBegin(codigo);
-		glNormal3f(1.0f, 0.0f, 0.0f);
-		glVertex3f(-95.0f,  0.0f,  0.0f);
-		glVertex3f(-95.0f,  0.0f,-18.0f);
-		glVertex3f(-95.0f, 22.0f,-18.0f);
-		glVertex3f(-95.0f, 22.0f,  0.0f);
+	glBindTexture(GL_TEXTURE_2D, textura[5].texID);
+
+	glBegin(GL_QUADS);
+	glNormal3f(1.0f, 0.0f, 0.0f);
+	glTexCoord2f(0.0f, 0.0f); glVertex3f(-95.0f, 0.0f, 0.0f);
+	glTexCoord2f(1.0f, 0.0f); glVertex3f(-95.0f, 0.0f, -18.0f);
+	glTexCoord2f(1.0f, 1.0f); glVertex3f(-95.0f, 22.0f, -18.0f);
+	glTexCoord2f(0.0f, 1.0f); glVertex3f(-95.0f, 22.0f, 0.0f);
 	glEnd();
 
 	//objeto 8 (10 planos)
 	//1
 	glColor3f(0.0f, 1.0f, 0.4f);
-
 	glBegin(codigo);
 		glNormal3f(0.0f, 0.0f, 1.0f);
 		glVertex3f(-78.0f,  0.0f, 0.0f);
@@ -854,7 +941,7 @@ void dibujaEscenario()
 	glColor3f(0.08f, 0.32f, 0.67f);
 	glBegin(codigo);
 		
-		glNormal3f(1.0f, 0.0f, 0.0f);
+		glNormal3f(-1.0f, 0.0f, 0.0f);
 		glVertex3f(50.0f, 0.0f,  0.0f);
 		glVertex3f(50.0f, 22.0f, 0.0f);
 		glVertex3f(50.0f, 22.0f, -12.0f);
@@ -1489,6 +1576,8 @@ void dibujaEscenario()
                 glVertex3f(-54.0f, 1.0f, 1.0f);
                 glVertex3f(-54.0f, 0.0f, 1.0f);
         glEnd();
+		
+	glDisable(GL_TEXTURE_2D);
 
 	//Al final de la función siempre se regresa al color blanco default de opengl
 	glColor3f(1.0f,1.0f,1.0f);
@@ -1500,6 +1589,7 @@ void boxWallA(float x, float y, float z, int modoRender)
     glColor3f(1.0f, 1.0f, 0.0f);
     if (modoRender == 1) glBegin(GL_QUADS);// sólido
     else if (modoRender == 2) glBegin(GL_LINE_LOOP);// alambrado
+    glNormal3f(0.0f, 0.0f, -1.0f);
     glVertex3f(0.0f, 0.0f, 0.0f);
     glVertex3f(0.0f, y, 0.0f);
     glVertex3f(x, y, 0.0f);
@@ -1509,10 +1599,11 @@ void boxWallA(float x, float y, float z, int modoRender)
 
 void boxWallB(float x, float y, float z, int modoRender)
 {
-    glColor3f(1.0f, 0.0f, 0.0f);
+    glColor3f(-1.0f, 0.0f, 0.0f);
 
     if (modoRender == 1) glBegin(GL_QUADS);// sólido
     else if (modoRender == 2) glBegin(GL_LINE_LOOP);// alambrado
+    glNormal3f(-1.0f, 0.0f, 0.0f);
     glVertex3f(0.0f, 0.0f, 0.0f);
     glVertex3f(0.0f, 0.0f, z);
     glVertex3f(0.0f, y, z);
@@ -1525,6 +1616,7 @@ void boxWallC(float x, float y, float z, int modoRender)
     glColor3f(0.0f, 0.0f, 1.0f);
     if (modoRender == 1) glBegin(GL_QUADS);// sólido
     else if (modoRender == 2) glBegin(GL_LINE_LOOP);// alambrado
+    glNormal3f(0.0f, -1.0f, 0.0f);
     glVertex3f(0.0f, 0.0f, 0.0f);
     glVertex3f(x, 0.0f, 0.0f);
     glVertex3f(x, 0.0f, z);
@@ -1557,7 +1649,6 @@ void dibujaCaja(float ancho, float altura, float largo, int modoRender)
     glPushMatrix();
         glRotatef(180.0f, 1.0f, 0.0f, 0.0f);
         glTranslatef(0.0f, -altura, -largo);
-
         boxWallC(ancho, altura, largo, modoRender);
     glPopMatrix();
 
@@ -1645,11 +1736,16 @@ void dibujaCilindro(float radio, int lados, float altura, int modoRender) {
 	}
 }
 
-void dibujaCono(float radio1, float radio2, int lados, float altura, int modoRender)
+void dibujaCono()
 {
     float ang;
     float a[3], b[3], c[3], d[3];
     float delta;
+    float radio1 = 1.5;
+    float radio2 = 0.5;
+    int lados = 8;
+    float altura = 4.0;
+    int modoRender = 1;
 
     delta = 360.0f / lados;
 
@@ -1679,51 +1775,59 @@ void dibujaCono(float radio1, float radio2, int lados, float altura, int modoRen
 
         glPushMatrix();
         glTranslatef(0.0f, 0.5f, 0.0f);
-            if (modoRender == 1) glBegin(GL_QUADS);// sólido
-            else if (modoRender == 2) glBegin(GL_LINE_LOOP);// alambrado
-            glVertex3f(a[0], a[1], a[2]);
-            glVertex3f(b[0], b[1], b[2]);
-            glVertex3f(c[0], c[1], c[2]);
-            glVertex3f(d[0], d[1], d[2]);
-            glEnd();
+        if (modoRender == 1) glBegin(GL_QUADS);// sólido
+        else if (modoRender == 2) glBegin(GL_LINE_LOOP);// alambrado
+        glVertex3f(a[0], a[1], a[2]);
+        glVertex3f(b[0], b[1], b[2]);
+        glVertex3f(c[0], c[1], c[2]);
+        glVertex3f(d[0], d[1], d[2]);
+        glEnd();
 
-            //Tapa superior
-			glColor3f(1.0f, 1.0f, 0.0f);
-            if (modoRender == 1) glBegin(GL_TRIANGLES);// sólido
-            else if (modoRender == 2) glBegin(GL_LINE_LOOP);// alambrado
-            glVertex3f(c[0], c[1], c[2]);
-            glVertex3f(b[0], b[1], b[2]);
-            glVertex3f(0.0f, altura, 0.0f);
-            glEnd();
+        //Tapa superior
+        glColor3f(1.0f, 1.0f, 0.0f);
 
-            //Tapa inferior
-            glColor3f(0.0f, 0.0f, 1.0f);
+        if (modoRender == 1) glBegin(GL_TRIANGLES);// sólido
+        else if (modoRender == 2) glBegin(GL_LINE_LOOP);// alambrado
+        glVertex3f(c[0], c[1], c[2]);
+        glVertex3f(b[0], b[1], b[2]);
+        glVertex3f(0.0f, altura, 0.0f);
+        glEnd();
 
-            if (modoRender == 1) glBegin(GL_TRIANGLES);// sólido
-            else if (modoRender == 2) glBegin(GL_LINE_LOOP);// alambrado
-            glVertex3f(a[0], a[1], a[2]);
-            glVertex3f(d[0], d[1], d[2]);
-            glVertex3f(0.0f, 0.0f, 0.0f);
-            glEnd();
+        //Tapa inferior
+        glColor3f(0.0f, 0.0f, 1.0f);
 
-            glColor3f(1.0f, 1.0f, 1.0f);
-       glPopMatrix();
+        if (modoRender == 1) glBegin(GL_TRIANGLES);// sólido
+        else if (modoRender == 2) glBegin(GL_LINE_LOOP);// alambrado
+        glVertex3f(a[0], a[1], a[2]);
+        glVertex3f(d[0], d[1], d[2]);
+        glVertex3f(0.0f, 0.0f, 0.0f);
+        glEnd();
 
-       dibujaCilindro(radio1 + 0.7, 4, 0.5, 1);
+        glColor3f(1.0f, 1.0f, 1.0f);
+        glPopMatrix();
+
+        //Se hace la caja y despues se traslada al centro de los ejes de referencia
+        glPushMatrix();
+        glTranslated(-2.0f, 0.0f, -2.0f);
+        dibujaCaja(4.0, 0.5, 4.0, 1);
+        glPopMatrix();
     }
 }
 
 void dibujaHidrante() {
 
+    SeleccionaMaterial(2);
 	//Cuerpo del Hidrante
 	glPushMatrix();
 	glTranslatef(0.0, 0.5f, 0.0f);
 	dibujaCilindro(1.0f, 12.0f, 3.0f, 1);
 	glPopMatrix();
 
+        SeleccionaMaterial(2);
 	//Base
 	dibujaCilindro(1.5f, 12.0f, 0.5f, 1);
-
+        
+        SeleccionaMaterial(2);
 	//Brazo A
 	glPushMatrix();
 	glScalef(0.5f, 0.5f, 0.5f);
@@ -1732,7 +1836,8 @@ void dibujaHidrante() {
 	dibujaCilindro(1.0f, 12.0f, 2.7f, 1);
 	glPopMatrix();
 
-	//Brazo B
+        SeleccionaMaterial(2);
+        //Brazo B
 	glPushMatrix();
 	glScalef(0.5f, 0.5f, 0.5f);
 	glRotatef(-90.0f, 0.0f, 0.0f, 1.0f);
@@ -1740,24 +1845,29 @@ void dibujaHidrante() {
 	dibujaCilindro(1.0f, 12.0f, 2.7f, 1);
 	glPopMatrix();
 
-	//Arriba hidrante adorno
+        SeleccionaMaterial(2);
+        //Arriba hidrante adorno
 	glPushMatrix();
 	glTranslatef(0.0, 3.5, 0.0);
 	dibujaCilindro(1.2f, 12.0f, 0.2f, 1);
 	glPopMatrix();
 
+        SeleccionaMaterial(2);
 	//Semiesfera arriba hidrante
 	glPushMatrix();
 	glColor3f(1.0, 0.0, 0.0);
 	glTranslatef(0.0, 3.7, 0.0);
-	SemiesferaSup(1.0f, 12, 10, 1);
+	dibujaEsfera(1.0f, 12, 10, 1, 0);
 	glPopMatrix();
 
+        SeleccionaMaterial(2);
 	//Arriba hidrante adorno
 	glPushMatrix();
 	glTranslatef(0.0, 4.6, 0.0);
 	dibujaCilindro(0.2, 12.0f, 0.2f, 1);
 	glPopMatrix();
+
+        SeleccionaMaterial(0);
 }
 
 void dibujaEscalera() //se arma con traslaciones 
@@ -1966,6 +2076,7 @@ void dibujaEscalera() //se arma con traslaciones
 
 	glPushMatrix(); //Plano izquierdo
 	glBegin(codigo);
+	glNormal3f(-1.0, 0.0, 0.0);
 	glColor3f(0.501, 0.501, 0.75);
 	glVertex3f(-56.6, 0.0, 1.3);
 	glVertex3f(-56.6, 0.0, 3.3);
@@ -1976,6 +2087,7 @@ void dibujaEscalera() //se arma con traslaciones
 
 	glPushMatrix(); 
 	glBegin(codigo);
+	glNormal3f(1.0, 0.0, 0.0);
 	glColor3f(0.501, 0.501, 0.75);
 	glVertex3f(-56.6, 0.0, 1.3);
 	glVertex3f(-56.6, 12.5, 1.3);
@@ -1986,6 +2098,7 @@ void dibujaEscalera() //se arma con traslaciones
 
 	glPushMatrix(); //Plano derecho
 	glBegin(codigo);
+	glNormal3f(-1.0, 0.0, 0.0);
 	glColor3f(0.501, 0.501, 0.75);
 	glVertex3f(-43.6, 0.0, 1.3);
 	glVertex3f(-43.6, 0.0, 3.3);
@@ -1997,6 +2110,7 @@ void dibujaEscalera() //se arma con traslaciones
 
 	glPushMatrix(); 
 	glBegin(codigo);
+	glNormal3f(1.0, 0.0, 0.0);
 	glColor3f(0.501, 0.501, 0.75);
 	glVertex3f(-43.6, 0.0, 1.3);
 	glVertex3f(-43.6, 12.5, 1.3);
@@ -2007,6 +2121,7 @@ void dibujaEscalera() //se arma con traslaciones
 
 	glPushMatrix(); //Plano grande
 	glBegin(codigo);
+	glNormal3f(0.0, 1.0, 0.0);
 	glColor3f(0.501, 0.501, 1.0);
 	glVertex3f(-56.4, 5.2, 0.0);
 	glVertex3f(-56.4, 5.2, 2.7);
@@ -2017,6 +2132,7 @@ void dibujaEscalera() //se arma con traslaciones
 
 	glPushMatrix(); //Plano izquierda
 	glBegin(codigo);
+	glNormal3f(0.0, 1.0, 0.0);
 	glColor3f(0.601, 0.601, 1.0);
 	glVertex3f(-56.4, 5.2, 2.7);
 	glVertex3f(-56.4, 5.2, 5.0 );
@@ -2027,6 +2143,7 @@ void dibujaEscalera() //se arma con traslaciones
 
 	glPushMatrix(); //Plano derecha
 	glBegin(codigo);
+	glNormal3f(0.0, 1.0, 0.0);
 	glColor3f(0.601, 0.601, 1.0);
 	glVertex3f(-48.3, 5.2, 2.7);
 	glVertex3f(-48.3, 5.2, 5.0);
@@ -2165,7 +2282,9 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 	actualizaLuzParam();
 	DibujaEjes();
 	dibujaEscenario();
+        SeleccionaMaterial(1);
 	dibujaPersonaje();
+        SeleccionaMaterial(0);
 
 	glEnable(GL_NORMALIZE);
   	dibujaEscalera();
@@ -2173,60 +2292,79 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 
 	//Conos 
 	glEnable(GL_NORMALIZE);
+        SeleccionaMaterial(1);
+        //Se traslada el cono a la posicion que se desea
+        //Se escala el cono ya que el modelo original es algo grande
 	glPushMatrix();
-	glTranslatef(8.0f, 0.0f, 3.0f);
-	dibujaCono(1.0, 0.4, 30, 2.3, 1);
+		glTranslatef(8.0f, 0.0f, 3.0f);
+                glScalef(0.7f, 0.7f, 0.7f);
+		dibujaCono();
 	glPopMatrix();
 
+        SeleccionaMaterial(1);
 	glPushMatrix();
-	glTranslatef(-40.0,0.0,3.0f);
-	dibujaCono(1.0, 0.4, 30, 2.3, 1);
+		glTranslatef(-40.0,0.0,3.0f);
+                glScalef(0.7f, 0.7f, 0.7f);
+		dibujaCono();
 	glPopMatrix();
-	
+        
+	SeleccionaMaterial(1);
 	glPushMatrix();
-	glTranslatef(115.0, 0.0, 15.0f);
-	dibujaCono(1.0, 0.4, 30, 2.3, 1);
+		glTranslatef(115.0, 0.0, 15.0f);
+                glScalef(0.7f, 0.7f, 0.7f);
+		dibujaCono();
 	glPopMatrix();
-
+        
+	SeleccionaMaterial(1);
 	glPushMatrix();
-	glTranslatef(48.0, 0.0, 15.0f);
-	dibujaCono(1.0, 0.4, 30, 2.3, 1);
+		glTranslatef(48.0, 0.0, 15.0f);
+                glScalef(0.7f, 0.7f, 0.7f);
+		dibujaCono();
 	glPopMatrix();
-
-	glPushMatrix();
-	glTranslatef(-118.0, 0.0, 3.0f);
-	dibujaCono(1.0, 0.4, 30, 2.3, 1);
+      
+        SeleccionaMaterial(1);
+        glPushMatrix();
+		glTranslatef(-118.0, 0.0, 3.0f);
+                glScalef(0.7f, 0.7f, 0.7f);
+		dibujaCono();
 	glPopMatrix();
-
+        SeleccionaMaterial(0);
 	glDisable(GL_NORMALIZE);
 	
 	//Hidrante
 	glEnable(GL_NORMALIZE);
+		SeleccionaMaterial(2);
 	glPushMatrix();
-	glTranslatef(-100.0, 0.0, 3.0);
-	dibujaHidrante();
-	glPopMatrix();	
-	
-	glPushMatrix();
-	glTranslatef(127.0, 0.0, -10.0);
-	glRotatef(90, 0.0, 1.0, 0.0);	
-	dibujaHidrante();
+		glTranslatef(-100.0, 0.0, 3.0);
+		dibujaHidrante();
 	glPopMatrix();
 
+		SeleccionaMaterial(2);
 	glPushMatrix();
-	glTranslatef(-15.0, 0.0, 15.0);
-	dibujaHidrante();
+		glTranslatef(127.0, 0.0, -10.0);
+		glRotatef(90, 0.0, 1.0, 0.0);
+		dibujaHidrante();
 	glPopMatrix();
 
+		SeleccionaMaterial(2);
 	glPushMatrix();
-	glTranslatef(77.0, 0.0, 3.0);
-	dibujaHidrante();
+		glTranslatef(-15.0, 0.0, 15.0);
+		dibujaHidrante();
 	glPopMatrix();
 
+		SeleccionaMaterial(2);
 	glPushMatrix();
-	glTranslatef(45.0, 0.0, -27.0);
-	dibujaHidrante();
+		glTranslatef(77.0, 0.0, 3.0);
+		dibujaHidrante();
 	glPopMatrix();
+
+		SeleccionaMaterial(2);
+	glPushMatrix();
+		glTranslatef(45.0, 0.0, -27.0);
+		dibujaHidrante();
+	glPopMatrix();
+
+	SeleccionaMaterial(0);
 	glDisable(GL_NORMALIZE);
 
 	sprintf(strBuffer, "Tipo cámara: %d", tipoCamara);
@@ -2620,6 +2758,7 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instancia
 		}
 	}
         DescargaModelos();
+		DescargaTexturas();
 	// Finalización del programa
 	DestruyeVentanaOGL();							// Destruye la ventana
 	return (msg.wParam);							// Sale del programa
@@ -2853,10 +2992,10 @@ int ManejaTeclado()
         }
 
 		//Controles de la iluminación
-		if (keys['Z'])
+		if (keys['X'])
 			LightPos[0] += 1.0f; //Hacia la derecha
 
-		if (keys['X'])
+		if (keys['Z'])
 			LightPos[0] -= 1.0f; //Hacia la izquierda
 
 		if (keys['C'])
