@@ -669,8 +669,8 @@ void dibujaEsfera(float radio, int paralelos, int meridianos, int modoRender, in
                 glVertex3f(d[0], d[1], d[2]);
             glEnd();
 
-            //Si la opcion es igual a 1 se dibuja la esfera completa, si no, se dibuja solo la mitad
-            if (semi == 1)
+            //Si la opcion es igual a 0 se dibuja la esfera completa, si es 1, se dibuja solo la mitad
+            if (semi == 0)
             {
                 //Parte inferior
                 if (modoRender == 1) glBegin(GL_QUADS);// sólido
@@ -1857,7 +1857,7 @@ void dibujaHidrante() {
 	glPushMatrix();
 	glColor3f(1.0, 0.0, 0.0);
 	glTranslatef(0.0, 3.7, 0.0);
-	dibujaEsfera(1.0f, 12, 10, 1, 0);
+	dibujaEsfera(1.0f, 12, 10, 1, 1);
 	glPopMatrix();
 
         SeleccionaMaterial(2);
@@ -2333,38 +2333,34 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 	
 	//Hidrante
 	glEnable(GL_NORMALIZE);
-		SeleccionaMaterial(2);
+
 	glPushMatrix();
 		glTranslatef(-100.0, 0.0, 3.0);
 		dibujaHidrante();
 	glPopMatrix();
 
-		SeleccionaMaterial(2);
+
 	glPushMatrix();
 		glTranslatef(127.0, 0.0, -10.0);
 		glRotatef(90, 0.0, 1.0, 0.0);
 		dibujaHidrante();
 	glPopMatrix();
 
-		SeleccionaMaterial(2);
 	glPushMatrix();
 		glTranslatef(-15.0, 0.0, 15.0);
 		dibujaHidrante();
 	glPopMatrix();
 
-		SeleccionaMaterial(2);
 	glPushMatrix();
 		glTranslatef(77.0, 0.0, 3.0);
 		dibujaHidrante();
 	glPopMatrix();
 
-		SeleccionaMaterial(2);
 	glPushMatrix();
 		glTranslatef(45.0, 0.0, -27.0);
 		dibujaHidrante();
 	glPopMatrix();
 
-	SeleccionaMaterial(0);
 	glDisable(GL_NORMALIZE);
 
 	sprintf(strBuffer, "Tipo cámara: %d", tipoCamara);
