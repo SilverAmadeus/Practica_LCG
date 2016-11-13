@@ -619,55 +619,73 @@ void dibujaEsfera(float radio, int paralelos, int meridianos, int modoRender, in
 {
     float ang1, ang2;
     float a[3], b[3], c[3], d[3];
-    float delta1, delta2;
+    float delta1, delta2, deltaT;
 
     delta1 = 180.0f / paralelos;
     delta2 = 360.0f / meridianos;
+	deltaT = 1.0 / paralelos;
+	float t1, t2, s1, s2;
+	glEnable(GL_TEXTURE_2D);
 
-    //Semiesfera superior (y positivos)
+	//Semiesfera superior (y positivos)
     for (int i = 0; i < paralelos/2; i++)
     {
-        for (int j = 0; j <= meridianos; j++)
-        {
-            ang1 = i*delta1;
-            ang2 = j*delta2;
-            a[0] = radio*(float)cos(ang1*PI / 180.0f)*(float)cos(ang2*PI / 180.0f);
-            a[1] = radio*(float)sin(ang1*PI / 180.0f);
-            a[2] = radio*(float)cos(ang1*PI / 180.0f)*(float)sin(ang2*PI / 180.0f);
+		t1 = 0.15+i*deltaT;
+		t2 = 0.15+(i + 1.0)*deltaT;
+		s1 = 0.0;
+		s2 = 1.0;
 
-            ang1 = (i + 1)*delta1;
-            ang2 = j*delta2;
-            b[0] = radio*(float)cos(ang1*PI / 180.0f)*(float)cos(ang2*PI / 180.0f);
-            b[1] = radio*(float)sin(ang1*PI / 180.0f);
-            b[2] = radio*(float)cos(ang1*PI / 180.0f)*(float)sin(ang2*PI / 180.0f);
-            ang1 = (i + 1)*delta1;
-            ang2 = (j + 1)*delta2;
-            c[0] = radio*(float)cos(ang1*PI / 180.0f)*(float)cos(ang2*PI / 180.0f);
-            c[1] = radio*(float)sin(ang1*PI / 180.0f);
-            c[2] = radio*(float)cos(ang1*PI / 180.0f)*(float)sin(ang2*PI / 180.0f);
-            ang1 = i*delta1;
-            ang2 = (j + 1)*delta2;
-            d[0] = radio*(float)cos(ang1*PI / 180.0f)*(float)cos(ang2*PI / 180.0f);
-            d[1] = radio*(float)sin(ang1*PI / 180.0f);
-            d[2] = radio*(float)cos(ang1*PI / 180.0f)*(float)sin(ang2*PI / 180.0f);
+		for (int j = 0; j <= meridianos; j++)
+		{
+			ang1 = i*delta1;
+			ang2 = j*delta2;
+			a[0] = radio*(float)cos(ang1*PI / 180.0f)*(float)cos(ang2*PI / 180.0f);
+			a[1] = radio*(float)sin(ang1*PI / 180.0f);
+			a[2] = radio*(float)cos(ang1*PI / 180.0f)*(float)sin(ang2*PI / 180.0f);
 
-            glColor3f(1.0f, 1.0f, 1.0f);
+			ang1 = (i + 1)*delta1;
+			ang2 = j*delta2;
+			b[0] = radio*(float)cos(ang1*PI / 180.0f)*(float)cos(ang2*PI / 180.0f);
+			b[1] = radio*(float)sin(ang1*PI / 180.0f);
+			b[2] = radio*(float)cos(ang1*PI / 180.0f)*(float)sin(ang2*PI / 180.0f);
+			ang1 = (i + 1)*delta1;
+			ang2 = (j + 1)*delta2;
+			c[0] = radio*(float)cos(ang1*PI / 180.0f)*(float)cos(ang2*PI / 180.0f);
+			c[1] = radio*(float)sin(ang1*PI / 180.0f);
+			c[2] = radio*(float)cos(ang1*PI / 180.0f)*(float)sin(ang2*PI / 180.0f);
+			ang1 = i*delta1;
+			ang2 = (j + 1)*delta2;
+			d[0] = radio*(float)cos(ang1*PI / 180.0f)*(float)cos(ang2*PI / 180.0f);
+			d[1] = radio*(float)sin(ang1*PI / 180.0f);
+			d[2] = radio*(float)cos(ang1*PI / 180.0f)*(float)sin(ang2*PI / 180.0f);
 
-            //Parte superior
-            if (modoRender == 1) glBegin(GL_QUADS);// sólido
-            else if (modoRender == 2) glBegin(GL_LINE_LOOP);// alambrado
-                glNormal3f(a[0], a[1], a[2]);
-                glVertex3f(a[0], a[1], a[2]);
+			glColor3f(1.0f, 1.0f, 1.0f);
+		
 
-                glNormal3f(b[0], b[1], b[2]);
-                glVertex3f(b[0], b[1], b[2]);
+			//Parte superior		
+			if (modoRender == 1) glBegin(GL_QUADS);// sólido
+			else if (modoRender == 2) glBegin(GL_LINE_LOOP);// alambrado
+		
 
-                glNormal3f(c[0], c[1], c[2]);
-                glVertex3f(c[0], c[1], c[2]);
+				glBindTexture(GL_TEXTURE_2D, textura[20].texID);
+				glBegin(GL_QUADS);			
+				glNormal3f(a[0], a[1], a[2]);
+				glTexCoord2f(s1*2, t1);
+				glVertex3f(a[0], a[1], a[2]);
 
-                glNormal3f(d[0], d[1], d[2]);
-                glVertex3f(d[0], d[1], d[2]);
-            glEnd();
+				glNormal3f(b[0], b[1], b[2]);
+				glTexCoord2f(s1*2,t2);
+				glVertex3f(b[0], b[1], b[2]);
+
+				glNormal3f(c[0], c[1], c[2]);
+				glTexCoord2f(s2*2,t2);
+				glVertex3f(c[0], c[1], c[2]);
+
+				glNormal3f(d[0], d[1], d[2]);
+				glTexCoord2f(s2*2, t1);
+				glVertex3f(d[0], d[1], d[2]);
+				
+				glEnd();
 
             //Si la opcion es igual a 0 se dibuja la esfera completa, si es 1, se dibuja solo la mitad
             if (semi == 0)
@@ -675,7 +693,8 @@ void dibujaEsfera(float radio, int paralelos, int meridianos, int modoRender, in
                 //Parte inferior
                 if (modoRender == 1) glBegin(GL_QUADS);// sólido
                 else if (modoRender == 2) glBegin(GL_LINE_LOOP);// alambrado
-                glNormal3f(a[0], -a[1], a[2]);
+                
+				glNormal3f(a[0], -a[1], a[2]);
                 glVertex3f(a[0], -a[1], a[2]);
 
                 glNormal3f(d[0], -d[1], d[2]);
@@ -691,6 +710,7 @@ void dibujaEsfera(float radio, int paralelos, int meridianos, int modoRender, in
 
         }
     }
+	glDisable(GL_TEXTURE_2D);
 }
 
 
