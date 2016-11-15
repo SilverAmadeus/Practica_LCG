@@ -136,6 +136,17 @@ GLfloat vmetalDif[] = { 0.08f, 0.7f, 0.11f, 1.0f };
 GLfloat vmetalSpe[] = { 0.08f, 0.6f, 0.16f, 1.0f };
 GLfloat vmetalShi = 110.0f;
 
+//Animacion
+const int maxKF = 9; //Num. total de KeyFrames para la animacion
+FRAME KeyFrame[maxKF]; //Contenedor para almacenar cada keyframe de la animacion
+
+bool play = false;
+int playIndex = 0;
+
+//En seccion de globales:
+datosColadera datColadera;
+
+
 //Contenedor de texturas para el escenario
 CTga textura[25];
 
@@ -291,6 +302,226 @@ void iniciaCamara()
 
 }
 
+void InicializaAnim()
+{
+	//Se inicializan las variables de la secuencia 1
+	for (int i = 0; i<maxKF; i++)
+	{
+		KeyFrame[i].Angt1 = 0.0f;
+		KeyFrame[i].Angt2 = 0.0f;
+		KeyFrame[i].Angc1 = 0.0f;
+		KeyFrame[i].Angc2 = 0.0f;
+		KeyFrame[i].Angbi1 = 0.0f;
+		KeyFrame[i].Angbi2 = 0.0f;
+		KeyFrame[i].Angbib = 0.0f;
+		KeyFrame[i].Angbd1 = 0.0f;
+		KeyFrame[i].Angbd2 = 0.0f;
+		KeyFrame[i].Angbdb = 0.0f;
+		KeyFrame[i].Angpizq = 0.0f;
+		KeyFrame[i].Angpder = 0.0f;
+		KeyFrame[i].Angpi = 0.0f;
+		KeyFrame[i].Angpd = 0.0f;
+		KeyFrame[i].Xtor = 0.0f;
+		KeyFrame[i].Ytor = 0.0f;
+		KeyFrame[i].Ztor = 0.0f;
+
+		KeyFrame[i].incAngt1 = 0.0f;
+		KeyFrame[i].incAngt1 = 0.0f;
+		KeyFrame[i].incAngc1 = 0.0f;
+		KeyFrame[i].incAngc2 = 0.0f;
+		KeyFrame[i].incAngbi1 = 0.0f;
+		KeyFrame[i].incAngbi2 = 0.0f;
+		KeyFrame[i].incAngbib = 0.0f;
+		KeyFrame[i].incAngbd1 = 0.0f;
+		KeyFrame[i].incAngbd2 = 0.0f;
+		KeyFrame[i].incAngbdb = 0.0f;
+		KeyFrame[i].incAngpizq = 0.0f;
+		KeyFrame[i].incAngpder = 0.0f;
+		KeyFrame[i].incAngpi = 0.0f;
+		KeyFrame[i].incAngpd = 0.0f;
+		KeyFrame[i].incXtor = 0.0f;
+		KeyFrame[i].incYtor = 0.0f;
+		KeyFrame[i].incZtor = 0.0f;
+	}
+
+	play = false;
+	playIndex = 0;
+}
+
+void DatosAnimacion()
+{
+	//KF1
+	KeyFrame[0].Angt1 = 0.0f;
+	KeyFrame[0].Angt2 = 0.0f;
+	KeyFrame[0].Angc1 = 20.0f;
+	KeyFrame[0].Angc2 = 0.0f;
+	KeyFrame[0].Angbi1 = 0.0f;
+	KeyFrame[0].Angbi2 = 0.0f;
+	KeyFrame[0].Angbib = 0.0f;
+	KeyFrame[0].Angbd1 = 0.0f;
+	KeyFrame[0].Angbd2 = 0.0f;
+	KeyFrame[0].Angbdb = 0.0f;
+	KeyFrame[0].Angpizq = 0.0f;
+	KeyFrame[0].Angpder = 0.0f;
+	KeyFrame[0].Angpi = 0.0f;
+	KeyFrame[0].Angpd = 0.0f;
+	KeyFrame[0].Xtor = 0.0f;
+	KeyFrame[0].Ytor = 0.0f;
+	KeyFrame[0].Ztor = 0.0f;
+
+	//KF2
+	KeyFrame[1].Angt1 = 0.0f;
+	KeyFrame[1].Angt2 = 0.0f;
+	KeyFrame[1].Angc1 = -5.0f;
+	KeyFrame[1].Angc2 = 0.0f;
+	KeyFrame[1].Angbi1 = 0.0f;
+	KeyFrame[1].Angbi2 = 0.0f;
+	KeyFrame[1].Angbib = 0.0f;
+	KeyFrame[1].Angbd1 = 0.0f;
+	KeyFrame[1].Angbd2 = 0.0f;
+	KeyFrame[1].Angbdb = 0.0f;
+	KeyFrame[1].Angpizq = 0.0f;
+	KeyFrame[1].Angpder = 0.0f;
+	KeyFrame[1].Angpi = 0.0f;
+	KeyFrame[1].Angpd = 0.0f;
+	KeyFrame[1].Xtor = 0.0f;
+	KeyFrame[1].Ytor = 0.0f;
+	KeyFrame[1].Ztor = 0.0f;
+
+	//KF3
+	KeyFrame[2].Angt1 = 0.0f;
+	KeyFrame[2].Angt2 = 0.0f;
+	KeyFrame[2].Angc1 = 15.0f;
+	KeyFrame[2].Angc2 = 0.0f;
+	KeyFrame[2].Angbi1 = 0.0f;
+	KeyFrame[2].Angbi2 = 0.0f;
+	KeyFrame[2].Angbib = 0.0f;
+	KeyFrame[2].Angbd1 = 0.0f;
+	KeyFrame[2].Angbd2 = 0.0f;
+	KeyFrame[2].Angbdb = 0.0f;
+	KeyFrame[2].Angpizq = 0.0f;
+	KeyFrame[2].Angpder = 0.0f;
+	KeyFrame[2].Angpi = 0.0f;
+	KeyFrame[2].Angpd = 0.0f;
+	KeyFrame[2].Xtor = 0.0f;
+	KeyFrame[2].Ytor = 0.0f;
+	KeyFrame[2].Ztor = 0.0f;
+
+	//KF4
+	KeyFrame[3].Angt1 = -10.0f;
+	KeyFrame[3].Angt2 = 0.0f;
+	KeyFrame[3].Angc1 = -5.0f;
+	KeyFrame[3].Angc2 = 0.0f;
+	KeyFrame[3].Angbi1 = 0.0f;
+	KeyFrame[3].Angbi2 = 0.0f;
+	KeyFrame[3].Angbib = 0.0f;
+	KeyFrame[3].Angbd1 = -200.0f;
+	KeyFrame[3].Angbd2 = 0.0f;
+	KeyFrame[3].Angbdb = 0.0f;
+	KeyFrame[3].Angpizq = 10.0f;
+	KeyFrame[3].Angpder = 10.0f;
+	KeyFrame[3].Angpi = 0.0f;
+	KeyFrame[3].Angpd = 0.0f;
+	KeyFrame[3].Xtor = 0.0f;
+	KeyFrame[3].Ytor = 0.0f;
+	KeyFrame[3].Ztor = 0.0f;
+
+
+	//KF5
+	KeyFrame[4].Angt1 = 30.0f;
+	KeyFrame[4].Angt2 = 0.0f;
+	KeyFrame[4].Angc1 = 0.0f;
+	KeyFrame[4].Angc2 = 0.0f;
+	KeyFrame[4].Angbi1 = 0.0f;
+	KeyFrame[4].Angbi2 = 0.0f;
+	KeyFrame[4].Angbib = 0.0f;
+	KeyFrame[4].Angbd1 = 50.0f;
+	KeyFrame[4].Angbd2 = 0.0f;
+	KeyFrame[4].Angbdb = 0.0f;
+	KeyFrame[4].Angpizq = -30.0f;
+	KeyFrame[4].Angpder = -30.0f;
+	KeyFrame[4].Angpi = 0.0f;
+	KeyFrame[4].Angpd = 0.0f;
+	KeyFrame[4].Xtor = 0.0f;
+	KeyFrame[4].Ytor = 0.0f;
+	KeyFrame[4].Ztor = 0.0f;
+
+	//KF6
+	KeyFrame[5].Angt1 = 30.0f;
+	KeyFrame[5].Angt2 = 0.0f;
+	KeyFrame[5].Angc1 = 0.0f;
+	KeyFrame[5].Angc2 = 0.0f;
+	KeyFrame[5].Angbi1 = 0.0f;
+	KeyFrame[5].Angbi2 = 0.0f;
+	KeyFrame[5].Angbib = 0.0f;
+	KeyFrame[5].Angbd1 = 0.0f;
+	KeyFrame[5].Angbd2 = 0.0f;
+	KeyFrame[5].Angbdb = 0.0f;
+	KeyFrame[5].Angpizq = -30.0f;
+	KeyFrame[5].Angpder = -30.0f;
+	KeyFrame[5].Angpi = 0.0f;
+	KeyFrame[5].Angpd = 0.0f;
+	KeyFrame[5].Xtor = 0.0f;
+	KeyFrame[5].Ytor = 0.0f;
+	KeyFrame[5].Ztor = 0.0f;
+
+	//KF7
+	KeyFrame[6].Angt1 = 60.0f;
+	KeyFrame[6].Angt2 = 0.0f;
+	KeyFrame[6].Angc1 = 0.0f;
+	KeyFrame[6].Angc2 = 0.0f;
+	KeyFrame[6].Angbi1 = 0.0f;
+	KeyFrame[6].Angbi2 = 0.0f;
+	KeyFrame[6].Angbib = .0f;
+	KeyFrame[6].Angbd1 = 0.0f;
+	KeyFrame[6].Angbd2 = 0.0f;
+	KeyFrame[6].Angbdb = 0.0f;
+	KeyFrame[6].Angpizq = 0.0f;
+	KeyFrame[6].Angpder = 60.0f;
+	KeyFrame[6].Angpi = 0.0f;
+	KeyFrame[6].Angpd = 0.0f;
+	KeyFrame[6].Xtor = 0.0f;
+	KeyFrame[6].Ytor = 10.0f;
+	KeyFrame[6].Ztor = 0.0f;
+
+	//KF8
+	KeyFrame[7].Angt1 = 360.0f;
+	KeyFrame[7].Angt2 = 0.0f;
+	KeyFrame[7].Angc1 = 0.0f;
+	KeyFrame[7].Angc2 = 0.0f;
+	KeyFrame[7].Angbi1 = 0.0f;
+	KeyFrame[7].Angbi2 = 0.0f;
+	KeyFrame[7].Angbib = .0f;
+	KeyFrame[7].Angbd1 = 0.0f;
+	KeyFrame[7].Angbd2 = 0.0f;
+	KeyFrame[7].Angbdb = 0.0f;
+	KeyFrame[7].Angpizq = 0.0f;
+	KeyFrame[7].Angpder = 60.0f;
+	KeyFrame[7].Angpi = 0.0f;
+	KeyFrame[7].Angpd = 0.0f;
+	KeyFrame[7].Xtor = 0.0f;
+	KeyFrame[7].Ytor = 10.0f;
+	KeyFrame[7].Ztor = 0.0f;
+
+	//KF9
+	KeyFrame[8].Angt1 = 360.0f;
+	KeyFrame[8].Angt2 = 0.0f;
+	KeyFrame[8].Angc1 = 0.0f;
+	KeyFrame[8].Angc2 = 0.0f;
+	KeyFrame[8].Angbi1 = -180.0f;
+	KeyFrame[8].Angbi2 = 0.0f;
+	KeyFrame[8].Angbib = 0.0f;
+	KeyFrame[8].Angbd1 = 0.0f;
+	KeyFrame[8].Angbd2 = 0.0f;
+	KeyFrame[8].Angbdb = 0.0f;
+	KeyFrame[8].Angpizq = 0.0f;
+	KeyFrame[8].Angpder = 0.0f;
+	KeyFrame[8].Angpi = 0.0f;
+	KeyFrame[8].Angpd = 0.0f;
+	KeyFrame[8].Xtor = 0.0f;
+	KeyFrame[8].Ytor = 0.0f;
+	KeyFrame[8].Ztor = 0.0f;
+}
 
 int IniGL(GLvoid)										// Aqui se configuran los parametros iniciales de OpenGL
 {
@@ -343,11 +574,116 @@ int IniGL(GLvoid)										// Aqui se configuran los parametros iniciales de Ope
         Ztor = 0.0f;
 
         IncDec = 0; //0: Incrementa valores, 1: Decrementa valores
+		
+		datColadera.estado = 0;
+		datColadera.pos = CVector(30.0f, 0.0f, 0.0f);
+		datColadera.vel = 0.5f;
+		datColadera.desp = 0.0f;
+		datColadera.ang = 0.0f;
 
 		CargaTexturas();
+	
+		InicializaAnim();
+		DatosAnimacion();
+
+		
 	return TRUE;										
 }
 
+void controlEstadosColadera()
+{
+	if (datColadera.estado == 1) //Subiendo
+	{
+		datColadera.pos.y = datColadera.pos.y + datColadera.vel;
+		datColadera.desp += datColadera.vel;
+
+		datColadera.ang += 10.0f;
+		if (datColadera.ang > 360.0f) datColadera.ang -= 360.0f;
+
+		if (datColadera.desp > 30.0f)
+			datColadera.estado = 2;
+	}
+	else if (datColadera.estado == 2) //Cayendo
+	{
+		datColadera.pos.y = datColadera.pos.y - datColadera.vel;
+		datColadera.desp -= datColadera.vel;
+
+		datColadera.ang += 10.0f;
+		if (datColadera.ang > 360.0f) datColadera.ang -= 360.0f;
+
+		if (datColadera.desp <= 0.0f)
+		{
+			datColadera.estado = 3;
+			datColadera.pos.y = 0.0f;
+			datColadera.ang = 0.0f;
+		}
+	}
+}
+
+void animacion(int frames)
+{
+	if (play)
+	{
+		if ((fabs(KeyFrame[playIndex + 1].Angt1 - Angt1))<0.1f &&
+			(fabs(KeyFrame[playIndex + 1].Angt2 - Angt2))<0.1f &&
+			(fabs(KeyFrame[playIndex + 1].Angc1 - Angc1))<0.1f &&
+			(fabs(KeyFrame[playIndex + 1].Angc2 - Angc2))<0.1f &&
+			(fabs(KeyFrame[playIndex + 1].Angbi1 - Angbi1))<0.1f &&
+			(fabs(KeyFrame[playIndex + 1].Angbi2 - Angbi2))<0.1f &&
+			(fabs(KeyFrame[playIndex + 1].Angbd1 - Angbd1))<0.1f &&
+			(fabs(KeyFrame[playIndex + 1].Angbd2 - Angbd2))<0.1f &&
+			(fabs(KeyFrame[playIndex + 1].Angpizq - Angpizq))<0.1f &&
+			(fabs(KeyFrame[playIndex + 1].Angpder - Angpder))<0.1f &&
+			(fabs(KeyFrame[playIndex + 1].Angpi - Angpi))<0.1f &&
+			(fabs(KeyFrame[playIndex + 1].Angpd - Angpd))<0.1f &&
+			(fabs(KeyFrame[playIndex + 1].Xtor - Xtor))<0.1f &&
+			(fabs(KeyFrame[playIndex + 1].Ytor - Ytor))<0.1f &&
+			(fabs(KeyFrame[playIndex + 1].Ztor - Ztor))<0.1f)
+		{
+			playIndex++;
+			if (playIndex > maxKF - 2)
+			{
+				playIndex = 0;
+				play = false;
+			}
+		}
+		else
+		{
+			KeyFrame[playIndex].incAngt1 = (KeyFrame[playIndex + 1].Angt1 - KeyFrame[playIndex].Angt1) / frames;
+			KeyFrame[playIndex].incAngt2 = (KeyFrame[playIndex + 1].Angt2 - KeyFrame[playIndex].Angt2) / frames;
+			KeyFrame[playIndex].incAngc1 = (KeyFrame[playIndex + 1].Angc1 - KeyFrame[playIndex].Angc1) / frames;
+			KeyFrame[playIndex].incAngc2 = (KeyFrame[playIndex + 1].Angc2 - KeyFrame[playIndex].Angc2) / frames;
+			KeyFrame[playIndex].incAngbi1 = (KeyFrame[playIndex + 1].Angbi1 - KeyFrame[playIndex].Angbi1) / frames;
+			KeyFrame[playIndex].incAngbi2 = (KeyFrame[playIndex + 1].Angbi2 - KeyFrame[playIndex].Angbi2) / frames;
+			KeyFrame[playIndex].incAngbd1 = (KeyFrame[playIndex + 1].Angbd1 - KeyFrame[playIndex].Angbd1) / frames;
+			KeyFrame[playIndex].incAngbd2 = (KeyFrame[playIndex + 1].Angbd2 - KeyFrame[playIndex].Angbd2) / frames;
+			KeyFrame[playIndex].incAngpizq = (KeyFrame[playIndex + 1].Angpizq - KeyFrame[playIndex].Angpizq) / frames;
+			KeyFrame[playIndex].incAngpder = (KeyFrame[playIndex + 1].Angpder - KeyFrame[playIndex].Angpder) / frames;
+			KeyFrame[playIndex].incAngpi = (KeyFrame[playIndex + 1].Angpi - KeyFrame[playIndex].Angpi) / frames;
+			KeyFrame[playIndex].incAngpd = (KeyFrame[playIndex + 1].Angpd - KeyFrame[playIndex].Angpd) / frames;
+			KeyFrame[playIndex].incXtor = (KeyFrame[playIndex + 1].Xtor - KeyFrame[playIndex].Xtor) / frames;
+			KeyFrame[playIndex].incYtor = (KeyFrame[playIndex + 1].Ytor - KeyFrame[playIndex].Ytor) / frames;
+			KeyFrame[playIndex].incZtor = (KeyFrame[playIndex + 1].Ztor - KeyFrame[playIndex].Ztor) / frames;
+
+			Angt1 += KeyFrame[playIndex].incAngt1;
+			Angt2 += KeyFrame[playIndex].incAngt2;
+			Angc1 += KeyFrame[playIndex].incAngc1;
+			Angc2 += KeyFrame[playIndex].incAngc2;
+			Angbi1 += KeyFrame[playIndex].incAngbi1;
+			Angbi2 += KeyFrame[playIndex].incAngbi2;
+			Angbd1 += KeyFrame[playIndex].incAngbd1;
+			Angbd2 += KeyFrame[playIndex].incAngbd2;
+			Angpizq += KeyFrame[playIndex].incAngpizq;
+			Angpder += KeyFrame[playIndex].incAngpder;
+			Angpi += KeyFrame[playIndex].incAngpi;
+			Angpd += KeyFrame[playIndex].incAngpd;
+			Xtor += KeyFrame[playIndex].incXtor;
+			Ytor += KeyFrame[playIndex].incYtor;
+			Ztor += KeyFrame[playIndex].incZtor;
+
+		}
+	}
+}
 void SeleccionaMaterial(int tipo)
 {
     if (tipo == 0)
@@ -1568,10 +1904,10 @@ void dibujaEscenario()
 			glBindTexture(GL_TEXTURE_2D, textura[10].texID);
 			glBegin(GL_QUADS);
 				glNormal3f(0.0f, 0.0f, 1.0f);
-				glTexCoord2f(0.0f, 0.0f); glVertex3f(-10.0f, 0.0f, -1.0f);
-				glTexCoord2f(4.0f, 0.0f); glVertex3f(50.0f, 0.0f, -1.0f);
-				glTexCoord2f(4.0f, 1.0f); glVertex3f(50.0f, 8.0f, -1.0f);
-				glTexCoord2f(0.0f, 1.0f); glVertex3f(-10.0f, 8.0f, -1.0f);
+				glTexCoord2f(0.0f, 0.0f); glVertex3f(-10.0f, 0.0f, -3.0f);
+				glTexCoord2f(4.0f, 0.0f); glVertex3f(50.0f, 0.0f, -3.0f);
+				glTexCoord2f(4.0f, 1.0f); glVertex3f(50.0f, 8.0f, -3.0f);
+				glTexCoord2f(0.0f, 1.0f); glVertex3f(-10.0f, 8.0f, -3.0f);
 			glEnd();
 		glDisable(GL_ALPHA_TEST);
 
@@ -1836,83 +2172,83 @@ void dibujaCilindro(float radio, int lados, float altura, int modoRender,int tex
 	}
 }
 
-void dibujaCono()
+void dibujaCono(float radio, int lados, float altura, int modoRender)
 {
-    float ang;
-    float a[3], b[3], c[3], d[3];
-    float delta;
-    float radio1 = 1.5;
-    float radio2 = 0.5;
-    int lados = 8;
-    float altura = 4.0;
-    int modoRender = 1;
+	float ang;
+	float a[3], b[3], c[3];
+	float delta;
 
-    delta = 360.0f / lados;
+	CVector normalVert[3];
+	CVector vec1, vec2, N;
 
-    for (int i = 0; i < lados; i++)
-    {
-        ang = i*delta;
+	delta = 360.0f / lados;
 
-        a[0] = radio1*(float)cos(ang*PI / 180.0f);
-        a[1] = 0.0f;
-        a[2] = radio1*(float)sin(ang*PI / 180.0f);
+	for (int i = 0; i < lados; i++)
+	{
+		ang = (i + 1)*delta;
 
-        b[0] = radio2*(float)cos(ang*PI / 180.0f);
-        b[1] = altura;
-        b[2] = radio2*(float)sin(ang*PI / 180.0f);
+		a[0] = radio*(float)cos(ang*PI / 180.0f);
+		a[1] = 0.0f;
+		a[2] = radio*(float)sin(ang*PI / 180.0f);
 
-        ang = (i + 1)*delta;
+		ang = i*delta;
 
-        c[0] = radio2*(float)cos(ang*PI / 180.0f);
-        c[1] = altura;
-        c[2] = radio2*(float)sin(ang*PI / 180.0f);
+		b[0] = radio*(float)cos(ang*PI / 180.0f);
+		b[1] = 0.0f;
+		b[2] = radio*(float)sin(ang*PI / 180.0f);
 
-        d[0] = radio1*(float)cos(ang*PI / 180.0f);
-        d[1] = 0.0f;
-        d[2] = radio1*(float)sin(ang*PI / 180.0f);
+		c[0] = 0.0f;
+		c[1] = altura;
+		c[2] = 0.0f;
 
-        glColor3f(1.0f, 0.0f, 0.0f);
+		//Cálculo de las normales
+		vec1 = CVector(b[0], b[1], b[2]) - CVector(a[0], a[1], a[2]);
+		vec2 = CVector(c[0], c[1], c[2]) - CVector(a[0], a[1], a[2]);
+		N = Normaliza(Cruz(vec1, vec2));
 
-        glPushMatrix();
-        glTranslatef(0.0f, 0.5f, 0.0f);
-        if (modoRender == 1) glBegin(GL_QUADS);// sólido
-        else if (modoRender == 2) glBegin(GL_LINE_LOOP);// alambrado
-        glVertex3f(a[0], a[1], a[2]);
-        glVertex3f(b[0], b[1], b[2]);
-        glVertex3f(c[0], c[1], c[2]);
-        glVertex3f(d[0], d[1], d[2]);
-        glEnd();
+		normalVert[0] = Normaliza(CVector(a[0], a[1], a[2]) - CVector(0.0f, 0.0f, 0.0f));
+		normalVert[1] = Normaliza(CVector(b[0], b[1], b[2]) - CVector(0.0f, 0.0f, 0.0f));
+		normalVert[2] = Normaliza(CVector(c[0], c[1], c[2]) - CVector(0.0f, 0.0f, 0.0f));
 
-        //Tapa superior
-        glColor3f(1.0f, 1.0f, 0.0f);
+		normalVert[0].y = N.y;
+		normalVert[1].y = N.y;
+		normalVert[2].y = N.y;
 
-        if (modoRender == 1) glBegin(GL_TRIANGLES);// sólido
-        else if (modoRender == 2) glBegin(GL_LINE_LOOP);// alambrado
-        glVertex3f(c[0], c[1], c[2]);
-        glVertex3f(b[0], b[1], b[2]);
-        glVertex3f(0.0f, altura, 0.0f);
-        glEnd();
+		normalVert[0] = Normaliza(normalVert[0]);
+		normalVert[1] = Normaliza(normalVert[1]);
+		normalVert[2] = Normaliza(normalVert[2]);
 
-        //Tapa inferior
-        glColor3f(0.0f, 0.0f, 1.0f);
+		glPushMatrix();
+		if (modoRender == 1) glBegin(GL_TRIANGLES);// sólido
+		else if (modoRender == 2) glBegin(GL_LINE_LOOP);// alambrado
+		glNormal3f(normalVert[0].x, normalVert[0].y, normalVert[0].z);
+		glVertex3f(a[0], a[1], a[2]);
+		glNormal3f(normalVert[1].x, normalVert[1].y, normalVert[1].z);
+		glVertex3f(b[0], b[1], b[2]);
+		glNormal3f(normalVert[2].x, normalVert[2].y, normalVert[2].z);
+		glVertex3f(c[0], c[1], c[2]);
+		glEnd();
 
-        if (modoRender == 1) glBegin(GL_TRIANGLES);// sólido
-        else if (modoRender == 2) glBegin(GL_LINE_LOOP);// alambrado
-        glVertex3f(a[0], a[1], a[2]);
-        glVertex3f(d[0], d[1], d[2]);
-        glVertex3f(0.0f, 0.0f, 0.0f);
-        glEnd();
+		//Tapa inferior
+		glColor3f(0.0f, 0.0f, 1.0f);
 
-        glColor3f(1.0f, 1.0f, 1.0f);
-        glPopMatrix();
+		if (modoRender == 1) glBegin(GL_TRIANGLES);// sólido
+		else if (modoRender == 2) glBegin(GL_LINE_LOOP);// alambrado
+		glNormal3f(0.0f, -1.0f, 0.0f);
+		glVertex3f(b[0], b[1], b[2]);
+		glVertex3f(a[0], a[1], a[2]);
+		glVertex3f(0.0f, 0.0f, 0.0f);
+		glEnd();
 
-        //Se hace la caja y despues se traslada al centro de los ejes de referencia
-        glPushMatrix();
-        glTranslated(-2.0f, 0.0f, -2.0f);
-        dibujaCaja(4.0, 0.5, 4.0, 1);
-        glPopMatrix();
-    }
+		glPushMatrix();
+		glTranslatef(-radio-0.35, 0, -radio-0.35);
+		dibujaCaja(2*radio + 0.7, 0.5, 2*radio+ 0.7, 1);
+		glPopMatrix();
+		glPopMatrix();
+	}
 }
+
+
 
 void dibujaHidrante() {
 
@@ -2408,7 +2744,12 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 	DibujaEjes();
 	dibujaEscenario();
         SeleccionaMaterial(1);
-	dibujaPersonaje();
+
+		glPushMatrix();
+		glTranslatef(2.0, 2.5, 3.0);
+		dibujaPersonaje();
+		glPopMatrix();
+
         SeleccionaMaterial(0);
 
 	glEnable(GL_NORMALIZE);
@@ -2422,43 +2763,39 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
         //Se escala el cono ya que el modelo original es algo grande
 	glPushMatrix();
 		glTranslatef(-100.0f, 0.0f, -5.0f);
-                glScalef(0.7f, 0.7f, 0.7f);
-		dibujaCono();
+		dibujaCono(1.5,8,4,1);
 	glPopMatrix();
 
         SeleccionaMaterial(1);
-            glPushMatrix();
+        glPushMatrix();
             glTranslatef(8.0f, 0.0f, 3.0f);
-            glScalef(0.7f, 0.7f, 0.7f);
-            dibujaCono();
+      
+			dibujaCono(1.5, 8, 4, 1);
         glPopMatrix();
 
         SeleccionaMaterial(1);
 	glPushMatrix();
 		glTranslatef(-40.0,0.0,3.0f);
-                glScalef(0.7f, 0.7f, 0.7f);
-		dibujaCono();
+				dibujaCono(1.5, 8, 4, 1);
 	glPopMatrix();
         
 	SeleccionaMaterial(1);
 	glPushMatrix();
 		glTranslatef(115.0, 0.0, 15.0f);
-                glScalef(0.7f, 0.7f, 0.7f);
-		dibujaCono();
+				dibujaCono(1.5, 8, 4, 1);
 	glPopMatrix();
         
 	SeleccionaMaterial(1);
 	glPushMatrix();
 		glTranslatef(48.0, 0.0, 15.0f);
-                glScalef(0.7f, 0.7f, 0.7f);
-		dibujaCono();
+				dibujaCono(1.5, 8, 4, 1);
 	glPopMatrix();
       
         SeleccionaMaterial(1);
         glPushMatrix();
 		glTranslatef(-118.0, 0.0, 3.0f);
                 glScalef(0.7f, 0.7f, 0.7f);
-		dibujaCono();
+				dibujaCono(1.5, 8, 4, 1);
 	glPopMatrix();
         SeleccionaMaterial(0);
 	glDisable(GL_NORMALIZE);
@@ -2494,6 +2831,15 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 	glPopMatrix();
 
 	glDisable(GL_NORMALIZE);
+
+	glPushMatrix();
+		glTranslatef(datColadera.pos.x, datColadera.pos.y, datColadera.pos.z);
+		glRotatef(datColadera.ang, 0.0f, 0.0f, 1.0f);
+		dibujaCilindro(2.0f, 14, 0.4f, 1,0);
+	glPopMatrix();
+	
+	controlEstadosColadera();
+
 
 	sprintf(strBuffer, "Tipo cámara: %d", tipoCamara);
 	SetWindowText(hWnd, strBuffer);
@@ -2878,6 +3224,9 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instancia
 				{
 					RenderizaEscena();				// Dibuja la escena, se puede seleccionar la escena cambiando la llamada
 					SwapBuffers(hDC);				// Intercambia los Buffers (Double Buffering)
+					if (play)
+						animacion(20); //A mayor cantidad de frames es mas lento.
+
 				}
 
 				if(!ManejaTeclado()) return 0;
@@ -2914,7 +3263,7 @@ int ManejaTeclado()
 		controlCamara(3);
 	}
 
-        if (keys[VK_PRIOR] || keys['O'])
+        if (keys[VK_PRIOR])
 	{
 		controlCamara(5);
 	}
@@ -3138,6 +3487,37 @@ int ManejaTeclado()
 		if (keys['N'])
 			LightPos[2] -= 1.0f; //Hacia atrás
 
+		if (GetKeyState(VK_SPACE) & 0x80)
+		{
+			if (play == false)
+			{
+				//Se le asignan a las variables del personaje los 
+				//valores almacenados en el primer keyframe para que
+				//inicie desde ahí la animación.
+				Angt1 = KeyFrame[0].Angt1;
+				Angt2 = KeyFrame[0].Angt2;
+				Angc1 = KeyFrame[0].Angc1;
+				Angc2 = KeyFrame[0].Angc2;
+				Angbi1 = KeyFrame[0].Angbi1;
+				Angbi2 = KeyFrame[0].Angbi2;
+				Angbd1 = KeyFrame[0].Angbd1;
+				Angbd2 = KeyFrame[0].Angbd2;
+				Angpizq = KeyFrame[0].Angpizq;
+				Angpder = KeyFrame[0].Angpder;
+				Angpi = KeyFrame[0].Angpi;
+				Angpd = KeyFrame[0].Angpd;
+				Xtor = KeyFrame[0].Xtor;
+				Ytor = KeyFrame[0].Ytor;
+				Ztor = KeyFrame[0].Ztor;
+
+				play = true;
+				playIndex = 0;
+
+			}
+		}
+
+		if (keys['O'])
+			datColadera.estado = 1;
 
 	return TRUE;
 }

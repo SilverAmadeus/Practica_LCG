@@ -57,4 +57,55 @@ struct camara
 };
 
 
+struct FRAME
+{
+	float Angt1;
+	float Angt2;
+	float Angc1;
+	float Angc2;
+	float Angbi1;
+	float Angbi2;
+	float Angbib;
+	float Angbd1;
+	float Angbd2;
+	float Angbdb;
+	float Angpizq;
+	float Angpder;
+	float Angpi;
+	float Angpd;
+
+	float Xtor;
+	float Ytor;
+	float Ztor;
+
+	float incAngt1;
+	float incAngt2;
+	float incAngc1;
+	float incAngc2;
+	float incAngbi1;
+	float incAngbi2;
+	float incAngbib;
+	float incAngbd1;
+	float incAngbd2;
+	float incAngbdb;
+	float incAngpizq;
+	float incAngpder;
+	float incAngpi;
+	float incAngpd;
+
+	float incXtor;
+	float incYtor;
+	float incZtor;
+
+};
+
+struct datosColadera
+{
+	int estado;
+	CVector pos;
+	float vel;
+	float desp;
+	float ang;
+};
+
 #endif 
